@@ -6,9 +6,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="utf-8">
 </head>
 <body>
-<a href="http://sf.test/login/" target="iframeContent">login</a>
+<a href="<?php echo base_url('login');?>" target="iframeContent">login</a>
 <br>
-<a href="http://sf.test/user/" target="iframeContent">user</a>
+<a href="<?php echo base_url('user');?>" target="iframeContent">user</a>
+<br>
 </body>
-<br>
 </html>
