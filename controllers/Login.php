@@ -25,9 +25,17 @@ class Login extends CI_Controller {
         $isValid = $this->loginmodel->isLoginValid($loginData);
         if (true == $isValid) {
             echo "<h1>It is valid!!</h1>";
+            $_SESSION['userID'] = $loginData['userID'];
+            echo $_SESSION['userID'];
         }
         else {
             echo "<h1>It is NOT valid!!</h1>";
         }
+    }
+
+    public function logoutUser()
+    {
+        $this->session->sess_destroy();
+        redirect('welcome');
     }
 }
