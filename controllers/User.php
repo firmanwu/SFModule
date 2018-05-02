@@ -5,10 +5,11 @@ class User extends CI_Controller {
 
     public function index()
     {
+        /*
         if (false == isset($_SESSION['userID'])) {
             redirect('welcome/iframeContent');
             return;
-        }
+        }*/
 
         $data = array(
             'title' => 'User page',
