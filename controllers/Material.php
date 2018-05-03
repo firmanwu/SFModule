@@ -44,6 +44,21 @@ class Material extends CI_Controller {
     public function queryMaterial()
     {
         $this->load->model('materialmodel');
+
+        $selectedColumn = $this->input->post('queryMaterialColumn');
+        $value = $this->input->post('queryMaterialValue');
+        $queryData = array($selectedColumn => $value);
+
+        $query = $this->materialmodel->queryMaterialData($queryData);
+        foreach($query->result() as $row)
+        {
+            echo $row->materialID;
+            echo $row->materialName;
+            echo $row->purchaseCondition;
+            echo $row->usingDepartment;
+            echo $row->totalPackageNumber;
+            echo $row->totalWeight;
+        }
     }
 //--------------------------------------
     public function deleteUserAccount()

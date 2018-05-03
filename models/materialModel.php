@@ -10,6 +10,13 @@ class materialModel extends CI_Model {
         return $result;
     }
 
+    public function queryMaterialData($queryData)
+    {
+        $this->db->where($queryData);
+        $result = $this->db->get('material');
+
+        return $result;
+    }
 //------------------------------------------------
     public function deleteUserData($userData)
     {

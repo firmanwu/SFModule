@@ -27,11 +27,11 @@ Total weight:
 <?php echo form_open('material/queryMaterial'); ?>
 <h3>Query</h3>
 Material name:
-<select name="materialType">
+<select name="queryMaterialColumn">
     <option value="materialName" selected>materialName</option>
     <option value="purchaseCondition">purchaseCondition</option>
     <option value="usingDepartment">usingDepartment</option>
 </select>
-<input type="text" name="selectionValue"><br>
+<input type="text" name="queryMaterialValue"><br>
 <input type="submit" value="query">
 </form>
