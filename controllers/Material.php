@@ -45,51 +45,25 @@ class Material extends CI_Controller {
     {
         $this->load->model('materialmodel');
 
+        // useless
         $selectedColumn = $this->input->post('queryMaterialColumn');
         $value = $this->input->post('queryMaterialValue');
         $queryData = array($selectedColumn => $value);
+        // useless
 
         $query = $this->materialmodel->queryMaterialData($queryData);
+        //print_r($query->result_array());
         foreach($query->result() as $row)
         {
             echo $row->materialID;
             echo $row->materialName;
             echo $row->purchaseCondition;
+            echo $row->supplierName;
+            echo $row->packaging;
+            echo $row->unitWeight;
             echo $row->usingDepartment;
-            echo $row->totalPackageNumber;
-            echo $row->totalWeight;
-        }
-    }
-//--------------------------------------
-    public function deleteUserAccount()
-    {
-        $this->load->model('usermodel');
-
-        $userData['userID'] = $this->input->post('userName');
-
-        $result = $this->usermodel->deleteUserData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
-    }
-
-    public function updateUserPassword()
-    {
-        $this->load->model('usermodel');
-
-        // get userID from session
-        $userData['userID'] = $this->input->post('userName');
-        $userData['password'] = $this->input->post('password');
-
-        $result = $this->usermodel->updatePasswordData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
+            echo $row->price;
+            echo "<br>";
         }
     }
 }

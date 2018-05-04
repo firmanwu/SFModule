@@ -12,29 +12,13 @@ class materialModel extends CI_Model {
 
     public function queryMaterialData($queryData)
     {
+        /*
         $this->db->where($queryData);
-        $result = $this->db->get('material');
-
-        return $result;
-    }
-//------------------------------------------------
-    public function deleteUserData($userData)
-    {
-        $this->db->where('userID', $userData['userID']);
-        $result = $this->db->delete('account');
-
-        return $result;
-    }
-
-    public function updatePasswordData($userData)
-    {
-        // Get ID from session data
-        $passwordData = array(
-            'password' => password_hash($userData['password'], PASSWORD_DEFAULT)
-        );
-        //$userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $this->db->where('userID', $userData['userID']);
-        $result = $this->db->update('account', $passwordData);
+        $result = $this->db->get('material');*/
+        $this->db->select('material.materialID, material.materialName, material.purchaseCondition, supplier.supplierName, supplier.packaging, supplier.unitWeight, material.usingDepartment, supplier.price');
+        $this->db->from('material');
+        $this->db->join('supplier', 'material.materialID = supplier.product');
+        $result = $this->db->get();
 
         return $result;
     }

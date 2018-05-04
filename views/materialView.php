@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 
+<!-- add -->
 <?php echo form_open('material/addMaterial'); ?>
 <h3>Add</h3>
 Material ID:
@@ -23,10 +24,10 @@ Total weight:
 <input type="submit" value="add">
 </form>
 
-<!-------------------------------------- -->
+<!-- query -->
 <?php echo form_open('material/queryMaterial'); ?>
 <h3>Query</h3>
-Material name:
+Item name:
 <select name="queryMaterialColumn">
     <option value="materialName" selected>materialName</option>
     <option value="purchaseCondition">purchaseCondition</option>
