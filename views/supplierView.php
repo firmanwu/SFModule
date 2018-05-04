@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?><!DOCTYPE html>
 
+<!-- add -->
 <?php echo form_open('supplier/addSupplier'); ?>
 <h3>Add</h3>
 Supplier ID:<br>
@@ -10,29 +11,26 @@ Supplier name:<br>
 <input type="text" name="supplierName"><br>
 Product:<br>
 <input type="text" name="product"><br>
-Using department:<br>
+Packaging:<br>
 <input type="text" name="packaging"><br>
 Unit weight:<br>
 <input type="text" name="unitWeight"><br>
-Unit price:<br>
+Price:<br>
 <input type="text" name="price"><br>
 <input type="submit" value="add">
 </form>
 
-<!-------------------------------------- -->
-
-<?php echo form_open('user/deleteUserAccount'); ?>
-<h3>Delete</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-<input type="submit" value="delete">
-</form>
-
-<?php echo form_open('user/updateUserPassword'); ?>
-<h3>Update</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-Password:<br>
-<input type="password" name="password"><br>
-<input type="submit" value="update">
+<!-- query -->
+<?php echo form_open('supplier/querySupplier'); ?>
+<h3>Query</h3>
+Item name:
+<select name="querySupplierColumn">
+    <option value="supplierName">supplierName</option>
+    <option value="product">product</option>
+    <option value="packaging">packaging</option>
+    <option value="unitWeight">unitWeight</option>
+    <option value="price">price</option>
+</select>
+<input type="text" name="querySupplierValue"><br>
+<input type="submit" value="query">
 </form>

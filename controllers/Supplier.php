@@ -41,35 +41,24 @@ class Supplier extends CI_Controller {
         }
     }
 
-    public function deleteUserAccount()
+    public function querySupplier()
     {
-        $this->load->model('usermodel');
+        $this->load->model('suppliermodel');
 
-        $userData['userID'] = $this->input->post('userName');
+        $selectedColumn = $this->input->post('querySupplierColumn');
+        $value = $this->input->post('querySupplierValue');
+        $queryData = array($selectedColumn => $value);
 
-        $result = $this->usermodel->deleteUserData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
-    }
-
-    public function updateUserPassword()
-    {
-        $this->load->model('usermodel');
-
-        // get userID from session
-        $userData['userID'] = $this->input->post('userName');
-        $userData['password'] = $this->input->post('password');
-
-        $result = $this->usermodel->updatePasswordData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
+        $query = $this->suppliermodel->querySupplierData($queryData);
+        foreach($query->result() as $row)
+        {
+            echo $row->supplierID;
+            echo $row->supplierName;
+            echo $row->product;
+            echo $row->packaging;
+            echo $row->unitWeight;
+            echo $row->price;
+            echo "<br>";
         }
     }
 }
