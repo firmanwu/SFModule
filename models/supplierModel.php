@@ -17,4 +17,11 @@ class supplierModel extends CI_Model {
 
         return $result;
     }
+
+    public function querySupplierSpecificColumn($queryData)
+    {
+        $result = $this->db->query($queryData);
+
+        return $result;
+    }
 }
