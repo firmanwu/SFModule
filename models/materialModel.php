@@ -23,4 +23,12 @@ class materialModel extends CI_Model {
 
         return $result;
     }
+
+    public function updateMaterialQuantityData($updateData)
+    {
+        $this->db->set('totalPackageNumber', $updateData['totalPackageNumber'], FALSE);
+        $this->db->set('totalWeight', $updateData['totalWeight'], FALSE);
+        $this->db->where('materialID', $updateData['material']);
+        $this->db->update('material');
+    }
 }
