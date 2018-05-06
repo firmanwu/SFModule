@@ -6,12 +6,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h3>Add</h3>
 Material entry ID:<br>
 <input type="text" name="materialEntryID"><br>
-Purchase order:<br>
+Serial number:<br>
+<input type="text" name="serialNumber"><br>
+purchaseOrder:<br>
 <input type="text" name="purchaseOrder"><br>
 storedArea:<br>
 <input type="text" name="storedArea"><br>
-serialNumber:<br>
-<input type="text" name="serialNumber"><br>
 QRCode:<br>
 material:<br>
 <input type="text" name="material"><br>
@@ -19,14 +19,12 @@ batchNumber:<br>
 <input type="text" name="batchNumber"><br>
 storedDate:<br>
 <input type="text" name="storedDate"><br>
+Supplier:<br>
+<input type="text" name="supplier"><br>
 packageNumberOfPallet:<br>
 <input type="text" name="packageNumberOfPallet"><br>
 palletNumber:<br>
 <input type="text" name="palletNumber"><br>
-storedPackageNumber:<br>
-<input type="text" name="storedPackageNumber"><br>
-storedWeight:<br>
-<input type="text" name="storedWeight"><br>
 <input type="submit" value="add">
 </form>
 
