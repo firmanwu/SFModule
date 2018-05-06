@@ -21,22 +21,52 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
+    private function getMaterialUnitWeight($supplier)
+    {
+        $this->load->model('suppliermodel');
+
+        $queryData = 'SELECT unitWeight from supplier where supplierID = ' . $supplier;
+        $query = $this->suppliermodel->querySupplierSpecificColumn($queryData);
+
+        $row = $query->row_array();
+        if (isset($row)) {
+            return $row['unitWeight'];
+        }
+    }
+
+    private function updateMaterialQuantity($material, $packageNumber, $weight)
+    {
+        $this->load->model('materialmodel');
+
+        $totalPackageNumber = 'totalPackageNumber + ' . $packageNumber;
+        $totalWeight = 'totalWeight + ' . $weight;
+        $updateData = array(
+            'material' => $material,
+            'totalPackageNumber' => $totalPackageNumber,
+            'totalWeight' => $totalWeight
+        );
+        $this->materialmodel->updateMaterialQuantityData($updateData);
+    }
+
     public function addMaterialEntry()
     {
         $this->load->model('materialentrymodel');
 
         $materialEntryData['materialEntryID'] = $this->input->post('materialEntryID');
+        $materialEntryData['serialNumber'] = $this->input->post('serialNumber');
         $materialEntryData['purchaseOrder'] = $this->input->post('purchaseOrder');
         $materialEntryData['storedArea'] = $this->input->post('storedArea');
-        $materialEntryData['serialNumber'] = $this->input->post('serialNumber');
         //$materialEntryData['QRCode'] = $this->input->post('QRCode');
         $materialEntryData['material'] = $this->input->post('material');
         $materialEntryData['batchNumber'] = $this->input->post('batchNumber');
         $materialEntryData['storedDate'] = $this->input->post('storedDate');
+        $materialEntryData['supplier'] = $this->input->post('supplier');
         $materialEntryData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
         $materialEntryData['palletNumber'] = $this->input->post('palletNumber');
-        $materialEntryData['storedPackageNumber'] = $this->input->post('storedPackageNumber');
-        $materialEntryData['storedWeight'] = $this->input->post('storedWeight');
+        $materialEntryData['storedPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
+
+        $unitWeight = $this->getMaterialUnitWeight($materialEntryData['supplier']);
+        $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $unitWeight;
 
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);
         if (true == $result) {
@@ -45,38 +75,6 @@ class Materialentry extends CI_Controller {
         else {
             echo "<h1>NOT success!!</h1>";
         }
-    }
-
-//--------------------------------------
-    public function deleteUserAccount()
-    {
-        $this->load->model('usermodel');
-
-        $userData['userID'] = $this->input->post('userName');
-
-        $result = $this->usermodel->deleteUserData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
-    }
-
-    public function updateUserPassword()
-    {
-        $this->load->model('usermodel');
-
-        // get userID from session
-        $userData['userID'] = $this->input->post('userName');
-        $userData['password'] = $this->input->post('password');
-
-        $result = $this->usermodel->updatePasswordData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+        $this->updateMaterialQuantity($materialEntryData['material'], $materialEntryData['palletNumber'], $materialEntryData['storedWeight']);
     }
 }
