@@ -15,9 +15,10 @@ class materialModel extends CI_Model {
         /*
         $this->db->where($queryData);
         $result = $this->db->get('material');*/
-        $this->db->select('material.materialID, material.materialName, material.purchaseCondition, supplier.supplierName, supplier.packaging, supplier.unitWeight, material.usingDepartment, supplier.price');
+        $this->db->select('material.materialID, material.materialName, supplier.supplierName, supplier.packaging, supplier.unitWeight, materialusage.usingDepartment, supplier.price');
         $this->db->from('material');
         $this->db->join('supplier', 'material.materialID = supplier.product');
+        $this->db->join('materialusage', 'material.materialID = materialusage.material');
         $result = $this->db->get();
 
         return $result;

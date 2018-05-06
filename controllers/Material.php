@@ -27,8 +27,6 @@ class Material extends CI_Controller {
 
         $materialData['materialID'] = $this->input->post('materialID');
         $materialData['materialName'] = $this->input->post('materialName');
-        $materialData['purchaseCondition'] = $this->input->post('purchaseCondition');
-        $materialData['usingDepartment'] = $this->input->post('usingDepartment');
         $materialData['totalPackageNumber'] = $this->input->post('totalPackageNumber');
         $materialData['totalWeight'] = $this->input->post('totalWeight');
 
@@ -57,7 +55,6 @@ class Material extends CI_Controller {
         {
             echo $row->materialID;
             echo $row->materialName;
-            echo $row->purchaseCondition;
             echo $row->supplierName;
             echo $row->packaging;
             echo $row->unitWeight;
