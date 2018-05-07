@@ -24,4 +24,15 @@ class supplierModel extends CI_Model {
 
         return $result;
     }
+
+    public function querySupplierMaterialUnitWeightData($supplier)
+    {
+        $queryData = 'SELECT unitWeight FROM supplier where supplierID = ' . $supplier;
+        $query = $this->querySupplierSpecificColumn($queryData);
+
+        $row = $query->row_array();
+        if (isset($row)) {
+            return $row['unitWeight'];
+        }
+    }
 }
