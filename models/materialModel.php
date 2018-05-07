@@ -12,10 +12,14 @@ class materialModel extends CI_Model {
 
     public function queryMaterialData($queryData)
     {
-        /*
-        $this->db->where($queryData);
-        $result = $this->db->get('material');*/
-        $this->db->select('material.materialID, material.materialName, supplier.supplierName, supplier.packaging, supplier.unitWeight, materialusage.usingDepartment, supplier.price');
+        $this->db->select('
+            material.materialID,
+            material.materialName,
+            supplier.supplierName,
+            supplier.packaging,
+            supplier.unitWeight,
+            materialusage.usingDepartment,
+            supplier.price');
         $this->db->from('material');
         $this->db->join('supplier', 'material.materialID = supplier.product');
         $this->db->join('materialusage', 'material.materialID = materialusage.material');
@@ -24,11 +28,18 @@ class materialModel extends CI_Model {
         return $result;
     }
 
-    public function updateMaterialQuantityData($updateData)
+    public function queryMaterialSpecificColumn($queryData)
     {
-        $this->db->set('totalPackageNumber', $updateData['totalPackageNumber'], FALSE);
-        $this->db->set('totalWeight', $updateData['totalWeight'], FALSE);
-        $this->db->where('materialID', $updateData['material']);
+        $result = $this->db->query($queryData);
+
+        return $result;
+    }
+
+    public function updateMaterialQuantityData($material, $packageNumber, $weight)
+    {
+        $this->db->set('totalPackageNumber', 'totalPackageNumber + ' . $packageNumber, FALSE);
+        $this->db->set('totalWeight', 'totalWeight + ' . $weight, FALSE);
+        $this->db->where('materialID', $material);
         $this->db->update('material');
     }
 }
