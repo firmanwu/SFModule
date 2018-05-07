@@ -10,24 +10,25 @@ class materialRequisitionModel extends CI_Model {
         return $result;
     }
 
-//------------------------------------------------
-    public function deleteUserData($userData)
+    public function queryMaterialRequisitionData($queryData)
     {
-        $this->db->where('userID', $userData['userID']);
-        $result = $this->db->delete('account');
-
-        return $result;
-    }
-
-    public function updatePasswordData($userData)
-    {
-        // Get ID from session data
-        $passwordData = array(
-            'password' => password_hash($userData['password'], PASSWORD_DEFAULT)
-        );
-        //$userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $this->db->where('userID', $userData['userID']);
-        $result = $this->db->update('account', $passwordData);
+        $this->db->select('
+            materialrequisition.materialRequisitionID,
+            materialrequisition.requisitioningDate,
+            material.materialName,
+            materialrequisition.requisitioningDepartment,
+            materialrequisition.requisitioningMember,
+            supplier.supplierName,
+            supplier.packaging,
+            supplier.unitWeight,
+            materialrequisition.requisitionedPackageNumber,
+            materialrequisition.requisitionedWeight,
+            materialrequisition.remainingPackageNumber,
+            materialrequisition.remainingWeight');
+        $this->db->from('materialrequisition');
+        $this->db->join('material', 'materialrequisition.material = material.materialID');
+        $this->db->join('supplier', 'materialrequisition.supplier = supplier.supplierID');
+        $result = $this->db->get();
 
         return $result;
     }

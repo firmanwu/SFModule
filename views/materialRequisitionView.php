@@ -8,32 +8,29 @@ materialRequisitionID:<br>
 <input type="text" name="materialRequisitionID"><br>
 material:<br>
 <input type="text" name="material"><br>
-requisitionDate:<br>
-<input type="text" name="requisitionDate"><br>
-requisitionDepartment:<br>
-<input type="text" name="requisitionDepartment"><br>
-requisitionMember:<br>
-<input type="text" name="requisitionMember"><br>
-requisitionPackageNumber:<br>
-<input type="text" name="requisitionPackageNumber"><br>
-requistionWeight:<br>
-<input type="text" name="requistionWeight"><br>
+supplier:<br>
+<input type="text" name="supplier"><br>
+requisitioningDate:<br>
+<input type="text" name="requisitioningDate"><br>
+requisitioningDepartment:<br>
+<input type="text" name="requisitioningDepartment"><br>
+requisitioningMember:<br>
+<input type="text" name="requisitioningMember"><br>
+requisitionedPackageNumber:<br>
+<input type="text" name="requisitionedPackageNumber"><br>
+requisitionedWeight:<br>
+<input type="text" name="requisitionedWeight"><br>
 <input type="submit" value="add">
 </form>
 
 <!-------------------------------------- -->
-<?php echo form_open('user/deleteUserAccount'); ?>
-<h3>Delete</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-<input type="submit" value="delete">
-</form>
-
-<?php echo form_open('user/updateUserPassword'); ?>
-<h3>Update</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-Password:<br>
-<input type="password" name="password"><br>
-<input type="submit" value="update">
+<?php echo form_open('materialrequisition/queryMaterialRequisition'); ?>
+<h3>Query</h3>
+Item name:
+<select name="queryMaterialRequisitionColumn">
+    <option value="materialRequisitionID" selected>materialRequisitionID</option>
+    <option value="material">material</option>
+</select>
+<input type="text" name="queryMaterialRequisitionValue"><br>
+<input type="submit" value="query">
 </form>
