@@ -21,36 +21,11 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
-    private function getMaterialUnitWeight($supplier)
-    {
-        $this->load->model('suppliermodel');
-
-        $queryData = 'SELECT unitWeight from supplier where supplierID = ' . $supplier;
-        $query = $this->suppliermodel->querySupplierSpecificColumn($queryData);
-
-        $row = $query->row_array();
-        if (isset($row)) {
-            return $row['unitWeight'];
-        }
-    }
-
-    private function updateMaterialQuantity($material, $packageNumber, $weight)
-    {
-        $this->load->model('materialmodel');
-
-        $totalPackageNumber = 'totalPackageNumber + ' . $packageNumber;
-        $totalWeight = 'totalWeight + ' . $weight;
-        $updateData = array(
-            'material' => $material,
-            'totalPackageNumber' => $totalPackageNumber,
-            'totalWeight' => $totalWeight
-        );
-        $this->materialmodel->updateMaterialQuantityData($updateData);
-    }
-
     public function addMaterialEntry()
     {
         $this->load->model('materialentrymodel');
+        $this->load->model('suppliermodel');
+        $this->load->model('materialmodel');
 
         $materialEntryData['materialEntryID'] = $this->input->post('materialEntryID');
         $materialEntryData['serialNumber'] = $this->input->post('serialNumber');
@@ -65,7 +40,7 @@ class Materialentry extends CI_Controller {
         $materialEntryData['palletNumber'] = $this->input->post('palletNumber');
         $materialEntryData['storedPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
 
-        $unitWeight = $this->getMaterialUnitWeight($materialEntryData['supplier']);
+        $unitWeight = $this->suppliermodel->querySupplierMaterialUnitWeightData($materialEntryData['supplier']);
         $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $unitWeight;
 
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);
@@ -75,6 +50,43 @@ class Materialentry extends CI_Controller {
         else {
             echo "<h1>NOT success!!</h1>";
         }
-        $this->updateMaterialQuantity($materialEntryData['material'], $materialEntryData['palletNumber'], $materialEntryData['storedWeight']);
+
+        $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight'], true);
+    }
+
+    public function queryMaterialEntry()
+    {
+        $this->load->model('materialentrymodel');
+
+        // useless
+        $selectedColumn = $this->input->post('queryMaterialEntryColumn');
+        $value = $this->input->post('queryMaterialEntryValue');
+        $queryData = array($selectedColumn => $value);
+        // useless
+
+        $query = $this->materialentrymodel->queryMaterialEntryData($queryData);
+        foreach($query->result() as $row)
+        {
+            echo $row->materialEntryID;
+            echo $row->serialNumber;
+            echo $row->purchaseOrder;
+            echo $row->storedArea;
+            echo $row->QRCode;
+            echo $row->material;
+            echo $row->materialName;
+            echo $row->batchNumber;
+            echo $row->purchaseCondition;
+            echo $row->storedDate;
+            echo $row->supplierName;
+            echo $row->packaging;
+            echo $row->unitWeight;
+            echo $row->packageNumberOfPallet;
+            echo $row->palletNumber;
+            echo $row->storedPackageNumber;
+            echo $row->storedWeight;
+            echo $row->usingDepartment;
+            echo $row->price;
+            echo "<br>";
+        }
     }
 }

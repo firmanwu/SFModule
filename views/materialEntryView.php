@@ -29,18 +29,13 @@ palletNumber:<br>
 </form>
 
 <!-------------------------------------- -->
-<?php echo form_open('user/deleteUserAccount'); ?>
-<h3>Delete</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-<input type="submit" value="delete">
-</form>
-
-<?php echo form_open('user/updateUserPassword'); ?>
-<h3>Update</h3>
-User name:<br>
-<input type="text" name="userName"><br>
-Password:<br>
-<input type="password" name="password"><br>
-<input type="submit" value="update">
+<?php echo form_open('materialentry/queryMaterialEntry'); ?>
+<h3>Query</h3>
+Item name:
+<select name="queryMaterialEntryColumn">
+    <option value="materialEntryID" selected>materialEntryID</option>
+    <option value="serialNumber" selected>serialNumber</option>
+</select>
+<input type="text" name="queryMaterialEntryValue"><br>
+<input type="submit" value="query">
 </form>
