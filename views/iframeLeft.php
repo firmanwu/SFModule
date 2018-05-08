@@ -16,9 +16,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <br>
 <a href="<?php echo base_url('supplier');?>" target="iframeContent">supplier</a>
 <br>
-<a href="<?php echo base_url('materialentry');?>" target="iframeContent">Material entry</a>
+<a href="<?php echo base_url('materialentry');?>" target="iframeContent">material entry</a>
 <br>
-<a href="<?php echo base_url('materialrequisition');?>" target="iframeContent">Material requisition</a>
+<a href="<?php echo base_url('materialrequisition');?>" target="iframeContent">material requisition</a>
+<br>
+<a href="<?php echo base_url('finishedgood');?>" target="iframeContent">finished good</a>
+<br>
+<a href="<?php echo base_url('finishedgoodentry');?>" target="iframeContent">finished good entry</a>
+<br>
+<a href="<?php echo base_url('finishedgoodrequisition');?>" target="iframeContent">finished good requisition</a>
 <br>
 </body>
 </html>
