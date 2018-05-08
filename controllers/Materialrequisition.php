@@ -51,9 +51,8 @@ class Materialrequisition extends CI_Controller {
         $queryData = 'SELECT totalPackageNumber, totalWeight FROM material WHERE materialID = \'' . $materialRequisitionData['material'] . '\'';
         $query = $this->materialmodel->queryMaterialSpecificColumn($queryData);
 
-        $row = $query->row_array();
-        $materialRequisitionData['remainingPackageNumber'] = $row['totalPackageNumber'];
-        $materialRequisitionData['remainingWeight'] = $row['totalWeight'];
+        $materialRequisitionData['remainingPackageNumber'] = $query['totalPackageNumber'];
+        $materialRequisitionData['remainingWeight'] = $query['totalWeight'];
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
         if (true == $result) {

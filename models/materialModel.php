@@ -32,7 +32,7 @@ class materialModel extends CI_Model {
     {
         $result = $this->db->query($queryData);
 
-        return $result;
+        return $result->row_array();
     }
 
     public function updateMaterialQuantityData($material, $packageNumber, $weight)

@@ -51,7 +51,7 @@ class Materialentry extends CI_Controller {
             echo "<h1>NOT success!!</h1>";
         }
 
-        $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight'], true);
+        $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight']);
     }
 
     public function queryMaterialEntry()
