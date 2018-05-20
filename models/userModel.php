@@ -6,7 +6,7 @@ class userModel extends CI_Model {
     public function insertUserData($userData)
     {
         $userData['password'] = password_hash($userData['password'], PASSWORD_DEFAULT);
-        $result = $this->db->insert('account', $userData);
+        $result = $this->db->insert('user', $userData);
 
         return $result;
     }

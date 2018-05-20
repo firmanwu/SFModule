@@ -35,15 +35,14 @@ class User extends CI_Controller {
     {
         $this->load->model('usermodel');
 
-        $userData['userID'] = $this->input->post('userName');
+        $userData['userID'] = $this->input->post('userID');
+        $userData['userName'] = $this->input->post('userName');
         $userData['password'] = $this->input->post('password');
+        $userData['authority'] = $this->input->post('authority');
 
         $result = $this->usermodel->insertUserData($userData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
+            echo json_encode($userData);
         }
     }
 
