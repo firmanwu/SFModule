@@ -2,15 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <script>
-function query() {
-    $('#queryTable').remove();
+function queryUser() {
     $.ajax({
         url: "<?php echo base_url('user/queryUser'); ?>",
-        success: function(content) {
-            var row = JSON.parse(content);
+        success: function(result) {
+                $('#queryUserTable').remove();
+            var row = JSON.parse(result);
             var header = ["使用者ID", "使用者名稱", "權限"];
             var $table = $(document.createElement('table'));
-            $table.attr('id', 'queryTable');
+            $table.attr('id', 'queryUserTable');
             $table.appendTo($('#userList'));
             var $tr = $(document.createElement('tr'));
             $tr.appendTo($table);
@@ -23,12 +23,12 @@ function query() {
 
             for(var j in row)
             {
-                var $tr = $(document.createElement('tr'));
+                $tr = $(document.createElement('tr'));
                 $tr.appendTo($table);
                 for(var k in row[j])
                 {
                     if ("password" != k) {
-                        $td = $(document.createElement('td'));
+                        var $td = $(document.createElement('td'));
                         $td.text(row[j][k]);
                         $td.appendTo($tr);
                     }
@@ -48,7 +48,7 @@ table, th, td {
 
 <div data-role="content" role="main">
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="b" onclick="query()">使用者查詢</button>
+<button data-icon="flat-man" data-theme="b" onclick="queryUser()">使用者查詢</button>
 </div>
 
 <br><br>
