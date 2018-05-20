@@ -12,11 +12,12 @@ class Finishedgoodrequisition extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'Fnished good requisition page',
-            'message' => 'Fnished good requisition page!!!'
+            'theme' => 'd',
+            'title' => '領貨'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('finishedGoodRequisitionView');
         $this->load->view('footer');
     }

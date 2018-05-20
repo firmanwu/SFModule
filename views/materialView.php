@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-
+?>
 <!-- add -->
 <?php echo form_open('material/addMaterial'); ?>
 <h3>Add</h3>

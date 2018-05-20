@@ -12,11 +12,12 @@ class Materialusage extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'Material Usage page',
-            'message' => 'Material Usage page!!!'
+            'theme' => 'b',
+            'title' => '使用單位管理'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('materialUsageView');
         $this->load->view('footer');
     }

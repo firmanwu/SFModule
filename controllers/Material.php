@@ -7,16 +7,17 @@ class Material extends CI_Controller {
     {
         /*
         if (false == isset($_SESSION['userID'])) {
-            redirect('welcome/iframeContent');
+            redirect('welcome');
             return;
         }*/
 
         $data = array(
-            'title' => 'Material page',
-            'message' => 'Material page!!!'
+            'theme' => 'b',
+            'title' => '原料管理'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('materialView');
         $this->load->view('footer');
     }
@@ -50,7 +51,6 @@ class Material extends CI_Controller {
         // useless
 
         $query = $this->materialmodel->queryMaterialData($queryData);
-        //print_r($query->result_array());
         foreach($query->result() as $row)
         {
             echo $row->materialID;

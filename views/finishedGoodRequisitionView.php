@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+?>
 
 <?php echo form_open('finishedgoodrequisition/addFinishedGoodRequisition'); ?>
 <h3>Add</h3>

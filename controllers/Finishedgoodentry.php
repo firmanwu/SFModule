@@ -12,11 +12,12 @@ class Finishedgoodentry extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'Finished good entry page',
-            'message' => 'Finished good entry page!!!'
+            'theme' => 'd',
+            'title' => '入貨'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('finishedGoodEntryView');
         $this->load->view('footer');
     }

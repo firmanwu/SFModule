@@ -7,16 +7,17 @@ class Materialrequisition extends CI_Controller {
     {
         /*
         if (false == isset($_SESSION['userID'])) {
-            redirect('welcome/iframeContent');
+            redirect('welcome');
             return;
         }*/
 
         $data = array(
-            'title' => 'Material requisition page',
-            'message' => 'Material requisition page!!!'
+            'theme' => 'b',
+            'title' => '領料'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('materialRequisitionView');
         $this->load->view('footer');
     }

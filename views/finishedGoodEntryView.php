@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-
+?>
 <?php echo form_open('finishedgoodentry/addFinishedGoodEntry'); ?>
 <h3>Add</h3>
 finishedGoodEntryID:<br>

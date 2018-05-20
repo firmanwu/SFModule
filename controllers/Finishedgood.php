@@ -12,11 +12,12 @@ class Finishedgood extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'Finishedgood page',
-            'message' => 'Finishedgood page!!!'
+            'theme' => 'd',
+            'title' => '成品管理'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('finishedGoodView');
         $this->load->view('footer');
     }

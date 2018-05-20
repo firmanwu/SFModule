@@ -12,16 +12,17 @@ class User extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'User page',
-            'message' => 'User page!!!'
+            'theme' => 'f',
+            'title' => '使用者管理'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('userView');
         $this->load->view('footer');
     }
 
-    public function addUserAccount()
+    public function addUser()
     {
         $this->load->model('usermodel');
 
@@ -37,7 +38,15 @@ class User extends CI_Controller {
         }
     }
 
-    public function deleteUserAccount()
+    public function queryUser()
+    {
+        $this->load->model('usermodel');
+
+        $query = $this->usermodel->queryUserData();
+        echo json_encode($query->result_array());
+    }
+
+    public function deleteUser()
     {
         $this->load->model('usermodel');
 

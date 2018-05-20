@@ -11,6 +11,13 @@ class userModel extends CI_Model {
         return $result;
     }
 
+    public function queryUserData()
+    {
+        $result = $this->db->get('user');
+
+        return $result;
+    }
+
     public function deleteUserData($userData)
     {
         $this->db->where('userID', $userData['userID']);

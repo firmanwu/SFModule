@@ -7,16 +7,17 @@ class Materialentry extends CI_Controller {
     {
         /*
         if (false == isset($_SESSION['userID'])) {
-            redirect('welcome/iframeContent');
+            redirect('welcome');
             return;
         }*/
 
         $data = array(
-            'title' => 'Material entry page',
-            'message' => 'Material entry page!!!'
+            'theme' => 'b',
+            'title' => '入料'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('materialEntryView');
         $this->load->view('footer');
     }

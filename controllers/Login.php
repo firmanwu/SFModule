@@ -6,11 +6,12 @@ class Login extends CI_Controller {
     public function index()
     {
         $data = array(
-            'title' => 'Login page',
-            'message' => 'Login page!!!'
+            'theme' => 'f',
+            'title' => '登入'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('loginView');
         $this->load->view('footer');
     }

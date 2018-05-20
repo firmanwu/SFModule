@@ -12,11 +12,12 @@ class Supplier extends CI_Controller {
         }*/
 
         $data = array(
-            'title' => 'Supplier page',
-            'message' => 'Supplier page!!!'
+            'theme' => 'b',
+            'title' => '供應商管理'
         );
 
-        $this->load->view('header', $data);
+        $this->load->view('header');
+        $this->load->view('panel', $data);
         $this->load->view('supplierView');
         $this->load->view('footer');
     }
