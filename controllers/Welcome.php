@@ -6,16 +6,21 @@ class Welcome extends CI_Controller {
     public function index()
     {
         $this->load->helper('url');
-        $this->load->view('welcomeview');
+        $this->load->view('header');
+        $this->load->view('iframeContent');
+        $this->load->view('footer');
     }
 
-    public function iframeLeft()
+    public function welcomeView()
     {
-        $this->load->view('iframeleft');
-    }
+        $data = array(
+            'theme' => 'a',
+            'title' => '倉儲系統'
+        );
 
-    public function iframeContent()
-    {
-        $this->load->view('iframecontent');
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('welcomeView');
+        $this->load->view('footer');
     }
 }

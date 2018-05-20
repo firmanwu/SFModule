@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-</head>
-<body>
-<h1>Welcome to iframeContent!!!</h1>
-</body>
-</html>
+?>
+<style type="text/css">
+    #iframeContent {
+        width: 100%;
+        height: 700px;
+    }
+</style>
+
+<iframe id="iframeContent" name="iframeContent" frameborder="0" src="<?php echo base_url('welcome/welcomeView');?>"></iframe>
