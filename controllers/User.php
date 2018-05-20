@@ -10,15 +10,24 @@ class User extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addUserView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'f',
-            'title' => '使用者管理'
+            'title' => '新增帳號'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('userView');
+        $this->load->view('addUserView');
         $this->load->view('footer');
     }
 
@@ -36,6 +45,25 @@ class User extends CI_Controller {
         else {
             echo "<h1>NOT success!!</h1>";
         }
+    }
+
+    public function queryUserView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'f',
+            'title' => '查詢帳號'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryUserView');
+        $this->load->view('footer');
     }
 
     public function queryUser()
