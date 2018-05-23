@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <script>
-$(document).ready(function()  {
+$(document).ready(function() {
     $('#addUserForm').submit(function(event) {
         var formData = $('#addUserForm').serialize();
 
@@ -44,14 +44,13 @@ $(document).ready(function()  {
 });
 </script>
 
-<style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-</style>
-
 <div data-role="content" role="main">
+<fieldset class="ui-grid-a">
+    <div class="ui-block-a"><a href="<?php echo base_url('user/addUserView');?>" data-role="button" data-icon="flat-plus" data-theme="b">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('user/queryUserView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
+</fieldset>
+<hr size="5" noshade>
+
 <form id="addUserForm">
     <div data-role="controlgroup" data-type="horizontal" data-theme="b">
         使用者ID

@@ -1,12 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
 <script>
 function queryUser() {
     $.ajax({
         url: "<?php echo base_url('user/queryUser'); ?>",
         success: function(result) {
-                $('#queryUserTable').remove();
+            $('#queryUserTable').remove();
             var row = JSON.parse(result);
             var header = ["使用者ID", "使用者名稱", "權限"];
             var $table = $(document.createElement('table'));
@@ -39,14 +40,13 @@ function queryUser() {
 }
 </script>
 
-<style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-</style>
-
 <div data-role="content" role="main">
+<fieldset class="ui-grid-a">
+    <div class="ui-block-a"><a href="<?php echo base_url('user/addUserView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('user/queryUserView');?>" data-role="button" data-icon="flat-bubble" data-theme="b">查詢</a></div>
+</fieldset>
+<hr size="5" noshade>
+
 <div data-role="controlgroup" data-type="horizontal">
 <button data-icon="flat-man" data-theme="b" onclick="queryUser()">使用者查詢</button>
 </div>

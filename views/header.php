@@ -10,5 +10,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <script src="<?php echo base_url('asset/js/jquery-2.1.4.min.js');?>"></script>
     <script src="<?php echo base_url('asset/js/jquery.mobile-1.4.5.min.js');?>"></script>
     <title>倉儲系統</title>
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
 </head>
 <body>

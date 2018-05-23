@@ -21,9 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-theme="f">
             <h3>使用者</h3>
-            <a href="<?php echo base_url('login');?>"data-role="button" data-icon="flat-new" data-theme="f">登入</a>
-            <a href="<?php echo base_url('user/addUserView');?>"data-role="button" data-icon="flat-new" data-theme="f">新增帳號</a>
-            <a href="<?php echo base_url('user/queryUserView');?>"data-role="button" data-icon="flat-new" data-theme="f">查詢帳號</a>
+            <a href="<?php echo base_url('login');?>" data-role="button" data-icon="flat-new" data-theme="f">登入</a>
+            <a href="<?php echo base_url('user/addUserView');?>" data-role="button" data-icon="flat-new" data-theme="f">帳號管理</a>
         </div>
     </div>
     <div data-role="header" data-theme="<?php echo $theme; ?>">
