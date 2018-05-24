@@ -3,37 +3,61 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <script>
+function deleteUser(deleteURL) {
+    $.ajax({
+        url: deleteURL,
+        success: function(result) {
+            queryUser();
+        }
+    });
+}
+
 function queryUser() {
     $.ajax({
-        url: "<?php echo base_url('user/queryUser'); ?>",
+        url: "/user/queryUser",
         success: function(result) {
             $('#queryUserTable').remove();
             var row = JSON.parse(result);
-            var header = ["使用者ID", "使用者名稱", "權限"];
-            var $table = $(document.createElement('table'));
-            $table.attr('id', 'queryUserTable');
-            $table.appendTo($('#userList'));
-            var $tr = $(document.createElement('tr'));
-            $tr.appendTo($table);
+            var header = ["使用者ID", "使用者名稱", "權限", "刪除"];
+            var table = $(document.createElement('table'));
+            table.attr('id', 'queryUserTable');
+            table.appendTo($('#userList'));
+            var tr = $(document.createElement('tr'));
+            tr.appendTo(table);
             for(var i in header)
             {
-                var $th = $(document.createElement('th'));
-                $th.text(header[i]);
-                $th.appendTo($tr);
+                var th = $(document.createElement('th'));
+                th.text(header[i]);
+                th.appendTo(tr);
             }
 
             for(var j in row)
             {
-                $tr = $(document.createElement('tr'));
-                $tr.appendTo($table);
+                tr = $(document.createElement('tr'));
+                tr.appendTo(table);
                 for(var k in row[j])
                 {
+                    if ("userID" == k) {
+                        var userID = row[j][k];
+                    }
+
                     if ("password" != k) {
-                        var $td = $(document.createElement('td'));
-                        $td.text(row[j][k]);
-                        $td.appendTo($tr);
+                        var td = $(document.createElement('td'));
+                        td.text(row[j][k]);
+                        td.appendTo(tr);
                     }
                 }
+
+                var deleteButton = $(document.createElement('button'));
+                var onclickFunction = "deleteUser(\"/user/deleteUser/" + userID + "\")";
+                deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
+                deleteButton.text("刪除");
+
+                td = $(document.createElement('td'));
+                if ("admin" != userID) {
+                    deleteButton.appendTo(td);
+                }
+                td.appendTo(tr);
             }
         }
     });

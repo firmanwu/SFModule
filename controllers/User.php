@@ -73,19 +73,12 @@ class User extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function deleteUser()
+    public function deleteUser($userID)
     {
         $this->load->model('usermodel');
 
-        $userData['userID'] = $this->input->post('userName');
-
+        $userData['userID'] = $userID;
         $result = $this->usermodel->deleteUserData($userData);
-        if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
     }
 
     public function updateUserPassword()

@@ -16,6 +16,19 @@ table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
 }
+
+.selfButton {
+    background-color: red;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin: 4px 2px;
+}
+
 </style>
 </head>
 <body>
