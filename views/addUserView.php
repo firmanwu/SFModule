@@ -8,33 +8,33 @@ $(document).ready(function() {
         var formData = $('#addUserForm').serialize();
 
         $.ajax({
-            url: "<?php echo base_url('user/addUser'); ?>",
+            url: "/user/addUser",
             type: "POST",
             data: formData,
             success: function(result) {
                 $('#addUserTable').remove();
                 var row = JSON.parse(result);
                 var header = ["使用者ID", "使用者名稱", "權限"];
-                var $table = $(document.createElement('table'));
-                $table.attr('id', 'addUserTable');
-                $table.appendTo($('#userList'));
-                var $tr = $(document.createElement('tr'));
-                $tr.appendTo($table);
+                var table = $(document.createElement('table'));
+                table.attr('id', 'addUserTable');
+                table.appendTo($('#userList'));
+                var tr = $(document.createElement('tr'));
+                tr.appendTo(table);
                 for(var i in header)
                 {
-                    var $th = $(document.createElement('th'));
-                    $th.text(header[i]);
-                    $th.appendTo($tr);
+                    var th = $(document.createElement('th'));
+                    th.text(header[i]);
+                    th.appendTo(tr);
                 }
 
-                $tr = $(document.createElement('tr'));
-                $tr.appendTo($table);
+                tr = $(document.createElement('tr'));
+                tr.appendTo(table);
                 for(var j in row)
                 {
                     if ("password" != j) {
-                        $td = $(document.createElement('td'));
-                        $td.text(row[j]);
-                        $td.appendTo($tr);
+                        td = $(document.createElement('td'));
+                        td.text(row[j]);
+                        td.appendTo(tr);
                     }
                 }
             }
