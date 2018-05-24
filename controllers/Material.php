@@ -22,45 +22,71 @@ class Material extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function addMaterialView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '新增原料'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('addMaterialView');
+        $this->load->view('footer');
+    }
+
     public function addMaterial()
     {
         $this->load->model('materialmodel');
 
         $materialData['materialID'] = $this->input->post('materialID');
         $materialData['materialName'] = $this->input->post('materialName');
-        $materialData['totalPackageNumber'] = $this->input->post('totalPackageNumber');
-        $materialData['totalWeight'] = $this->input->post('totalWeight');
 
         $result = $this->materialmodel->insertMaterialData($materialData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($materialData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function queryMaterialView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '查詢原料'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryMaterialView');
+        $this->load->view('footer');
     }
 
     public function queryMaterial()
     {
         $this->load->model('materialmodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialColumn');
-        $value = $this->input->post('queryMaterialValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
-
-        $query = $this->materialmodel->queryMaterialData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->materialID;
-            echo $row->materialName;
-            echo $row->supplierName;
-            echo $row->packaging;
-            echo $row->unitWeight;
-            echo $row->usingDepartment;
-            echo $row->price;
-            echo "<br>";
-        }
+        $query = $this->materialmodel->queryMaterialData();
+        echo json_encode($query->result_array());
     }
+
+    public function deleteMaterial($materialID)
+    {
+        $this->load->model('materialmodel');
+
+        $materialData['materialID'] = $materialID;
+        $result = $this->materialmodel->deleteMaterialData($materialData);
+    }
+
 }

@@ -10,7 +10,7 @@ class materialModel extends CI_Model {
         return $result;
     }
 
-    public function queryMaterialData($queryData)
+    public function queryMaterialData()
     {
         $this->db->select('
             material.materialID,
@@ -24,6 +24,14 @@ class materialModel extends CI_Model {
         $this->db->join('supplier', 'material.materialID = supplier.product');
         $this->db->join('materialusage', 'material.materialID = materialusage.material');
         $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function deleteMaterialData($materialData)
+    {
+        $this->db->where('materialID', $materialData['materialID']);
+        $result = $this->db->delete('material');
 
         return $result;
     }
