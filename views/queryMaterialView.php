@@ -41,11 +41,9 @@ function queryMaterial() {
                         var materialID = row[j][k];
                     }
 
-                    if ("password" != k) {
-                        var td = $(document.createElement('td'));
-                        td.text(row[j][k]);
-                        td.appendTo(tr);
-                    }
+                    var td = $(document.createElement('td'));
+                    td.text(row[j][k]);
+                    td.appendTo(tr);
                 }
 
                 var deleteButton = $(document.createElement('button'));
