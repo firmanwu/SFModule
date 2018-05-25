@@ -10,15 +10,24 @@ class Supplier extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addSupplierView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'b',
-            'title' => '供應商管理'
+            'title' => '新增供應商'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('supplierView');
+        $this->load->view('addSupplierView');
         $this->load->view('footer');
     }
 
@@ -26,7 +35,6 @@ class Supplier extends CI_Controller {
     {
         $this->load->model('suppliermodel');
 
-        $supplierData['supplierID'] = $this->input->post('supplierID');
         $supplierData['supplierName'] = $this->input->post('supplierName');
         $supplierData['product'] = $this->input->post('product');
         $supplierData['packaging'] = $this->input->post('packaging');
@@ -35,31 +43,42 @@ class Supplier extends CI_Controller {
 
         $result = $this->suppliermodel->insertSupplierData($supplierData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($supplierData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function querySupplierView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '查詢供應商'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('querySupplierView');
+        $this->load->view('footer');
     }
 
     public function querySupplier()
     {
         $this->load->model('suppliermodel');
 
-        $selectedColumn = $this->input->post('querySupplierColumn');
-        $value = $this->input->post('querySupplierValue');
-        $queryData = array($selectedColumn => $value);
+        $query = $this->suppliermodel->querySupplierData();
+        echo json_encode($query->result_array());
+    }
 
-        $query = $this->suppliermodel->querySupplierData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->supplierID;
-            echo $row->supplierName;
-            echo $row->product;
-            echo $row->packaging;
-            echo $row->unitWeight;
-            echo $row->price;
-            echo "<br>";
-        }
+    public function deleteSupplier($supplierID)
+    {
+        $this->load->model('suppliermodel');
+
+        $supplierData['supplierID'] = $supplierID;
+        $result = $this->suppliermodel->deleteSupplierData($supplierData);
     }
 }

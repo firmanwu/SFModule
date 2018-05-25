@@ -10,10 +10,17 @@ class supplierModel extends CI_Model {
         return $result;
     }
 
-    public function querySupplierData($queryData)
+    public function querySupplierData()
     {
-        $this->db->where($queryData);
         $result = $this->db->get('supplier');
+
+        return $result;
+    }
+
+    public function deleteSupplierData($supplierData)
+    {
+        $this->db->where('supplierID', $supplierData['supplierID']);
+        $result = $this->db->delete('supplier');
 
         return $result;
     }
