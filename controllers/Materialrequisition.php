@@ -50,7 +50,7 @@ class Materialrequisition extends CI_Controller {
 
         // Get the remaining package number and weight of material
         $queryData = 'SELECT totalPackageNumber, totalWeight FROM material WHERE materialID = \'' . $materialRequisitionData['material'] . '\'';
-        $query = $this->materialmodel->queryMaterialSpecificColumn($queryData);
+        $query = $this->materialmodel->queryMaterialSpecificColumn($queryData, true);
 
         $materialRequisitionData['remainingPackageNumber'] = $query['totalPackageNumber'];
         $materialRequisitionData['remainingWeight'] = $query['totalWeight'];

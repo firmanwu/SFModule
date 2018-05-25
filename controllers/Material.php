@@ -10,16 +10,6 @@ class Material extends CI_Controller {
             redirect('welcome');
             return;
         }*/
-
-        $data = array(
-            'theme' => 'b',
-            'title' => '原料管理'
-        );
-
-        $this->load->view('header');
-        $this->load->view('panel', $data);
-        $this->load->view('materialView');
-        $this->load->view('footer');
     }
 
     public function addMaterialView()
@@ -81,6 +71,15 @@ class Material extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryMaterialNameWithID()
+    {
+        $this->load->model('materialmodel');
+
+        $queryData = 'SELECT materialID, materialName FROM material';
+        $query = $this->materialmodel->queryMaterialSpecificColumn($queryData, false);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteMaterial($materialID)
     {
         $this->load->model('materialmodel');
@@ -88,5 +87,4 @@ class Material extends CI_Controller {
         $materialData['materialID'] = $materialID;
         $result = $this->materialmodel->deleteMaterialData($materialData);
     }
-
 }

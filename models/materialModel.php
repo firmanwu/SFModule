@@ -36,11 +36,16 @@ class materialModel extends CI_Model {
         return $result;
     }
 
-    public function queryMaterialSpecificColumn($queryData)
+    public function queryMaterialSpecificColumn($queryData, $isOneRow)
     {
         $result = $this->db->query($queryData);
 
-        return $result->row_array();
+        if (true == $isOneRow) {
+            return $result->row_array();
+        }
+        else {
+            return $result;
+        }
     }
 
     public function updateMaterialQuantityData($material, $packageNumber, $weight)
