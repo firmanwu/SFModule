@@ -56,11 +56,9 @@ $(document).ready(function() {
                 tr.appendTo(table);
                 for(var j in row)
                 {
-                    if ("password" != j) {
-                        td = $(document.createElement('td'));
-                        td.text(row[j]);
-                        td.appendTo(tr);
-                    }
+                    td = $(document.createElement('td'));
+                    td.text(row[j]);
+                    td.appendTo(tr);
                 }
             }
         });
