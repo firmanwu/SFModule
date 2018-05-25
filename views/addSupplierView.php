@@ -4,9 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
-    //$("hr").click(function(event) {
-        //alert("i am here");
-            $.ajax({
+    $.ajax({
         url: "/material/queryMaterialNameWithID",
         success: function(result) {
             var row = JSON.parse(result);
@@ -30,7 +28,6 @@ $(document).ready(function() {
             }
         }
     });
-    //});
 
     $('#addSupplierForm').submit(function(event) {
         var formData = $('#addSupplierForm').serialize();
