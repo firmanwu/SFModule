@@ -10,15 +10,24 @@ class Materialusage extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addMaterialUsageView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'b',
-            'title' => '使用單位管理'
+            'title' => '新增使用單位'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('materialUsageView');
+        $this->load->view('addMaterialUsageView');
         $this->load->view('footer');
     }
 
@@ -31,10 +40,42 @@ class Materialusage extends CI_Controller {
 
         $result = $this->materialusagemodel->insertMaterialUsageData($materialUsageData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($materialUsageData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function queryMaterialUsageView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '查詢使用單位'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryMaterialUsageView');
+        $this->load->view('footer');
+    }
+
+    public function queryMaterialUsage()
+    {
+        $this->load->model('materialusagemodel');
+
+        $query = $this->materialusagemodel->queryMaterialUsageData();
+        echo json_encode($query->result_array());
+    }
+
+    public function deleteMaterialUsage($materialUsageID)
+    {
+        $this->load->model('materialusagemodel');
+
+        $materialUsageData['materialUsageID'] = $materialUsageID;
+        $result = $this->materialusagemodel->deleteMaterialUsageData($materialUsageData);
     }
 }
