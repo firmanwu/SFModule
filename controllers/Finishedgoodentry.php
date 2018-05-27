@@ -10,15 +10,24 @@ class Finishedgoodentry extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addFinishedGoodEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'd',
-            'title' => '入貨'
+            'title' => '新增入庫'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('finishedGoodEntryView');
+        $this->load->view('addFinishedGoodEntryView');
         $this->load->view('footer');
     }
 
@@ -55,6 +64,25 @@ class Finishedgoodentry extends CI_Controller {
         }
 
         $this->finishedgoodmodel->updateFinishedGoodQuantityData($finishedGoodEntryData['product'], $finishedGoodEntryData['storedPackageNumber'], $finishedGoodEntryData['storedWeight']);
+    }
+
+    public function queryFinishedGoodEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'd',
+            'title' => '查詢入庫'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryFinishedGoodEntryView');
+        $this->load->view('footer');
     }
 
     public function queryFinishedGoodEntry()

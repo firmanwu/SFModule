@@ -14,8 +14,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-theme="d">
             <h3>成品</h3>
-            <a href="<?php echo base_url('finishedgoodentry');?>" data-role="button" data-icon="flat-new" data-theme="d">入貨</a>
-            <a href="<?php echo base_url('finishedgoodrequisition');?>" data-role="button" data-icon="flat-new" data-theme="d">領貨</a>
+            <a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-new" data-theme="d">入庫</a>
+            <a href="<?php echo base_url('finishedgoodrequisition');?>" data-role="button" data-icon="flat-new" data-theme="d">出庫</a>
             <a href="<?php echo base_url('finishedgood/addFinishedGoodView');?>" data-role="button" data-icon="flat-new" data-theme="d">成品管理</a>
         </div>
 
