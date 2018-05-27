@@ -10,15 +10,24 @@ class Finishedgood extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addFinishedGoodView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'd',
-            'title' => '成品管理'
+            'title' => '新增成品'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('finishedGoodView');
+        $this->load->view('addFinishedGoodView');
         $this->load->view('footer');
     }
 
@@ -33,34 +42,34 @@ class Finishedgood extends CI_Controller {
 
         $result = $this->finishedgoodmodel->insertFinishedGoodData($finishedGoodData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($finishedGoodData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function queryFinishedGoodView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'd',
+            'title' => '查詢成品'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryFinishedGoodView');
+        $this->load->view('footer');
     }
 
     public function queryFinishedGood()
     {
         $this->load->model('finishedgoodmodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialColumn');
-        $value = $this->input->post('queryMaterialValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
-
-        $query = $this->finishedgoodmodel->queryFinishedGoodData($queryData);
-        //print_r($query->result_array());
-        foreach($query->result() as $row)
-        {
-            echo $row->finishedGoodID;
-            echo $row->finishedGoodType;
-            echo $row->unitWeight;
-            echo $row->packageNumberOfPallet;
-            echo $row->totalPackageNumber;
-            echo $row->totalWeight;
-            echo "<br>";
-        }
+        $query = $this->finishedgoodmodel->queryFinishedGoodData();
+        echo json_encode($query->result_array());
     }
 }

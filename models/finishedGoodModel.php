@@ -10,19 +10,8 @@ class finishedGoodModel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodData($queryData)
+    public function queryFinishedGoodData()
     {
-        /*$this->db->select('
-            material.materialID,
-            material.materialName,
-            supplier.supplierName,
-            supplier.packaging,
-            supplier.unitWeight,
-            materialusage.usingDepartment,
-            supplier.price');
-        $this->db->from('material');
-        $this->db->join('supplier', 'material.materialID = supplier.product');
-        $this->db->join('materialusage', 'material.materialID = materialusage.material');*/
         $result = $this->db->get('finishedgood');
 
         return $result;
