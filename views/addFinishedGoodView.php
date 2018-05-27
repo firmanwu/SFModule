@@ -4,31 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
-    $.ajax({
-        url: "/material/queryMaterialNameWithID",
-        success: function(result) {
-            var row = JSON.parse(result);
-            var selection = $(document.createElement('select'));
-            selection.attr({"name":"material","data-native-menu":"false"});
-            selection.appendTo($('#finishedGoodSelection'));
-
-            for(var i in row)
-            {
-                selectOption = $(document.createElement('option'));
-                for(var j in row[i])
-                {
-                    if ("materialID" == j) {
-                        selectOption.attr('value', row[i][j]);
-                    }
-                    if ("materialName" == j) {
-                        selectOption.text(row[i][j]);
-                    }
-                }
-                selectOption.appendTo(selection);
-            }
-        }
-    });
-
     $('#addFinishedGoodForm').submit(function(event) {
         var formData = $('#addFinishedGoodForm').serialize();
 
