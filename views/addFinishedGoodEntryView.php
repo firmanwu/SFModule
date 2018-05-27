@@ -14,7 +14,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addFinishedGoodEntryTable').remove();
                 var row = JSON.parse(result);
-                var header = ["成品代號", "成品種類", "單位重量", "每棧板的單位個數"];
+                var header = ["入庫編號", "倉儲流水號", "狀態", "儲放區域", "成品代號", "批號", "入庫日期", "入庫數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addFinishedGoodEntryTable');
                 table.appendTo($('#finishedGoodEntryList'));
@@ -31,6 +31,10 @@ $(document).ready(function() {
                 tr.appendTo(table);
                 for(var j in row)
                 {
+                    if ("palletNumber" == j){
+                        break;
+                    }
+
                     td = $(document.createElement('td'));
                     td.text(row[j]);
                     td.appendTo(tr);
@@ -64,7 +68,7 @@ $(document).ready(function() {
         批號
         <input type="text" name="batchNumber" size=20 maxlength=16>
         入庫日期
-        <input type="text" name="storedDate" size=20 maxlength=16>
+        <input type="date" name="storedDate" min="2017-01-01">
         入庫數量
         <input type="text" name="storedPackageNumber" size=20 maxlength=16>
     </div>

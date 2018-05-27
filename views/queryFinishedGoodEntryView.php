@@ -18,7 +18,7 @@ function queryFinishedGoodEntry() {
         success: function(result) {
             $('#queryFinishedGoodEntryTable').remove();
             var row = JSON.parse(result);
-            var header = ["成品代號", "成品種類", "單位重量", "每棧板的單位個數", "總數量", "總重量", "刪除"];
+            var header = ["儲放區域", "倉儲流水號", "狀態", "成品代號", "成品種類", "入庫日期", "批號", "入庫數量", "單位重量", "數量", "總重量", "刪除"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodEntryTable');
             table.appendTo($('#finishedGoodEntryList'));
@@ -39,6 +39,7 @@ function queryFinishedGoodEntry() {
                 {
                     if ("finishedGoodEntryID" == k) {
                         var finishedGoodEntryID = row[j][k];
+                        continue;
                     }
 
                     var td = $(document.createElement('td'));

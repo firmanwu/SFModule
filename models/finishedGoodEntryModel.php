@@ -10,9 +10,10 @@ class finishedGoodEntryModel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodEntryData($queryData)
+    public function queryFinishedGoodEntryData()
     {
         $this->db->select('
+            finishedgoodentry.finishedGoodEntryID,
             finishedgoodentry.storedArea,
             finishedgoodentry.serialNumber,
             finishedgoodentry.status,
@@ -27,6 +28,15 @@ class finishedGoodEntryModel extends CI_Model {
         $this->db->from('finishedgoodentry');
         $this->db->join('finishedgood', 'finishedgoodentry.product = finishedgood.finishedGoodID');
         $result = $this->db->get();
+
+        return $result;
+    }
+
+
+    public function deleteFinishedGoodEntryData($finishedGoodEntryData)
+    {
+        $this->db->where('finishedGoodEntryID', $finishedGoodEntryData['finishedGoodEntryID']);
+        $result = $this->db->delete('finishedgoodentry');
 
         return $result;
     }

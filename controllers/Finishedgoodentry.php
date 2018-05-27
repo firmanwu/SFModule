@@ -57,10 +57,7 @@ class Finishedgoodentry extends CI_Controller {
 
         $result = $this->finishedgoodentrymodel->insertFinishedGoodEntryData($finishedGoodEntryData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
+            echo json_encode($finishedGoodEntryData);
         }
 
         $this->finishedgoodmodel->updateFinishedGoodQuantityData($finishedGoodEntryData['product'], $finishedGoodEntryData['storedPackageNumber'], $finishedGoodEntryData['storedWeight']);
@@ -89,27 +86,16 @@ class Finishedgoodentry extends CI_Controller {
     {
         $this->load->model('finishedgoodentrymodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialEntryColumn');
-        $value = $this->input->post('queryMaterialEntryValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
+        $query = $this->finishedgoodentrymodel->queryFinishedGoodEntryData();
+        echo json_encode($query->result_array());
+    }
 
-        $query = $this->finishedgoodentrymodel->queryFinishedGoodEntryData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->storedArea;
-            echo $row->serialNumber;
-            echo $row->status;
-            echo $row->product;
-            echo $row->finishedGoodType;
-            echo $row->storedDate;
-            echo $row->batchNumber;
-            echo $row->storedPackageNumber;
-            echo $row->unitWeight;
-            echo $row->palletNumber;
-            echo $row->storedWeight;
-            echo "<br>";
-        }
+
+    public function deleteFinishedGoodEntry($finishedGoodEntryID)
+    {
+        $this->load->model('finishedgoodentrymodel');
+
+        $finishedGoodEntryData['finishedGoodEntryID'] = $finishedGoodEntryID;
+        $result = $this->finishedgoodentrymodel->deleteFinishedGoodEntryData($finishedGoodEntryData);
     }
 }
