@@ -14,7 +14,7 @@ function deleteFinishedGood(deleteURL) {
 
 function queryFinishedGood() {
     $.ajax({
-        url: "/finishedGood/queryFinishedGood",
+        url: "/finishedgood/queryFinishedGood",
         success: function(result) {
             $('#queryFinishedGoodTable').remove();
             var row = JSON.parse(result);
@@ -62,8 +62,8 @@ function queryFinishedGood() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('finishedGood/addFinishedGoodView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('finishedGood/queryFinishedGoodView');?>" data-role="button" data-icon="flat-bubble" data-theme="f">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('finishedgood/addFinishedGoodView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('finishedgood/queryFinishedGoodView');?>" data-role="button" data-icon="flat-bubble" data-theme="f">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

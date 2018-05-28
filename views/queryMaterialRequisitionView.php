@@ -14,7 +14,7 @@ function deleteMaterialRequisition(deleteURL) {
 
 function queryMaterialRequisition() {
     $.ajax({
-        url: "/materialRequisition/queryMaterialRequisition",
+        url: "/materialrequisition/queryMaterialRequisition",
         success: function(result) {
             $('#queryMaterialRequisitionTable').remove();
             var row = JSON.parse(result);
@@ -47,7 +47,7 @@ function queryMaterialRequisition() {
                 }
 
                 var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteMaterialRequisition(\"/materialRequisition/deleteMaterialRequisition/" + materialRequisitionID + "\")";
+                var onclickFunction = "deleteMaterialRequisition(\"/materialrequisition/deleteMaterialRequisition/" + materialRequisitionID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
                 deleteButton.text("刪除");
 
@@ -62,8 +62,8 @@ function queryMaterialRequisition() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('materialRequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('materialRequisition/queryMaterialRequisitionView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('materialrequisition/queryMaterialRequisitionView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

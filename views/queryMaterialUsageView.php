@@ -14,7 +14,7 @@ function deleteMaterialUsage(deleteURL) {
 
 function queryMaterialUsage() {
     $.ajax({
-        url: "/materialUsage/queryMaterialUsage",
+        url: "/materialusage/queryMaterialUsage",
         success: function(result) {
             $('#queryMaterialUsageTable').remove();
             var row = JSON.parse(result);
@@ -49,7 +49,7 @@ function queryMaterialUsage() {
                 }
 
                 var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteMaterialUsage(\"/materialUsage/deleteMaterialUsage/" + materialUsageID + "\")";
+                var onclickFunction = "deleteMaterialUsage(\"/materialusage/deleteMaterialUsage/" + materialUsageID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
                 deleteButton.text("刪除");
 
@@ -64,8 +64,8 @@ function queryMaterialUsage() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('materialUsage/addMaterialUsageView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('materialUsage/queryMaterialUsageView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('materialusage/addMaterialUsageView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('materialusage/queryMaterialUsageView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

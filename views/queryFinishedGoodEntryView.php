@@ -14,7 +14,7 @@ function deleteFinishedGoodEntry(deleteURL) {
 
 function queryFinishedGoodEntry() {
     $.ajax({
-        url: "/finishedGoodEntry/queryFinishedGoodEntry",
+        url: "/finishedgoodentry/queryFinishedGoodEntry",
         success: function(result) {
             $('#queryFinishedGoodEntryTable').remove();
             var row = JSON.parse(result);
@@ -48,7 +48,7 @@ function queryFinishedGoodEntry() {
                 }
 
                 var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteFinishedGoodEntry(\"/finishedGoodEntry/deleteFinishedGoodEntry/" + finishedGoodEntryID + "\")";
+                var onclickFunction = "deleteFinishedGoodEntry(\"/finishedgoodentry/deleteFinishedGoodEntry/" + finishedGoodEntryID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
                 deleteButton.text("刪除");
 
@@ -63,8 +63,8 @@ function queryFinishedGoodEntry() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('finishedGoodEntry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('finishedGoodEntry/queryFinishedGoodEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="f">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-plus" data-theme="c">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('finishedgoodentry/queryFinishedGoodEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="f">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

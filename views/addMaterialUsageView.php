@@ -33,7 +33,7 @@ $(document).ready(function() {
         var formData = $('#addMaterialUsageForm').serialize();
 
         $.ajax({
-            url: "/materialUsage/addMaterialUsage",
+            url: "/materialusage/addMaterialUsage",
             type: "POST",
             data: formData,
             success: function(result) {
@@ -69,8 +69,8 @@ $(document).ready(function() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('materialUsage/addMaterialUsageView');?>" data-role="button" data-icon="flat-plus" data-theme="d">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('materialUsage/queryMaterialUsageView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('materialusage/addMaterialUsageView');?>" data-role="button" data-icon="flat-plus" data-theme="d">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('materialusage/queryMaterialUsageView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

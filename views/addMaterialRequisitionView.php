@@ -8,7 +8,7 @@ $(document).ready(function() {
         var formData = $('#addMaterialRequisitionForm').serialize();
 
         $.ajax({
-            url: "/materialRequisition/addMaterialRequisition",
+            url: "/materialrequisition/addMaterialRequisition",
             type: "POST",
             data: formData,
             success: function(result) {
@@ -44,8 +44,8 @@ $(document).ready(function() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('materialRequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-plus" data-theme="d">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('materialRequisition/queryMaterialRequisitionView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-plus" data-theme="d">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('materialrequisition/queryMaterialRequisitionView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 

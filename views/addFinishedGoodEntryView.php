@@ -8,7 +8,7 @@ $(document).ready(function() {
         var formData = $('#addFinishedGoodEntryForm').serialize();
 
         $.ajax({
-            url: "/finishedGoodEntry/addFinishedGoodEntry",
+            url: "/finishedgoodentry/addFinishedGoodEntry",
             type: "POST",
             data: formData,
             success: function(result) {
@@ -48,8 +48,8 @@ $(document).ready(function() {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('finishedGoodEntry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-plus" data-theme="f">新增</a></div>
-    <div class="ui-block-b"><a href="<?php echo base_url('finishedGoodEntry/queryFinishedGoodEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-plus" data-theme="f">新增</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('finishedgoodentry/queryFinishedGoodEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢</a></div>
 </fieldset>
 <hr size="5" noshade>
 
