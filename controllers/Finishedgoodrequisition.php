@@ -10,15 +10,24 @@ class Finishedgoodrequisition extends CI_Controller {
             redirect('welcome/iframeContent');
             return;
         }*/
+    }
+
+    public function addFinishedGoodRequisitionView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'd',
-            'title' => '領貨'
+            'title' => '新增出庫'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('finishedGoodRequisitionView');
+        $this->load->view('addFinishedGoodRequisitionView');
         $this->load->view('footer');
     }
 
@@ -34,20 +43,14 @@ class Finishedgoodrequisition extends CI_Controller {
         $finishedGoodRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $finishedGoodRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
 
-        // Use javascript to cover this condition jugement
-        if ('' != $this->input->post('requisitionedWeight')) {
-            $finishedGoodRequisitionData['requisitionedWeight'] = $this->input->post('requisitionedWeight');
-        }
-        else {
-            // Get package number of 1 pallet and unit weight
-            $queryData = 'SELECT unitWeight, packageNumberOfPallet FROM finishedgood WHERE finishedGoodID = \'' . $finishedGoodRequisitionData['product'] . '\'';
-            $query = $this->finishedgoodmodel->queryFinishedGoodSpecificColumn($queryData);
-            $unitWeight = $query['unitWeight'];
-            $packageNumberOfPallet = $query['packageNumberOfPallet'];
+        // Get package number of 1 pallet and unit weight
+        $queryData = 'SELECT unitWeight, packageNumberOfPallet FROM finishedgood WHERE finishedGoodID = \'' . $finishedGoodRequisitionData['product'] . '\'';
+        $query = $this->finishedgoodmodel->queryFinishedGoodSpecificColumn($queryData);
+        $unitWeight = $query['unitWeight'];
+        $packageNumberOfPallet = $query['packageNumberOfPallet'];
 
-            $finishedGoodRequisitionData['requisitionedPalletNumber'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] / $packageNumberOfPallet;
-            $finishedGoodRequisitionData['requisitionedWeight'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] * $unitWeight;
-        }
+        $finishedGoodRequisitionData['requisitionedPalletNumber'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] / $packageNumberOfPallet;
+        $finishedGoodRequisitionData['requisitionedWeight'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] * $unitWeight;
 
         // Minus the requisitioned package number and weight of material
         $this->finishedgoodmodel->updateFinishedGoodQuantityData($finishedGoodRequisitionData['product'], (-$finishedGoodRequisitionData['requisitionedPackageNumber']), (-$finishedGoodRequisitionData['requisitionedWeight']));
@@ -61,39 +64,42 @@ class Finishedgoodrequisition extends CI_Controller {
 
         $result = $this->finishedgoodrequisitionmodel->insertFinishedGoodRequisitionData($finishedGoodRequisitionData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($finishedGoodRequisitionData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function queryFinishedGoodRequisitionView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'd',
+            'title' => '查詢出庫'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryFinishedGoodRequisitionView');
+        $this->load->view('footer');
     }
 
     public function queryFinishedGoodRequisition()
     {
         $this->load->model('finishedgoodrequisitionmodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialEntryColumn');
-        $value = $this->input->post('queryMaterialEntryValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
+        $query = $this->finishedgoodrequisitionmodel->queryFinishedGoodRequisitionData();
+        echo json_encode($query->result_array());
+    }
 
-        $query = $this->finishedgoodrequisitionmodel->queryFinishedGoodRequisitionData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->finishedGoodRequistionID;
-            echo $row->requisitioningDate;
-            echo $row->product;
-            echo $row->finishedGoodType;
-            echo $row->requisitioningDepartment;
-            echo $row->requisitioningMember;
-            echo $row->requisitionedPackageNumber;
-            echo $row->unitWeight;
-            echo $row->requisitionedPalletNumber;
-            echo $row->requisitionedWeight;
-            echo $row->remainingPackageNumber;
-            echo $row->remainingWeight;
-            echo "<br>";
-        }
+    public function deleteFinishedGoodRequisition($finishedGoodRequisitionID)
+    {
+        $this->load->model('finishedgoodrequisitionmodel');
+
+        $finishedGoodRequisitionData['finishedGoodRequisitionID'] = $finishedGoodRequisitionID;
+        $result = $this->finishedgoodrequisitionmodel->deleteFinishedGoodRequisitionData($finishedGoodRequisitionData);
     }
 }

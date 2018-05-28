@@ -10,7 +10,7 @@ class finishedGoodRequisitionModel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodRequisitionData($queryData)
+    public function queryFinishedGoodRequisitionData()
     {
         $this->db->select('
             finishedgoodrequisition.finishedGoodRequistionID,
@@ -28,6 +28,14 @@ class finishedGoodRequisitionModel extends CI_Model {
         $this->db->from('finishedgoodrequisition');
         $this->db->join('finishedgood', 'finishedgoodrequisition.product = finishedgood.finishedGoodID');
         $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function deleteFinishedGoodRequisitionData($finishedGoodEntryData)
+    {
+        $this->db->where('finishedGoodRequistionID', $finishedGoodEntryData['finishedGoodRequistionID']);
+        $result = $this->db->delete('finishedgoodrequisition');
 
         return $result;
     }
