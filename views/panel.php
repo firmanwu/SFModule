@@ -5,8 +5,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div data-role="panel" id="panel" data-position="left" data-display="push">
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-collapsed="true" data-theme="b">
             <h3>原料</h3>
-            <a href="<?php echo base_url('materialEntry');?>" data-role="button" data-icon="flat-new" data-theme="b" target="iframeContent">入料</a>
-            <a href="<?php echo base_url('materialRequisition');?>" data-role="button" data-icon="flat-new" data-theme="b">領料</a>
+            <a href="<?php echo base_url('materialEntry/addMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b" target="iframeContent">入料</a>
+            <a href="<?php echo base_url('materialRequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="b">領料</a>
             <a href="<?php echo base_url('material/addMaterialView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料管理</a>
             <a href="<?php echo base_url('supplier/addSupplierView');?>" data-role="button" data-icon="flat-new" data-theme="b">供應商管理</a>
             <a href="<?php echo base_url('materialUsage/addMaterialUsageView');?>" data-role="button" data-icon="flat-new" data-theme="b">使用單位管理</a>

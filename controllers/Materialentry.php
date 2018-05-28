@@ -10,15 +10,24 @@ class Materialentry extends CI_Controller {
             redirect('welcome');
             return;
         }*/
+    }
+
+    public function addMaterialEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'b',
-            'title' => '入料'
+            'title' => '新增入料'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('materialEntryView');
+        $this->load->view('addMaterialEntryView');
         $this->load->view('footer');
     }
 
@@ -46,48 +55,44 @@ class Materialentry extends CI_Controller {
 
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
-        }
-        else {
-            echo "<h1>NOT success!!</h1>";
+            echo json_encode($materialEntryData);
         }
 
         $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight']);
+    }
+
+    public function queryMaterialEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '查詢入料'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryMaterialEntryView');
+        $this->load->view('footer');
     }
 
     public function queryMaterialEntry()
     {
         $this->load->model('materialentrymodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialEntryColumn');
-        $value = $this->input->post('queryMaterialEntryValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
+        $query = $this->materialentrymodel->queryMaterialEntryData();
+        echo json_encode($query->result_array());
+    }
 
-        $query = $this->materialentrymodel->queryMaterialEntryData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->materialEntryID;
-            echo $row->serialNumber;
-            echo $row->purchaseOrder;
-            echo $row->storedArea;
-            echo $row->QRCode;
-            echo $row->material;
-            echo $row->materialName;
-            echo $row->batchNumber;
-            echo $row->purchaseCondition;
-            echo $row->storedDate;
-            echo $row->supplierName;
-            echo $row->packaging;
-            echo $row->unitWeight;
-            echo $row->packageNumberOfPallet;
-            echo $row->palletNumber;
-            echo $row->storedPackageNumber;
-            echo $row->storedWeight;
-            echo $row->usingDepartment;
-            echo $row->price;
-            echo "<br>";
-        }
+    public function deleteMaterialEntry($materialEntryID)
+    {
+        $this->load->model('materialentrymodel');
+
+        $materialEntryData['materialEntryID'] = $materialEntryID;
+        $result = $this->materialentrymodel->deleteMaterialEntryData($materialEntryData);
     }
 }
