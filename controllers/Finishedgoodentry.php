@@ -90,7 +90,6 @@ class Finishedgoodentry extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-
     public function deleteFinishedGoodEntry($finishedGoodEntryID)
     {
         $this->load->model('finishedgoodentrymodel');

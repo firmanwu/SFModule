@@ -32,7 +32,6 @@ class finishedGoodEntryModel extends CI_Model {
         return $result;
     }
 
-
     public function deleteFinishedGoodEntryData($finishedGoodEntryData)
     {
         $this->db->where('finishedGoodEntryID', $finishedGoodEntryData['finishedGoodEntryID']);
