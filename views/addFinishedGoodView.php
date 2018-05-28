@@ -57,7 +57,7 @@ $(document).ready(function() {
         <input type="text" name="finishedGoodType" size=20 maxlength=16>
         單位重量
         <input type="text" name="unitWeight" size=20 maxlength=16>
-        每棧板的單位個數
+        每棧板的原料數量
         <input type="text" name="packageNumberOfPallet" size=20 maxlength=16>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f">
