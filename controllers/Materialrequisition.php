@@ -10,15 +10,24 @@ class Materialrequisition extends CI_Controller {
             redirect('welcome');
             return;
         }*/
+    }
+
+    public function addMaterialRequisitionView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
 
         $data = array(
             'theme' => 'b',
-            'title' => '領料'
+            'title' => '新增領料'
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('materialRequisitionView');
+        $this->load->view('addMaterialRequisitionView');
         $this->load->view('footer');
     }
 
@@ -36,14 +45,8 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $materialRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
 
-        // Use javascript to cover this condition jugement
-        if ('' != $this->input->post('requisitionedWeight')) {
-            $materialRequisitionData['requisitionedWeight'] = $this->input->post('requisitionedWeight');
-        }
-        else {
-            $unitWeight = $this->suppliermodel->querySupplierMaterialUnitWeightData($materialRequisitionData['supplier']);
-            $materialRequisitionData['requisitionedWeight'] = $materialRequisitionData['requisitionedPackageNumber'] * $unitWeight;
-        }
+        $unitWeight = $this->suppliermodel->querySupplierMaterialUnitWeightData($materialRequisitionData['supplier']);
+        $materialRequisitionData['requisitionedWeight'] = $materialRequisitionData['requisitionedPackageNumber'] * $unitWeight;
 
         // Minus the requisitioned package number and weight of material
         $this->materialmodel->updateMaterialQuantityData($materialRequisitionData['material'], (-$materialRequisitionData['requisitionedPackageNumber']), (-$materialRequisitionData['requisitionedWeight']));
@@ -57,39 +60,42 @@ class Materialrequisition extends CI_Controller {
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
         if (true == $result) {
-            echo "<h1>success!!</h1>";
+            echo json_encode($materialRequisitionData);
         }
-        else {
-            echo "<h1>NOT success!!</h1>";
-        }
+    }
+
+    public function queryMaterialRequisitionView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b',
+            'title' => '查詢領料'
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryMaterialRequisitionView');
+        $this->load->view('footer');
     }
 
     public function queryMaterialRequisition()
     {
         $this->load->model('materialrequisitionmodel');
 
-        // useless
-        $selectedColumn = $this->input->post('queryMaterialEntryColumn');
-        $value = $this->input->post('queryMaterialEntryValue');
-        $queryData = array($selectedColumn => $value);
-        // useless
+        $query = $this->materialrequisitionmodel->queryMaterialRequisitionData();
+        echo json_encode($query->result_array());
+    }
 
-        $query = $this->materialrequisitionmodel->queryMaterialRequisitionData($queryData);
-        foreach($query->result() as $row)
-        {
-            echo $row->materialRequisitionID;
-            echo $row->requisitioningDate;
-            echo $row->materialName;
-            echo $row->requisitioningDepartment;
-            echo $row->requisitioningMember;
-            echo $row->supplierName;
-            echo $row->packaging;
-            echo $row->unitWeight;
-            echo $row->requisitionedPackageNumber;
-            echo $row->requisitionedWeight;
-            echo $row->remainingPackageNumber;
-            echo $row->remainingWeight;
-            echo "<br>";
-        }
+    public function deleteMaterialRequisition($materialRequisitionID)
+    {
+        $this->load->model('materialrequisitionmodel');
+
+        $materialRequisitionData['materialRequisitionID'] = $materialRequisitionID;
+        $result = $this->materialrequisitionmodel->deleteMaterialRequisitionData($materialRequisitionData);
     }
 }
