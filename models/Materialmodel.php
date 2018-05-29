@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class materialModel extends CI_Model {
+class Materialmodel extends CI_Model {
 
     public function insertMaterialData($materialData)
     {

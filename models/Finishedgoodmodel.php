@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class finishedGoodModel extends CI_Model {
+class Finishedgoodmodel extends CI_Model {
 
     public function insertFinishedGoodData($finishedGoodData)
     {

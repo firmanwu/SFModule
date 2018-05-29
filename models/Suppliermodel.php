@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class supplierModel extends CI_Model {
+class Suppliermodel extends CI_Model {
 
     public function insertSupplierData($supplierData)
     {
