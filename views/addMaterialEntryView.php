@@ -4,12 +4,54 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
+    // Auto-generate serial number
     $.ajax({
         url: "/materialentry/getSerialNumber",
         success: function(serialNumber) {
             $("input[name = 'serialNumber']").attr('value', serialNumber);
         }
     });
+
+    // Auto-fill in material ID and display material name
+    $.ajax({
+        url: "/material/queryMaterialNameWithID/",
+        success: function(result) {
+            var row = JSON.parse(result);
+            var selection = $(document.createElement('select'));
+            selection.attr({"name":"material","data-native-menu":"false"});
+            selection.appendTo($('#materialSelection'));
+
+            var selected = 0;
+            for(var i in row)
+            {
+                selectOption = $(document.createElement('option'));
+                for(var j in row[i])
+                {
+                    if ("materialID" == j) {
+                        selectOption.attr('value', row[i][j]);
+                    }
+                    if ("materialName" == j) {
+                        selectOption.text(row[i][j]);
+                    }
+
+                    if (0 == selected) {
+                        selectOption.attr('selected', true);
+                        selected = 1;
+                    }
+                }
+                selectOption.appendTo(selection);
+            }
+        }
+    });
+
+    // Auto-fill in current date into storeDate
+    var dateObject = new Date();
+    var month = (dateObject.getMonth() + 1);
+    if (2 > month.toString().length) {
+        month = '0' + month;
+    }
+    currentDate = dateObject.getFullYear() + "-" + month + "-" + dateObject.getDate();
+    $("input[name = 'storedDate']").attr('value', currentDate);
 
     $('#addMaterialEntryForm').submit(function(event) {
         var formData = $('#addMaterialEntryForm').serialize();
@@ -70,8 +112,11 @@ $(document).ready(function() {
         <input type="text" name="purchaseOrder" size=20 maxlength=16>
         儲放區域
         <input type="text" name="storedArea" size=20 maxlength=16>
-        原料編號
-        <input type="text" name="material" size=20 maxlength=16>
+        原料
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         批號
         <input type="text" name="batchNumber" size=20 maxlength=16>
         進貨日期
