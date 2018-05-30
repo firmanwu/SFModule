@@ -95,4 +95,60 @@ class Materialentry extends CI_Controller {
         $materialEntryData['materialEntryID'] = $materialEntryID;
         $result = $this->materialentrymodel->deleteMaterialEntryData($materialEntryData);
     }
+
+    public function getSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+        $this->load->helper('string');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'SN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+                write_file($fileName, $newSerialNumber);
+
+                echo $newSerialNumber;
+            }
+            else {
+                echo $currentSerialNumber;
+            }
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+
+            echo $newSerialNumber;
+        }
+    }
+
+    public function increaseSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+        $this->load->helper('string');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'SN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+            }
+            else {
+                $newSerialNumber = increment_string($currentSerialNumber, '');
+            }
+            write_file($fileName, $newSerialNumber);
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+        }
+    }
 }

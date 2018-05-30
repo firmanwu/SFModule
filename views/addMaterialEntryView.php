@@ -4,6 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
+    $.ajax({
+        url: "/materialentry/getSerialNumber",
+        success: function(serialNumber) {
+            $("input[name = 'serialNumber']").attr('value', serialNumber);
+        }
+    });
+
     $('#addMaterialEntryForm').submit(function(event) {
         var formData = $('#addMaterialEntryForm').serialize();
 
@@ -35,6 +42,10 @@ $(document).ready(function() {
                     td.text(row[j]);
                     td.appendTo(tr);
                 }
+
+                $.ajax({
+                    url: "/materialentry/increaseSerialNumber"
+                });
             }
         });
         event.preventDefault();
@@ -54,7 +65,7 @@ $(document).ready(function() {
         進貨單編號
         <input type="text" name="materialEntryID" size=20 maxlength=16>
         倉儲流水號
-        <input type="text" name="serialNumber" size=20 maxlength=16>
+        <input type="text" name="serialNumber" size=20 maxlength=16 disabled>
         採購單編號
         <input type="text" name="purchaseOrder" size=20 maxlength=16>
         儲放區域
