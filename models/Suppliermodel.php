@@ -40,7 +40,7 @@ class Suppliermodel extends CI_Model {
     public function querySupplierMaterialUnitWeightData($supplier)
     {
         $queryData = 'SELECT unitWeight FROM supplier where supplierID = ' . $supplier;
-        $query = $this->querySupplierSpecificColumn($queryData);
+        $query = $this->querySupplierSpecificColumn($queryData, true);
 
         if (isset($query)) {
             return $query['unitWeight'];
