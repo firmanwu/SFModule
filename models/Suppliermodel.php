@@ -25,11 +25,16 @@ class Suppliermodel extends CI_Model {
         return $result;
     }
 
-    public function querySupplierSpecificColumn($queryData)
+    public function querySupplierSpecificColumn($queryData, $isOneRow)
     {
         $result = $this->db->query($queryData);
 
-        return $result->row_array();
+        if (true == $isOneRow) {
+            return $result->row_array();
+        }
+        else {
+            return $result;
+        }
     }
 
     public function querySupplierMaterialUnitWeightData($supplier)

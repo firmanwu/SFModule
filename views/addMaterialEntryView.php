@@ -17,11 +17,7 @@ $(document).ready(function() {
         url: "/material/queryMaterialNameWithID/",
         success: function(result) {
             var row = JSON.parse(result);
-            var selection = $(document.createElement('select'));
-            selection.attr({"name":"material","data-native-menu":"false"});
-            selection.appendTo($('#materialSelection'));
 
-            var selected = 0;
             for(var i in row)
             {
                 selectOption = $(document.createElement('option'));
@@ -33,13 +29,8 @@ $(document).ready(function() {
                     if ("materialName" == j) {
                         selectOption.text(row[i][j]);
                     }
-
-                    if (0 == selected) {
-                        selectOption.attr('selected', true);
-                        selected = 1;
-                    }
                 }
-                selectOption.appendTo(selection);
+                selectOption.appendTo($('#material'));
             }
         }
     });
@@ -47,11 +38,45 @@ $(document).ready(function() {
     // Auto-fill in current date into storeDate
     var dateObject = new Date();
     var month = (dateObject.getMonth() + 1);
+    var date = dateObject.getDate();
+
     if (2 > month.toString().length) {
         month = '0' + month;
     }
-    currentDate = dateObject.getFullYear() + "-" + month + "-" + dateObject.getDate();
+    if (2 > date.toString().length) {
+        date = '0' + date;
+    }
+    currentDate = dateObject.getFullYear() + "-" + month + "-" + date;
     $("input[name = 'storedDate']").attr('value', currentDate);
+
+    // Auto-fill supplier
+    $('#materialSelection').on("change", '#material', function() {
+        var materialID = $('select#material').find("option:selected").val();
+
+        if ("請選擇" != materialID) {
+            $.ajax({
+                url: "/supplier/querysSupplierNamebyMaterialID/" + materialID,
+                success: function(result) {
+                    var row = JSON.parse(result);
+
+                    for(var i in row)
+                    {
+                        selectOption = $(document.createElement('option'));
+                        for(var j in row[i])
+                        {
+                            if ("supplierID" == j) {
+                                selectOption.attr('value', row[i][j]);
+                            }
+                            if ("supplierName" == j) {
+                                selectOption.text(row[i][j]);
+                            }
+                        }
+                        selectOption.appendTo($('#supplier'));
+                    }
+                }
+            });
+        }
+    });
 
     $('#addMaterialEntryForm').submit(function(event) {
         var formData = $('#addMaterialEntryForm').serialize();
@@ -115,6 +140,9 @@ $(document).ready(function() {
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+        <select id="material" name="material">
+        <option>請選擇</option>
+        </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         批號
@@ -122,7 +150,13 @@ $(document).ready(function() {
         進貨日期
         <input type="date" name="storedDate" min="2017-01-01">
         供應商
-        <input type="text" name="supplier" size=20 maxlength=16>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierSelection">
+        <select id="supplier" name="supplier">
+        <option>請選擇</option>
+        </select>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         每棧板的原料數量
         <input type="text" name="packageNumberOfPallet" size=20 maxlength=16>
         棧板數

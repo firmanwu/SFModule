@@ -74,6 +74,15 @@ class Supplier extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function querysSupplierNamebyMaterialID($materialID)
+    {
+        $this->load->model('suppliermodel');
+
+        $queryData = 'SELECT supplierID, supplierName FROM supplier WHERE product = ' . "\"" . $materialID . "\"";
+        $query = $this->suppliermodel->querySupplierSpecificColumn($queryData, false);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteSupplier($supplierID)
     {
         $this->load->model('suppliermodel');
