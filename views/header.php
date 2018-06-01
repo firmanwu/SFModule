@@ -17,7 +17,7 @@ table, th, td {
     border-collapse: collapse;
 }
 
-.selfButton {
+.selfButtonR {
     background-color: red;
     color: white;
     border: none;
@@ -29,6 +29,29 @@ table, th, td {
     margin: 4px 2px;
 }
 
+.selfButtonG {
+    background-color: green;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin: 4px 2px;
+}
+
+.selfButtonB {
+    background-color: blue;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin: 4px 2px;
+}
 </style>
 </head>
 <body>
