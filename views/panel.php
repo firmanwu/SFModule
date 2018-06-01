@@ -28,5 +28,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div data-role="header" data-theme="<?php echo $theme; ?>">
         <a data-iconpos="notext" href="#panel" data-role="button" data-icon="flat-menu"></a>
         <h1><?php echo $title; ?></h1>
-        <a data-iconpos="notext" href="<?php echo base_url('welcome');?>" data-role="button" data-icon="home" target="iframeContent"></a>
+        <a data-iconpos="notext" href="<?php echo base_url('welcome');?>" data-role="button" data-icon="home"></a>
     </div>

@@ -8,7 +8,7 @@ $(document).ready(function() {
     $.ajax({
         url: "/materialentry/getSerialNumber",
         success: function(serialNumber) {
-            $("input[name = 'serialNumber']").attr('value', serialNumber);
+            $("input[name = 'serialNumber']").attr({"value":serialNumber, "readonly":true});
         }
     });
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
 
             for(var i in row)
             {
-                selectOption = $(document.createElement('option'));
+                var selectOption = $(document.createElement('option'));
                 for(var j in row[i])
                 {
                     if ("materialID" == j) {
@@ -58,6 +58,13 @@ $(document).ready(function() {
                 url: "/supplier/querysSupplierNamebyMaterialID/" + materialID,
                 success: function(result) {
                     var row = JSON.parse(result);
+
+                    $('select#supplier option').each( function() {
+                        $(this).remove();
+                    });
+                    var selectOption = $(document.createElement('option'));
+                    selectOption.text("請選擇");
+                    selectOption.appendTo($('#supplier'));
 
                     for(var i in row)
                     {
@@ -132,7 +139,7 @@ $(document).ready(function() {
         進貨單編號
         <input type="text" name="materialEntryID" size=20 maxlength=16>
         倉儲流水號
-        <input type="text" name="serialNumber" size=20 maxlength=16 disabled>
+        <input type="text" name="serialNumber" size=20 maxlength=16>
         採購單編號
         <input type="text" name="purchaseOrder" size=20 maxlength=16>
         儲放區域
