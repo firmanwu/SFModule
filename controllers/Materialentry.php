@@ -61,7 +61,7 @@ class Materialentry extends CI_Controller {
         $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight']);
     }
 
-    public function queryMaterialEntryView()
+    public function queryMaterialEntryView($isConfirmed)
     {
         /*
         if (false == isset($_SESSION['userID'])) {
@@ -70,21 +70,35 @@ class Materialentry extends CI_Controller {
         }*/
 
         $data = array(
-            'theme' => 'b',
-            'title' => '查詢入料'
+            'theme' => 'b'
         );
+
+        if (true == $isConfirmed) {
+            $data['title'] = "查詢已確認入料";
+            $data['confirmedTheme'] = 'd';
+            $data['unconfirmedTheme'] = 'c';
+            $data['buttonCaption'] = '已確認入料查詢';
+            $data['queryFunction'] = 'queryMaterialEntry(1)';
+        }
+        else {
+            $data['title'] = "查詢未確認入料";
+            $data['confirmedTheme'] = 'c';
+            $data['unconfirmedTheme'] = 'd';
+            $data['buttonCaption'] = '未確認入料查詢';
+            $data['queryFunction'] = 'queryMaterialEntry(0)';
+        }
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('queryMaterialEntryView');
+        $this->load->view('queryMaterialEntryView', $data);
         $this->load->view('footer');
     }
 
-    public function queryMaterialEntry()
+    public function queryMaterialEntry($isConfirmed)
     {
         $this->load->model('materialentrymodel');
 
-        $query = $this->materialentrymodel->queryMaterialEntryData();
+        $query = $this->materialentrymodel->queryMaterialEntryData($isConfirmed);
         echo json_encode($query->result_array());
     }
 
