@@ -8,9 +8,6 @@ $(document).ready(function() {
         url: "/material/queryMaterialNameWithID",
         success: function(result) {
             var row = JSON.parse(result);
-            var selection = $(document.createElement('select'));
-            selection.attr({"name":"product","data-native-menu":"false"});
-            selection.appendTo($('#materialSelection'));
 
             for(var i in row)
             {
@@ -24,7 +21,7 @@ $(document).ready(function() {
                         selectOption.text(row[i][j]);
                     }
                 }
-                selectOption.appendTo(selection);
+                selectOption.appendTo($('#product'));
             }
         }
     });
@@ -39,7 +36,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addSupplierTable').remove();
                 var row = JSON.parse(result);
-                var header = ["供應商", "產品", "包裝", "單位重量", "價格"];
+                var header = ["供應商", "產品", "單位重量", "單價"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addSupplierTable');
                 table.appendTo($('#supplierList'));
@@ -81,16 +78,15 @@ $(document).ready(function() {
         產品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+        <select id="product" name="product">
+        <option>請選擇</option>
+        </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        包裝
-        <input type="text" name="packaging" size=20 maxlength=16>
         單位重量
-        <input type="text" name="unitWeight" size=20 maxlength=16>
+        <input type="number" name="unitWeight">
         價格
-        <input type="text" name="price" size=20 maxlength=16>
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        <input type="number" name="price">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>

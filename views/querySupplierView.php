@@ -18,7 +18,8 @@ function querySupplier() {
         success: function(result) {
             $('#querySupplierTable').remove();
             var row = JSON.parse(result);
-            var header = ["供應商", "產品", "包裝", "單位重量", "價格", "刪除"];
+            //var header = ["供應商", "產品", "包裝", "單位重量", "價格", "刪除"];
+            var header = ["供應商", "產品", "單位重量", "價格"];
             var table = $(document.createElement('table'));
             table.attr('id', 'querySupplierTable');
             table.appendTo($('#supplierList'));
@@ -48,6 +49,7 @@ function querySupplier() {
                     }
                 }
 
+/*
                 var deleteButton = $(document.createElement('button'));
                 var onclickFunction = "deleteSupplier(\"/supplier/deleteSupplier/" + supplierID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
@@ -56,6 +58,7 @@ function querySupplier() {
                 td = $(document.createElement('td'));
                 deleteButton.appendTo(td);
                 td.appendTo(tr);
+*/
             }
         }
     });

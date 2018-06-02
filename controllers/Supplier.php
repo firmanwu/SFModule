@@ -37,7 +37,6 @@ class Supplier extends CI_Controller {
 
         $supplierData['supplierName'] = $this->input->post('supplierName');
         $supplierData['product'] = $this->input->post('product');
-        $supplierData['packaging'] = $this->input->post('packaging');
         $supplierData['unitWeight'] = $this->input->post('unitWeight');
         $supplierData['price'] = $this->input->post('price');
 
