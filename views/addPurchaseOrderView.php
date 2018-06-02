@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
+    // Auto-fill in material ID and display material name
     $.ajax({
         url: "/material/queryMaterialNameWithID",
         success: function(result) {
@@ -26,6 +27,73 @@ $(document).ready(function() {
         }
     });
 
+    // Auto-fill supplier and packaging
+    $('#materialSelection').on("change", '#material', function() {
+        var materialID = $('select#material').find("option:selected").val();
+
+        if ("請選擇" != materialID) {
+            // For supplier
+            $.ajax({
+                url: "/supplier/querysSupplierNamebyMaterialID/" + materialID,
+                success: function(result) {
+                    var row = JSON.parse(result);
+
+                    $('select#supplier option').each( function() {
+                        $(this).remove();
+                    });
+                    var selectOption = $(document.createElement('option'));
+                    selectOption.text("請選擇");
+                    selectOption.appendTo($('#supplier'));
+
+                    for(var i in row)
+                    {
+                        selectOption = $(document.createElement('option'));
+                        for(var j in row[i])
+                        {
+                            if ("supplierID" == j) {
+                                selectOption.attr('value', row[i][j]);
+                            }
+                            if ("supplierName" == j) {
+                                selectOption.text(row[i][j]);
+                            }
+                        }
+                        selectOption.appendTo($('#supplier'));
+                    }
+                }
+            });
+
+            // For packaging
+            $.ajax({
+                url: "/packaging/queryPackagingbyMaterialID/" + materialID,
+                success: function(result) {
+                    var row = JSON.parse(result);
+
+                    $('select#packaging option').each( function() {
+                        $(this).remove();
+                    });
+                    var selectOption = $(document.createElement('option'));
+                    selectOption.text("請選擇");
+                    selectOption.appendTo($('#packaging'));
+
+                    for(var i in row)
+                    {
+                        selectOption = $(document.createElement('option'));
+                        for(var j in row[i])
+                        {
+                            if ("packagingID" == j) {
+                                selectOption.attr('value', row[i][j]);
+                            }
+                            if ("packaging" == j) {
+                                selectOption.text(row[i][j]);
+                            }
+                        }
+                        selectOption.appendTo($('#packaging'));
+                    }
+                }
+            });
+        }
+    });
+
     $('#addPurchaseOrderForm').submit(function(event) {
         var formData = $('#addPurchaseOrderForm').serialize();
 
@@ -36,7 +104,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addPurchaseOrderTable').remove();
                 var row = JSON.parse(result);
-                var header = ["採購單編號", "原料", "進貨條件"];
+                var header = ["採購單編號", "原料", "供應商", "包裝", "進貨條件"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addPurchaseOrderTable');
                 table.appendTo($('#purchaseOrderList'));
@@ -79,6 +147,22 @@ $(document).ready(function() {
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
         <select id="material" name="material">
+        <option>請選擇</option>
+        </select>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        供應商
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierSelection">
+        <select id="supplier" name="supplier">
+        <option>請選擇</option>
+        </select>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        包裝
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="packagingSelection">
+        <select id="packaging" name="packaging">
         <option>請選擇</option>
         </select>
     </div>

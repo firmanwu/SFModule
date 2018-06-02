@@ -37,6 +37,8 @@ class Purchaseorder extends CI_Controller {
 
         $purchaseOrderData['purchaseOrderID'] = $this->input->post('purchaseOrderID');
         $purchaseOrderData['material'] = $this->input->post('material');
+        $purchaseOrderData['supplier'] = $this->input->post('supplier');
+        $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
 
         $result = $this->purchaseordermodel->insertPurchaseOrderData($purchaseOrderData);

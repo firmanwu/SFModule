@@ -12,7 +12,19 @@ class Purchaseordermodel extends CI_Model {
 
     public function queryPurchaseOrderData()
     {
-        $result = $this->db->get('purchaseorder');
+        $this->db->select('
+            purchaseorder.purchaseOrderID,
+            material.materialName,
+            supplier.supplierName,
+            supplier.unitPrice,
+            packaging.packaging,
+            packaging.unitWeight,
+            purchaseorder.purchaseCondition');
+        $this->db->from('purchaseorder');
+        $this->db->join('material', 'purchaseorder.material = material.materialID');
+        $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
+        $result = $this->db->get();
 
         return $result;
     }

@@ -19,7 +19,7 @@ function queryPurchaseOrder() {
             $('#queryPurchaseOrderTable').remove();
             var row = JSON.parse(result);
             //var header = ["採購單編號", "原料", "進貨條件", "刪除];
-            var header = ["採購單編號", "原料", "進貨條件"];
+            var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryPurchaseOrderTable');
             table.appendTo($('#purchaseOrderList'));
