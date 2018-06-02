@@ -72,11 +72,11 @@ class Packaging extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function queryPackagingIDbyMaterialID($materialID)
+    public function queryPackagingbyMaterialID($materialID)
     {
         $this->load->model('packagingmodel');
 
-        $queryData = 'SELECT packagingID FROM purchaseorder WHERE material = ' . "\"" . $materialID . "\"";
+        $queryData = 'SELECT packagingID, packaging FROM packaging WHERE material = ' . "\"" . $materialID . "\"";
         $query = $this->packagingmodel->queryPackagingSpecificColumn($queryData, false);
         echo json_encode($query->result_array());
     }
