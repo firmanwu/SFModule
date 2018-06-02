@@ -12,7 +12,13 @@ class Materialusagemodel extends CI_Model {
 
     public function queryMaterialUsageData()
     {
-        $result = $this->db->get('materialusage');
+        $this->db->select('
+            materialusage.materialUsageID,
+            material.materialName,
+            materialusage.usingDepartment');
+        $this->db->from('materialusage');
+        $this->db->join('material', 'materialusage.material = material.materialID');
+        $result = $this->db->get();
 
         return $result;
     }

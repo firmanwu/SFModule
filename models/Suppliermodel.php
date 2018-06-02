@@ -12,7 +12,14 @@ class Suppliermodel extends CI_Model {
 
     public function querySupplierData()
     {
-        $result = $this->db->get('supplier');
+        $this->db->select('
+            supplier.supplierID,
+            supplier.supplierName,
+            material.materialName,
+            supplier.unitPrice');
+        $this->db->from('supplier');
+        $this->db->join('material', 'supplier.material = material.materialID');
+        $result = $this->db->get();
 
         return $result;
     }

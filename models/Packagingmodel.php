@@ -12,7 +12,14 @@ class Packagingmodel extends CI_Model {
 
     public function queryPackagingData()
     {
-        $result = $this->db->get('packaging');
+        $this->db->select('
+            packaging.packagingID,
+            material.materialName,
+            packaging.packaging,
+            packaging.unitWeight');
+        $this->db->from('packaging');
+        $this->db->join('material', 'packaging.material = material.materialID');
+        $result = $this->db->get();
 
         return $result;
     }
