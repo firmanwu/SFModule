@@ -8,9 +8,6 @@ $(document).ready(function() {
         url: "/material/queryMaterialNameWithID",
         success: function(result) {
             var row = JSON.parse(result);
-            var selection = $(document.createElement('select'));
-            selection.attr({"name":"material","data-native-menu":"false"});
-            selection.appendTo($('#materialUsageSelection'));
 
             for(var i in row)
             {
@@ -24,7 +21,7 @@ $(document).ready(function() {
                         selectOption.text(row[i][j]);
                     }
                 }
-                selectOption.appendTo(selection);
+                selectOption.appendTo($('#material'));
             }
         }
     });
@@ -78,13 +75,14 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         原料
     </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialUsageSelection">
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+        <select id="material" name="material">
+        <option>請選擇</option>
+        </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         使用單位
         <input type="text" name="usingDepartment" size=20 maxlength=16>
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>

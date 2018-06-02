@@ -18,7 +18,8 @@ function queryMaterialUsage() {
         success: function(result) {
             $('#queryMaterialUsageTable').remove();
             var row = JSON.parse(result);
-            var header = ["原料", "使用單位", "刪除"];
+            //var header = ["原料", "使用單位", "刪除"];
+            var header = ["原料", "使用單位"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialUsageTable');
             table.appendTo($('#materialUsageList'));
@@ -48,6 +49,7 @@ function queryMaterialUsage() {
                     }
                 }
 
+/*
                 var deleteButton = $(document.createElement('button'));
                 var onclickFunction = "deleteMaterialUsage(\"/materialusage/deleteMaterialUsage/" + materialUsageID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
@@ -56,6 +58,7 @@ function queryMaterialUsage() {
                 td = $(document.createElement('td'));
                 deleteButton.appendTo(td);
                 td.appendTo(tr);
+*/
             }
         }
     });

@@ -19,7 +19,7 @@ function querySupplier() {
             $('#querySupplierTable').remove();
             var row = JSON.parse(result);
             //var header = ["供應商", "產品", "包裝", "單位重量", "價格", "刪除"];
-            var header = ["供應商", "產品", "單價"];
+            var header = ["供應商", "原料", "單價"];
             var table = $(document.createElement('table'));
             table.attr('id', 'querySupplierTable');
             table.appendTo($('#supplierList'));
