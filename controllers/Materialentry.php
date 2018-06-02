@@ -34,7 +34,7 @@ class Materialentry extends CI_Controller {
     public function addMaterialEntry()
     {
         $this->load->model('materialentrymodel');
-        $this->load->model('suppliermodel');
+        $this->load->model('purchaseordermodel');
         $this->load->model('materialmodel');
 
         $materialEntryData['materialEntryID'] = $this->input->post('materialEntryID');
@@ -42,23 +42,26 @@ class Materialentry extends CI_Controller {
         $materialEntryData['purchaseOrder'] = $this->input->post('purchaseOrder');
         $materialEntryData['storedArea'] = $this->input->post('storedArea');
         //$materialEntryData['QRCode'] = $this->input->post('QRCode');
-        $materialEntryData['material'] = $this->input->post('material');
         $materialEntryData['batchNumber'] = $this->input->post('batchNumber');
         $materialEntryData['storedDate'] = $this->input->post('storedDate');
-        $materialEntryData['supplier'] = $this->input->post('supplier');
         $materialEntryData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
         $materialEntryData['palletNumber'] = $this->input->post('palletNumber');
         $materialEntryData['storedPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
 
-        $unitWeight = $this->suppliermodel->querySupplierMaterialUnitWeightData($materialEntryData['supplier']);
-        $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $unitWeight;
+        $purchaseOrderData = $this->purchaseordermodel->queryPurchaseOrderForUnitWeightUnitPrice($materialEntryData['purchaseOrder']);
+        $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $purchaseOrderData['unitWeight'];
+        $materialEntryData['storedMoney'] = $materialEntryData['storedWeight'] * $purchaseOrderData['unitPrice'];
 
+        $this->materialmodel->updateMaterialQuantityData(
+            $purchaseOrderData['material'],
+            $materialEntryData['storedPackageNumber'],
+            $materialEntryData['storedWeight'],
+            $materialEntryData['storedMoney']
+        );
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);
         if (true == $result) {
             echo json_encode($materialEntryData);
         }
-
-        $this->materialmodel->updateMaterialQuantityData($materialEntryData['material'], $materialEntryData['storedPackageNumber'], $materialEntryData['storedWeight']);
     }
 
     public function queryMaterialEntryView($isConfirmed)

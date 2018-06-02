@@ -12,9 +12,9 @@ $(document).ready(function() {
         }
     });
 
-    // Auto-fill in material ID and display material name
+    // Auto-fill purchase order ID
     $.ajax({
-        url: "/material/queryMaterialNameWithID/",
+        url: "/purchaseorder/queryPurchaseOrderID",
         success: function(result) {
             var row = JSON.parse(result);
 
@@ -23,47 +23,11 @@ $(document).ready(function() {
                 var selectOption = $(document.createElement('option'));
                 for(var j in row[i])
                 {
-                    if ("materialID" == j) {
-                        selectOption.attr('value', row[i][j]);
-                    }
-                    if ("materialName" == j) {
-                        selectOption.text(row[i][j]);
-                    }
+                    selectOption.attr('value', row[i][j]);
+                    selectOption.text(row[i][j]);
                 }
-                selectOption.appendTo($('#material'));
+                selectOption.appendTo($('#purchaseOrder'));
             }
-        }
-    });
-
-    // Auto-fill in purchase order ID by chosen material ID
-    $('#materialSelection').on("change", '#material', function() {
-        var materialID = $('select#material').find("option:selected").val();
-
-        if ("請選擇" != materialID) {
-            $.ajax({
-                url: "/purchaseorder/queryPurchaseOrderIDbyMaterialID/" + materialID,
-                success: function(result) {
-                    var row = JSON.parse(result);
-
-                    $('select#purchaseOrder option').each( function() {
-                        $(this).remove();
-                    });
-                    var selectOption = $(document.createElement('option'));
-                    selectOption.text("請選擇");
-                    selectOption.appendTo($('#purchaseOrder'));
-
-                    for(var i in row)
-                    {
-                        selectOption = $(document.createElement('option'));
-                        for(var j in row[i])
-                        {
-                            selectOption.attr('value', row[i][j]);
-                            selectOption.text(row[i][j]);
-                        }
-                        selectOption.appendTo($('#purchaseOrder'));
-                    }
-                }
-            });
         }
     });
 
@@ -81,42 +45,6 @@ $(document).ready(function() {
     currentDate = dateObject.getFullYear() + "-" + month + "-" + date;
     $("input[name = 'storedDate']").attr('value', currentDate);
 
-    // Auto-fill supplier
-    $('#materialSelection').on("change", '#material', function() {
-        var materialID = $('select#material').find("option:selected").val();
-
-        if ("請選擇" != materialID) {
-            $.ajax({
-                url: "/supplier/querysSupplierNamebyMaterialID/" + materialID,
-                success: function(result) {
-                    var row = JSON.parse(result);
-
-                    $('select#supplier option').each( function() {
-                        $(this).remove();
-                    });
-                    var selectOption = $(document.createElement('option'));
-                    selectOption.text("請選擇");
-                    selectOption.appendTo($('#supplier'));
-
-                    for(var i in row)
-                    {
-                        selectOption = $(document.createElement('option'));
-                        for(var j in row[i])
-                        {
-                            if ("supplierID" == j) {
-                                selectOption.attr('value', row[i][j]);
-                            }
-                            if ("supplierName" == j) {
-                                selectOption.text(row[i][j]);
-                            }
-                        }
-                        selectOption.appendTo($('#supplier'));
-                    }
-                }
-            });
-        }
-    });
-
     $('#addMaterialEntryForm').submit(function(event) {
         var formData = $('#addMaterialEntryForm').serialize();
 
@@ -127,7 +55,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialEntryTable').remove();
                 var row = JSON.parse(result);
-                var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "批號", "進貨日期", "供應商", "每棧板的原料數量", "棧板數", "入料數量", "入料重量"];
+                var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "批號", "進貨日期", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "入料金額"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialEntryTable');
                 table.appendTo($('#addMaterialEntryList'));
@@ -173,14 +101,6 @@ $(document).ready(function() {
         <input type="text" name="materialEntryID" size=20 maxlength=16>
         倉儲流水號
         <input type="text" name="serialNumber" size=20 maxlength=16>
-        原料
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
-        <select id="material" name="material">
-        <option>請選擇</option>
-        </select>
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         採購單編號
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="purchaseOrderSelection">
@@ -195,14 +115,6 @@ $(document).ready(function() {
         <input type="text" name="batchNumber" size=20 maxlength=16>
         進貨日期
         <input type="date" name="storedDate" min="2017-01-01">
-        供應商
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierSelection">
-        <select id="supplier" name="supplier">
-        <option>請選擇</option>
-        </select>
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         每棧板的原料數量
         <input type="number" name="packageNumberOfPallet">
         棧板數

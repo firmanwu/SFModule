@@ -74,6 +74,15 @@ class Purchaseorder extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryPurchaseOrderID()
+    {
+        $this->load->model('purchaseordermodel');
+
+        $queryData = 'SELECT purchaseOrderID FROM purchaseorder';
+        $query = $this->purchaseordermodel->queryPurchaseOrderSpecificColumn($queryData, false);
+        echo json_encode($query->result_array());
+    }
+
     public function queryPurchaseOrderIDbyMaterialID($materialID)
     {
         $this->load->model('purchaseordermodel');

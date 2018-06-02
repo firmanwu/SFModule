@@ -29,12 +29,19 @@ class Purchaseordermodel extends CI_Model {
         return $result;
     }
 
-    public function deletePurchaseOrderData($purchaseOrderData)
+    public function queryPurchaseOrderForUnitWeightUnitPrice($purchaseOrderID)
     {
-        $this->db->where('purchaseOrderID', $purchaseOrderData['purchaseOrderID']);
-        $result = $this->db->delete('purchaseorder');
+        $this->db->select('
+            purchaseorder.material,
+            packaging.unitWeight,
+            supplier.unitPrice');
+        $this->db->from('purchaseorder');
+        $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
+        $this->db->where('purchaseOrderID', $purchaseOrderID);
+        $result = $this->db->get();
 
-        return $result;
+        return $result->row_array();
     }
 
     public function queryPurchaseOrderSpecificColumn($queryData, $isOneRow)
@@ -47,5 +54,13 @@ class Purchaseordermodel extends CI_Model {
         else {
             return $result;
         }
+    }
+
+    public function deletePurchaseOrderData($purchaseOrderData)
+    {
+        $this->db->where('purchaseOrderID', $purchaseOrderData['purchaseOrderID']);
+        $result = $this->db->delete('purchaseorder');
+
+        return $result;
     }
 }
