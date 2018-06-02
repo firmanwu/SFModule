@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="b">領料</a>
             <a href="<?php echo base_url('material/addMaterialView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料管理</a>
             <a href="<?php echo base_url('supplier/addSupplierView');?>" data-role="button" data-icon="flat-new" data-theme="b">供應商管理</a>
+            <a href="<?php echo base_url('packaging/addPackagingView');?>" data-role="button" data-icon="flat-new" data-theme="b">包裝管理</a>
             <a href="<?php echo base_url('purchaseorder/addPurchaseOrderView');?>" data-role="button" data-icon="flat-new" data-theme="b">採購單管理</a>
             <a href="<?php echo base_url('materialusage/addMaterialUsageView');?>" data-role="button" data-icon="flat-new" data-theme="b">使用單位管理</a>
         </div>
