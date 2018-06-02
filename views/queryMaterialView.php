@@ -18,7 +18,8 @@ function queryMaterial() {
         success: function(result) {
             $('#queryMaterialTable').remove();
             var row = JSON.parse(result);
-            var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "價格", "刪除"];
+            //var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "價格", "刪除"];
+            var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "價格"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialTable');
             table.appendTo($('#materialList'));
@@ -46,6 +47,7 @@ function queryMaterial() {
                     td.appendTo(tr);
                 }
 
+/*
                 var deleteButton = $(document.createElement('button'));
                 var onclickFunction = "deleteMaterial(\"/material/deleteMaterial/" + materialID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
@@ -54,6 +56,7 @@ function queryMaterial() {
                 td = $(document.createElement('td'));
                 deleteButton.appendTo(td);
                 td.appendTo(tr);
+*/
             }
         }
     });
