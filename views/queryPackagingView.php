@@ -19,7 +19,7 @@ function queryPackaging() {
             $('#queryPackagingTable').remove();
             var row = JSON.parse(result);
             //var header = ["採購單編號", "原料", "進貨條件", "刪除];
-            var header = ["包裝", "原料"];
+            var header = ["原料", "包裝", "單位重量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryPackagingTable');
             table.appendTo($('#packagingList'));

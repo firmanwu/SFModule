@@ -37,6 +37,7 @@ class Packaging extends CI_Controller {
 
         $packagingData['packaging'] = $this->input->post('packaging');
         $packagingData['material'] = $this->input->post('material');
+        $packagingData['unitWeight'] = $this->input->post('unitWeight');
 
         $result = $this->packagingmodel->insertPackagingData($packagingData);
         if (true == $result) {

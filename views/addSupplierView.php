@@ -36,7 +36,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addSupplierTable').remove();
                 var row = JSON.parse(result);
-                var header = ["供應商", "產品", "單位重量", "單價"];
+                var header = ["供應商", "產品", "單價"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addSupplierTable');
                 table.appendTo($('#supplierList'));
@@ -83,8 +83,6 @@ $(document).ready(function() {
         </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        單位重量
-        <input type="number" name="unitWeight">
         價格
         <input type="number" name="price">
         <input type="submit" value="新增" data-role="button">

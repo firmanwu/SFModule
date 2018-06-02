@@ -36,7 +36,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addPackagingTable').remove();
                 var row = JSON.parse(result);
-                var header = ["包裝", "原料"];
+                var header = ["原料", "包裝", "單位重量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addPackagingTable');
                 table.appendTo($('#packagingList'));
@@ -73,8 +73,6 @@ $(document).ready(function() {
 
 <form id="addPackagingForm">
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        包裝
-        <input type="text" name="packaging" size=20 maxlength=16>
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
@@ -83,6 +81,10 @@ $(document).ready(function() {
         </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        包裝
+        <input type="text" name="packaging" size=20 maxlength=16>
+        單位重量
+        <input type="number" name="unitWeight">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>
