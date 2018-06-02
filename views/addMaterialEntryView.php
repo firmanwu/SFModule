@@ -35,6 +35,38 @@ $(document).ready(function() {
         }
     });
 
+    // Auto-fill in purchase order ID by chosen material ID
+    $('#materialSelection').on("change", '#material', function() {
+        var materialID = $('select#material').find("option:selected").val();
+
+        if ("請選擇" != materialID) {
+            $.ajax({
+                url: "/purchaseorder/queryPurchaseOrderIDbyMaterialID/" + materialID,
+                success: function(result) {
+                    var row = JSON.parse(result);
+
+                    $('select#purchaseOrder option').each( function() {
+                        $(this).remove();
+                    });
+                    var selectOption = $(document.createElement('option'));
+                    selectOption.text("請選擇");
+                    selectOption.appendTo($('#purchaseOrder'));
+
+                    for(var i in row)
+                    {
+                        selectOption = $(document.createElement('option'));
+                        for(var j in row[i])
+                        {
+                            selectOption.attr('value', row[i][j]);
+                            selectOption.text(row[i][j]);
+                        }
+                        selectOption.appendTo($('#purchaseOrder'));
+                    }
+                }
+            });
+        }
+    });
+
     // Auto-fill in current date into storeDate
     var dateObject = new Date();
     var month = (dateObject.getMonth() + 1);
@@ -141,10 +173,6 @@ $(document).ready(function() {
         <input type="text" name="materialEntryID" size=20 maxlength=16>
         倉儲流水號
         <input type="text" name="serialNumber" size=20 maxlength=16>
-        採購單編號
-        <input type="text" name="purchaseOrder" size=20 maxlength=16>
-        儲放區域
-        <input type="text" name="storedArea" size=20 maxlength=16>
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
@@ -153,6 +181,16 @@ $(document).ready(function() {
         </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        採購單編號
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="purchaseOrderSelection">
+        <select id="purchaseOrder" name="purchaseOrder">
+        <option>請選擇</option>
+        </select>
+    </div>
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
+        儲放區域
+        <input type="text" name="storedArea" size=20 maxlength=16>
         批號
         <input type="text" name="batchNumber" size=20 maxlength=16>
         進貨日期
@@ -169,8 +207,6 @@ $(document).ready(function() {
         <input type="number" name="packageNumberOfPallet" size=20 maxlength=16>
         棧板數
         <input type="number" name="palletNumber" size=20 maxlength=16>
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>

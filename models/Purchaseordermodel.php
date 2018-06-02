@@ -24,4 +24,16 @@ class Purchaseordermodel extends CI_Model {
 
         return $result;
     }
+
+    public function queryPurchaseOrderSpecificColumn($queryData, $isOneRow)
+    {
+        $result = $this->db->query($queryData);
+
+        if (true == $isOneRow) {
+            return $result->row_array();
+        }
+        else {
+            return $result;
+        }
+    }
 }
