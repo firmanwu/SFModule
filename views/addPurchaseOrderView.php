@@ -28,8 +28,8 @@ $(document).ready(function() {
     });
 
     // Auto-fill supplier and packaging
-    $('#materialSelection').on("change", '#material', function() {
-        var materialID = $('select#material').find("option:selected").val();
+    $('#materialSelection').on("change", '#materialInPurchaseOrder', function() {
+        var materialID = $('select#materialInPurchaseOrder').find("option:selected").val();
 
         if ("請選擇" != materialID) {
             // For supplier
