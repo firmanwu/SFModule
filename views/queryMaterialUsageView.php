@@ -40,13 +40,12 @@ function queryMaterialUsage() {
                 {
                     if ("materialUsageID" == k) {
                         var materialUsageID = row[j][k];
+                        continue;
                     }
 
-                    if ("materialUsageID" != k) {
-                        var td = $(document.createElement('td'));
-                        td.text(row[j][k]);
-                        td.appendTo(tr);
-                    }
+                    var td = $(document.createElement('td'));
+                    td.text(row[j][k]);
+                    td.appendTo(tr);
                 }
 
 /*

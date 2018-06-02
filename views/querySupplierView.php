@@ -40,13 +40,12 @@ function querySupplier() {
                 {
                     if ("supplierID" == k) {
                         var supplierID = row[j][k];
+                        continue;
                     }
 
-                    if ("supplierID" != k) {
-                        var td = $(document.createElement('td'));
-                        td.text(row[j][k]);
-                        td.appendTo(tr);
-                    }
+                    var td = $(document.createElement('td'));
+                    td.text(row[j][k]);
+                    td.appendTo(tr);
                 }
 
 /*
