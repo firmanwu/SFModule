@@ -21,7 +21,7 @@ $(document).ready(function() {
                         selectOption.text(row[i][j]);
                     }
                 }
-                selectOption.appendTo($('#material'));
+                selectOption.appendTo($('#materialInSupplier'));
             }
         }
     });
@@ -75,10 +75,10 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         供應商
         <input type="text" name="supplierName" size=20 maxlength=16>
-        產品
+        原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
-        <select id="material" name="material">
+        <select id="materialInSupplier" name="material">
         <option>請選擇</option>
         </select>
     </div>

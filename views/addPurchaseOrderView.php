@@ -22,7 +22,7 @@ $(document).ready(function() {
                         selectOption.text(row[i][j]);
                     }
                 }
-                selectOption.appendTo($('#material'));
+                selectOption.appendTo($('#materialInPurchaseOrder'));
             }
         }
     });
@@ -146,7 +146,7 @@ $(document).ready(function() {
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
-        <select id="material" name="material">
+        <select id="materialInPurchaseOrder" name="material">
         <option>請選擇</option>
         </select>
     </div>
