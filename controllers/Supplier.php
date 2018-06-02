@@ -36,8 +36,8 @@ class Supplier extends CI_Controller {
         $this->load->model('suppliermodel');
 
         $supplierData['supplierName'] = $this->input->post('supplierName');
-        $supplierData['product'] = $this->input->post('product');
-        $supplierData['price'] = $this->input->post('price');
+        $supplierData['material'] = $this->input->post('material');
+        $supplierData['unitPrice'] = $this->input->post('unitPrice');
 
         $result = $this->suppliermodel->insertSupplierData($supplierData);
         if (true == $result) {
@@ -76,7 +76,7 @@ class Supplier extends CI_Controller {
     {
         $this->load->model('suppliermodel');
 
-        $queryData = 'SELECT supplierID, supplierName FROM supplier WHERE product = ' . "\"" . $materialID . "\"";
+        $queryData = 'SELECT supplierID, supplierName FROM supplier WHERE material = ' . "\"" . $materialID . "\"";
         $query = $this->suppliermodel->querySupplierSpecificColumn($queryData, false);
         echo json_encode($query->result_array());
     }

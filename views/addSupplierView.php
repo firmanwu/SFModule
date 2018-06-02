@@ -21,7 +21,7 @@ $(document).ready(function() {
                         selectOption.text(row[i][j]);
                     }
                 }
-                selectOption.appendTo($('#product'));
+                selectOption.appendTo($('#material'));
             }
         }
     });
@@ -78,13 +78,13 @@ $(document).ready(function() {
         產品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
-        <select id="product" name="product">
+        <select id="material" name="material">
         <option>請選擇</option>
         </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         價格
-        <input type="number" name="price">
+        <input type="number" name="unitPrice">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>
