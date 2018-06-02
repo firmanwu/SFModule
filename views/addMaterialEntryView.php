@@ -204,9 +204,9 @@ $(document).ready(function() {
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         每棧板的原料數量
-        <input type="number" name="packageNumberOfPallet" size=20 maxlength=16>
+        <input type="number" name="packageNumberOfPallet">
         棧板數
-        <input type="number" name="palletNumber" size=20 maxlength=16>
+        <input type="number" name="palletNumber">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>

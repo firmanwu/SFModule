@@ -14,7 +14,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialTable').remove();
                 var row = JSON.parse(result);
-                var header = ["原料編號", "原料"];
+                var header = ["原料編號", "原料名稱"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialTable');
                 table.appendTo($('#materialList'));
@@ -53,7 +53,7 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         原料編號
         <input type="text" name="materialID" size=20 maxlength=16>
-        原料
+        原料名稱
         <input type="text" name="materialName" size=20 maxlength=16>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
