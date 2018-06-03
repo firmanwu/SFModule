@@ -36,8 +36,7 @@ function revisedMaterialEntry(
 
     var form = $(document.createElement('form'));
     form.attr('id', 'reviseMaterialEntryForm');
-    form.attr('action', '/materialentry/updateMaterialEntryPackageNumber');
-    form.appendTo($('#queryMaterialEntryList'));
+    form.appendTo($('#reviseMaterialEntryArea'));
 
     var div = $(document.createElement('div'));
     div.html("每棧板的原料數量");
@@ -210,3 +209,4 @@ function queryMaterialEntry(isConfirmed) {
 
 <br><br>
 <div id="queryMaterialEntryList"></div>
+<div id="reviseMaterialEntryArea"></div>
