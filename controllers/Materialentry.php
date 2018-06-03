@@ -107,10 +107,10 @@ class Materialentry extends CI_Controller {
             'theme' => 'b'
         );
 
-        $data['title'] = "查詢未確認入料";
+        $data['title'] = "入庫管理";
         $data['confirmedTheme'] = 'c';
         $data['unconfirmedTheme'] = 'd';
-        $data['buttonCaption'] = '未確認入料查詢';
+        $data['buttonCaption'] = '顯示入庫清單';
         $data['queryFunction'] = 'queryMaterialEntry(0)';
 
         $this->load->view('header');
