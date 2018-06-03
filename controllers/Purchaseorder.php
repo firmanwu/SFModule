@@ -85,7 +85,7 @@ class Purchaseorder extends CI_Controller {
     {
         $this->load->model('purchaseordermodel');
 
-        $queryData = 'SELECT purchaseOrderID FROM purchaseorder ORDER BY purchaseOrderID';
+        $queryData = 'SELECT purchaseOrderID FROM purchaseorder WHERE notEnteredPackageNumber > 0 ORDER BY purchaseOrderID';
         $query = $this->purchaseordermodel->queryPurchaseOrderSpecificColumn($queryData, false);
         echo json_encode($query->result_array());
     }
