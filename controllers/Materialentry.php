@@ -95,6 +95,30 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function queryUnconfirmedMaterialEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'b'
+        );
+
+        $data['title'] = "查詢未確認入料";
+        $data['confirmedTheme'] = 'c';
+        $data['unconfirmedTheme'] = 'd';
+        $data['buttonCaption'] = '未確認入料查詢';
+        $data['queryFunction'] = 'queryMaterialEntry(0)';
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryUnconfirmedMaterialEntryView', $data);
+        $this->load->view('footer');
+    }
+
     public function queryMaterialEntry($isConfirmed)
     {
         $this->load->model('materialentrymodel');
