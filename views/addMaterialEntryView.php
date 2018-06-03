@@ -33,42 +33,42 @@ $(document).ready(function() {
 
     // Display purchase order information
     $('#purchaseOrderSelection').on("change", '#purchaseOrder', function() {
-        $.ajax({
-            url: "/purchaseorder/queryPurchaseOrder",
-            success: function(result) {
-                $('#queryPurchaseOrderTable').remove();
-                var row = JSON.parse(result);
-                //var header = ["採購單編號", "原料", "進貨條件", "刪除];
-                var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件"];
-                var table = $(document.createElement('table'));
-                table.attr('id', 'queryPurchaseOrderTable');
-                table.appendTo($('#purchaseOrderList'));
-                var tr = $(document.createElement('tr'));
-                tr.appendTo(table);
-                for(var i in header)
-                {
-                    var th = $(document.createElement('th'));
-                    th.text(header[i]);
-                    th.appendTo(tr);
-                }
+        var purchaseOrderID = $('select#purchaseOrder').find("option:selected").val();
 
-                for(var j in row)
-                {
-                    tr = $(document.createElement('tr'));
+        if ("請選擇" != purchaseOrderID) {
+            $.ajax({
+                url: "/purchaseorder/queryPurchaseOrder/" + purchaseOrderID,
+                success: function(result) {
+                    $('#queryPurchaseOrderTable').remove();
+                    var row = JSON.parse(result);
+                    //var header = ["採購單編號", "原料", "進貨條件", "刪除];
+                    var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "採購數量", "未入料數量"];
+                    var table = $(document.createElement('table'));
+                    table.attr('id', 'queryPurchaseOrderTable');
+                    table.appendTo($('#purchaseOrderList'));
+                    var tr = $(document.createElement('tr'));
                     tr.appendTo(table);
-                    for(var k in row[j])
+                    for(var i in header)
                     {
-                        if ("purchaseOrderID" == k) {
-                            var purchaseOrderID = row[j][k];
-                        }
+                        var th = $(document.createElement('th'));
+                        th.text(header[i]);
+                        th.appendTo(tr);
+                    }
 
-                        var td = $(document.createElement('td'));
-                        td.text(row[j][k]);
-                        td.appendTo(tr);
+                    for(var j in row)
+                    {
+                        tr = $(document.createElement('tr'));
+                        tr.appendTo(table);
+                        for(var k in row[j])
+                        {
+                            var td = $(document.createElement('td'));
+                            td.text(row[j][k]);
+                            td.appendTo(tr);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     });
 
     // Auto-fill in current date into storeDate
