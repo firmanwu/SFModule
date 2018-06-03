@@ -46,6 +46,22 @@ class Materialentrymodel extends CI_Model {
         return $result;
     }
 
+    // To update totalPackageNumber, totalWeight and totalMoney by material ID
+    public function queryMaterialEntryDataToUpdateMaterial($materialEntryID)
+    {
+        $this->db->select('
+            purchaseorder.material,
+            materialentry.storedPackageNumber,
+            materialentry.storedWeight,
+            materialentry.storedMoney');
+        $this->db->from('materialentry');
+        $this->db->join('purchaseorder', 'materialentry.purchaseOrder = purchaseorder.purchaseOrderID');
+        $this->db->where('materialentry.materialEntryID', $materialEntryID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function deleteMaterialEntryData($materialEntryData)
     {
         $this->db->where('materialEntryID', $materialEntryData['materialEntryID']);
@@ -54,10 +70,27 @@ class Materialentrymodel extends CI_Model {
         return $result;
     }
 
-
     public function updateMaterialEntryConfirmationData($materialEntryID)
     {
         $this->db->set('confirmation', 1, FALSE);
+        $this->db->where('materialEntryID', $materialEntryID);
+        $this->db->update('materialentry');
+    }
+
+    public function updateMaterialEntryPackageNumberData(
+        $materialEntryID,
+        $packageNumberOfPallet,
+        $palletNumber,
+        $storedPackageNumber,
+        $storedWeight,
+        $storedMoney
+    )
+    {
+        $this->db->set('packageNumberOfPallet', 'packageNumberOfPallet + ' . $packageNumberOfPallet, FALSE);
+        $this->db->set('palletNumber', 'palletNumber + ' . $palletNumber, FALSE);
+        $this->db->set('storedPackageNumber', 'storedPackageNumber + ' . $storedPackageNumber, FALSE);
+        $this->db->set('storedWeight', 'storedWeight + ' . $storedWeight, FALSE);
+        $this->db->set('storedMoney', 'storedMoney + ' . $storedMoney, FALSE);
         $this->db->where('materialEntryID', $materialEntryID);
         $this->db->update('materialentry');
     }

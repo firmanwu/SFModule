@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <script>
+var materialEntryID;
+var purchaseOrder;
+var packageNumberOfPallet;
+var palletNumber;
+
 function deleteMaterialEntry(deleteURL) {
     $.ajax({
         url: deleteURL,
@@ -20,6 +25,75 @@ function confirmMaterialEntry(confirmURL, isConfirmed) {
         }
     });
 }
+
+function revisedMaterialEntry(
+        materialEntryID, 
+        packageNumberOfPallet,
+        palletNumber,
+        purchaseOrder,
+        isConfirmed) {
+    $('#queryMaterialEntryTable').remove();
+
+    var form = $(document.createElement('form'));
+    form.attr('id', 'reviseMaterialEntryForm');
+    form.attr('action', '/materialentry/updateMaterialEntryPackageNumber');
+    form.appendTo($('#queryMaterialEntryList'));
+
+    var div = $(document.createElement('div'));
+    div.html("每棧板的原料數量");
+    div.appendTo(form);
+
+    var input = $(document.createElement('input'));
+    input.attr({"type":"number", "name":"packageNumberOfPallet", "value":packageNumberOfPallet});
+    input.appendTo(form);
+
+    div = $(document.createElement('div'));
+    div.html("棧板數");
+    div.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"number", "name":"palletNumber", "value":palletNumber});
+    input.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"materialEntryID", "value":materialEntryID, "hidden":true});
+    input.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"number", "name":"originalPackageNumberOfPallet", "value":packageNumberOfPallet, "hidden":true});
+    input.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"number", "name":"originalPalletNumber", "value":palletNumber, "hidden":true});
+    input.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"number", "name":"purchaseOrder", "value":purchaseOrder, "hidden":true});
+    input.appendTo(form);
+
+    div = $(document.createElement('div'));
+    div.html("");
+    div.appendTo(form);
+
+    input = $(document.createElement('input'));
+    input.attr({"type":"submit", "class":"selfButtonB", "value":"修改"});
+    input.appendTo(form);
+}
+
+$('#reviseMaterialEntryForm').submit(function(event) {
+    alert("here");
+    var formData = $('#reviseMaterialEntryForm').serialize();
+
+    alert(formData);
+    $.ajax({
+        url: "/materialentry/updateMaterialEntryPackageNumber",
+        type: "POST",
+        data: formData,
+        success: function(result) {
+            alert(result);
+        }
+    });
+});
 
 function queryMaterialEntry(isConfirmed) {
     $.ajax({
@@ -53,11 +127,19 @@ function queryMaterialEntry(isConfirmed) {
                 for(var k in row[j])
                 {
                     if ("materialEntryID" == k) {
-                        var materialEntryID = row[j][k];
+                        materialEntryID = row[j][k];
                     }
 
-                    if ("QRCode" == k) {
-                        continue;
+                    if ("packageNumberOfPallet" == k) {
+                        packageNumberOfPallet = row[j][k];
+                    }
+
+                    if ("palletNumber" == k) {
+                        palletNumber = row[j][k];
+                    }
+
+                    if ("purchaseOrder" == k) {
+                        purchaseOrder = row[j][k];
                     }
 
                     if ("confirmation" == k) {
@@ -77,7 +159,12 @@ function queryMaterialEntry(isConfirmed) {
 
                             // Create revised button
                             var revisedButton = $(document.createElement('button'));
-                            var onclickFunction = "revisedMaterialEntry(\"/materialentry/revisedMaterialEntry/" + materialEntryID + "\")";
+                            var onclickFunction = "revisedMaterialEntry(\"" 
+                            + materialEntryID + "\", " 
+                            + packageNumberOfPallet + ", " 
+                            + palletNumber + ", \"" 
+                            + purchaseOrder + "\", " 
+                            + isConfirmed + ")";
                             revisedButton.attr({"class":"selfButtonB", "onclick":onclickFunction});
                             revisedButton.text("修改");
 
