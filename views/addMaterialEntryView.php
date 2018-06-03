@@ -159,8 +159,8 @@ $(document).ready(function() {
         <input type="number" name="packageNumberOfPallet">
         棧板數
         <input type="number" name="palletNumber">
-        <input type="submit" value="新增" data-role="button">
-        <input type="reset" value="清除" data-role="button">
+        <input type="submit" value="確定" data-role="button">
+        <input type="reset" value="新增" data-role="button">
     </div>
 </form>
 
