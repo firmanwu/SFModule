@@ -21,14 +21,14 @@ class Purchaseordermodel extends CI_Model {
             packaging.unitWeight,
             purchaseorder.purchaseCondition,
             purchaseorder.purchasedPackageNumber,
-            purchaseorder.notEnteringPackageNumber');
+            purchaseorder.notEnteredPackageNumber');
         $this->db->from('purchaseorder');
         $this->db->join('material', 'purchaseorder.material = material.materialID');
         $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
         $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
         if (false != $purchaseOrderID) {
             $this->db->where('purchaseOrderID', $purchaseOrderID);
-            $this->db->where('notEnteringPackageNumber >', 0);
+            $this->db->where('notEnteredPackageNumber >', 0);
         }
         $result = $this->db->get();
 
@@ -68,5 +68,12 @@ class Purchaseordermodel extends CI_Model {
         $result = $this->db->delete('purchaseorder');
 
         return $result;
+    }
+
+    public function updatePurchaseOrderQuantityData($purchaseOrder, $storedPackageNumber)
+    {
+        $this->db->set('notEnteredPackageNumber', 'notEnteredPackageNumber + ' . $storedPackageNumber, FALSE);
+        $this->db->where('purchaseOrderID', $purchaseOrder);
+        $this->db->update('purchaseorder');
     }
 }

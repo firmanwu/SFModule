@@ -41,7 +41,7 @@ class Purchaseorder extends CI_Controller {
         $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
         $purchaseOrderData['purchasedPackageNumber'] = $this->input->post('purchasedPackageNumber');
-        $purchaseOrderData['notEnteringPackageNumber'] = $this->input->post('purchasedPackageNumber');
+        $purchaseOrderData['notEnteredPackageNumber'] = $this->input->post('purchasedPackageNumber');
 
         $result = $this->purchaseordermodel->insertPurchaseOrderData($purchaseOrderData);
         if (true == $result) {

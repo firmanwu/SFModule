@@ -58,6 +58,12 @@ class Materialentry extends CI_Controller {
             $materialEntryData['storedWeight'],
             $materialEntryData['storedMoney']
         );
+
+        $this->purchaseordermodel->updatePurchaseOrderQuantityData(
+            $materialEntryData['purchaseOrder'],
+            (-$materialEntryData['storedPackageNumber'])
+        );
+
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);
         if (true == $result) {
             echo json_encode($materialEntryData);
