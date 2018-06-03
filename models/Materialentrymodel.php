@@ -53,4 +53,12 @@ class Materialentrymodel extends CI_Model {
 
         return $result;
     }
+
+
+    public function updateMaterialEntryConfirmationData($materialEntryID)
+    {
+        $this->db->set('confirmation', 1, FALSE);
+        $this->db->where('materialEntryID', $materialEntryID);
+        $this->db->update('materialentry');
+    }
 }

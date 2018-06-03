@@ -119,6 +119,13 @@ class Materialentry extends CI_Controller {
         $result = $this->materialentrymodel->deleteMaterialEntryData($materialEntryData);
     }
 
+    public function confirmMaterialEntry($materialEntryID)
+    {
+        $this->load->model('materialentrymodel');
+
+        $this->materialentrymodel->updateMaterialEntryConfirmationData($materialEntryID);
+    }
+
     public function getSerialNumber()
     {
         $this->load->helper('file');

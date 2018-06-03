@@ -12,6 +12,15 @@ function deleteMaterialEntry(deleteURL) {
     });
 }
 
+function confirmMaterialEntry(confirmURL, isConfirmed) {
+    $.ajax({
+        url: confirmURL,
+        success: function(result) {
+            queryMaterialEntry(isConfirmed);
+        }
+    });
+}
+
 function queryMaterialEntry(isConfirmed) {
     $.ajax({
         url: "/materialentry/queryMaterialEntry/" + isConfirmed,
@@ -58,7 +67,7 @@ function queryMaterialEntry(isConfirmed) {
                         else {
                             // Create confirmed button
                             var confirmedButton = $(document.createElement('button'));
-                            var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + "\")";
+                            var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + "\", " + isConfirmed + ")";
                             confirmedButton.attr({"class":"selfButtonG", "onclick":onclickFunction});
                             confirmedButton.text("確認");
 
