@@ -17,27 +17,28 @@ class Materialentrymodel extends CI_Model {
             materialentry.serialNumber,
             materialentry.purchaseOrder,
             materialentry.storedArea,
-            materialentry.QRCode,
-            materialentry.material,
+            purchaseorder.material,
             material.materialName,
             materialentry.batchNumber,
             purchaseorder.purchaseCondition,
             materialentry.storedDate,
             supplier.supplierName,
-            supplier.packaging,
-            supplier.unitWeight,
+            packaging.packaging,
+            packaging.unitWeight,
             materialentry.packageNumberOfPallet,
             materialentry.palletNumber,
             materialentry.storedPackageNumber,
             materialentry.storedWeight,
             materialusage.usingDepartment,
-            supplier.price,
+            supplier.unitPrice,
+            materialentry.storedMoney,
             materialentry.confirmation');
         $this->db->from('materialentry');
-        $this->db->join('material', 'materialentry.material = material.materialID');
         $this->db->join('purchaseorder', 'materialentry.purchaseOrder = purchaseorder.purchaseOrderID');
-        $this->db->join('supplier', 'materialentry.supplier = supplier.supplierID');
-        $this->db->join('materialusage', 'materialentry.material = materialusage.material');
+        $this->db->join('material', 'purchaseOrder.material = material.materialID');
+        $this->db->join('supplier', 'purchaseOrder.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'purchaseOrder.packaging = packaging.packagingID');
+        $this->db->join('materialusage', 'purchaseOrder.material = materialusage.material');
         $this->db->where('materialentry.confirmation', $isConfirmed);
         $result = $this->db->get();
 
