@@ -160,6 +160,7 @@ $(document).ready(function() {
         棧板數
         <input type="number" name="palletNumber">
         <input type="submit" value="新增" data-role="button">
+        <input type="reset" value="清除" data-role="button">
     </div>
 </form>
 
