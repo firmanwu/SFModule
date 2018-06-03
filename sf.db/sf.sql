@@ -87,9 +87,9 @@ CREATE TABLE IF NOT EXISTS `material` (
 /*!40000 ALTER TABLE `material` DISABLE KEYS */;
 REPLACE INTO `material` (`materialID`, `materialName`, `totalPackageNumber`, `totalWeight`, `totalMoney`) VALUES
 	('013A', '精鹽', 0, 0, 0),
-	('113', '尿素膠', 100, 100000, 1600000),
+	('113', '尿素膠', 10, 10000, 160000),
 	('217', '鋁粉', 0, 0, 0),
-	('219A', '二甲苯', 0, 0, 0),
+	('219A', '二甲苯', 30, 5160, 134160),
 	('435', '土狀黑鉛', 0, 0, 0),
 	('439A', '氧化鐵', 0, 0, 0);
 /*!40000 ALTER TABLE `material` ENABLE KEYS */;
@@ -114,10 +114,13 @@ CREATE TABLE IF NOT EXISTS `materialentry` (
   CONSTRAINT `entryPurchaseOrder` FOREIGN KEY (`purchaseOrder`) REFERENCES `purchaseorder` (`purchaseOrderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  sf.materialentry 的資料：~0 rows (大約)
+-- 正在傾印表格  sf.materialentry 的資料：~1 rows (大約)
 /*!40000 ALTER TABLE `materialentry` DISABLE KEYS */;
 REPLACE INTO `materialentry` (`materialEntryID`, `serialNumber`, `purchaseOrder`, `QRCode`, `storedArea`, `batchNumber`, `storedDate`, `packageNumberOfPallet`, `palletNumber`, `storedPackageNumber`, `storedWeight`, `storedMoney`, `confirmation`) VALUES
-	('EN001', '20180602001', 'PO001', NULL, 'A', '20180506001', '2018-06-02', 10, 10, 100, 100000, 1600000, 0);
+	('EN001', '20180603001', 'PO001', NULL, 'A', '20180506001', '2018-06-03', 5, 2, 10, 10000, 160000, 1),
+	('EN002', '20180603002', 'PO002', NULL, 'B', '20180506002', '2018-06-03', 10, 3, 30, 5160, 134160, 1),
+	('EN003', '20180603003', 'PO004', NULL, 'E', '20180506003', '2018-06-03', 5, 4, 20, 16000, 688000, 0),
+	('EN004', '20180603004', 'PO003', NULL, 'C', '20180506004', '2018-06-03', 2, 3, 6, 6000, 84000, 0);
 /*!40000 ALTER TABLE `materialentry` ENABLE KEYS */;
 
 -- 傾印  表格 sf.materialrequisition 結構
@@ -195,6 +198,8 @@ CREATE TABLE IF NOT EXISTS `purchaseorder` (
   `supplier` int(16) unsigned NOT NULL,
   `packaging` int(16) unsigned NOT NULL,
   `purchaseCondition` varchar(256) NOT NULL,
+  `purchasedPackageNumber` int(16) NOT NULL DEFAULT 0,
+  `notEnteredPackageNumber` int(16) NOT NULL DEFAULT 0,
   PRIMARY KEY (`purchaseOrderID`),
   KEY `purchaseOrderMaterialID` (`material`),
   KEY `purchaseOrderSupplierID` (`supplier`),
@@ -204,10 +209,13 @@ CREATE TABLE IF NOT EXISTS `purchaseorder` (
   CONSTRAINT `purchaseOrderSupplierID` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  sf.purchaseorder 的資料：~1 rows (大約)
+-- 正在傾印表格  sf.purchaseorder 的資料：~3 rows (大約)
 /*!40000 ALTER TABLE `purchaseorder` DISABLE KEYS */;
-REPLACE INTO `purchaseorder` (`purchaseOrderID`, `material`, `supplier`, `packaging`, `purchaseCondition`) VALUES
-	('PO001', '113', 11, 6, '一般');
+REPLACE INTO `purchaseorder` (`purchaseOrderID`, `material`, `supplier`, `packaging`, `purchaseCondition`, `purchasedPackageNumber`, `notEnteredPackageNumber`) VALUES
+	('PO001', '113', 11, 6, '一般', 30, 20),
+	('PO002', '219A', 5, 3, '一般', 50, 20),
+	('PO003', '435', 7, 4, '特採', 10, 4),
+	('PO004', '217', 3, 2, '回收料', 20, 0);
 /*!40000 ALTER TABLE `purchaseorder` ENABLE KEYS */;
 
 -- 傾印  表格 sf.supplier 結構
