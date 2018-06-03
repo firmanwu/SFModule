@@ -158,7 +158,7 @@ class Materialentry extends CI_Controller {
         $dateString = '%Y%m%d';
         $time = time();
         $currentDate = mdate($dateString, $time);
-        $fileName = 'SN';
+        $fileName = 'EntrySN';
         if (TRUE == file_exists($fileName)) {
             $currentSerialNumber = read_file($fileName);
             if (FALSE == strstr($currentSerialNumber, $currentDate)) {
