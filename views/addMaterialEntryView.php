@@ -31,6 +31,46 @@ $(document).ready(function() {
         }
     });
 
+    // Display purchase order information
+    $('#purchaseOrderSelection').on("change", '#purchaseOrder', function() {
+        $.ajax({
+            url: "/purchaseorder/queryPurchaseOrder",
+            success: function(result) {
+                $('#queryPurchaseOrderTable').remove();
+                var row = JSON.parse(result);
+                //var header = ["採購單編號", "原料", "進貨條件", "刪除];
+                var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件"];
+                var table = $(document.createElement('table'));
+                table.attr('id', 'queryPurchaseOrderTable');
+                table.appendTo($('#purchaseOrderList'));
+                var tr = $(document.createElement('tr'));
+                tr.appendTo(table);
+                for(var i in header)
+                {
+                    var th = $(document.createElement('th'));
+                    th.text(header[i]);
+                    th.appendTo(tr);
+                }
+
+                for(var j in row)
+                {
+                    tr = $(document.createElement('tr'));
+                    tr.appendTo(table);
+                    for(var k in row[j])
+                    {
+                        if ("purchaseOrderID" == k) {
+                            var purchaseOrderID = row[j][k];
+                        }
+
+                        var td = $(document.createElement('td'));
+                        td.text(row[j][k]);
+                        td.appendTo(tr);
+                    }
+                }
+            }
+        });
+    });
+
     // Auto-fill in current date into storeDate
     var dateObject = new Date();
     var month = (dateObject.getMonth() + 1);
@@ -108,6 +148,7 @@ $(document).ready(function() {
         <option>請選擇</option>
         </select>
     </div>
+    <div id="purchaseOrderList"></div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         儲放區域
         <input type="text" name="storedArea" size=20 maxlength=16>
