@@ -35,10 +35,10 @@ class Materialentrymodel extends CI_Model {
             materialentry.confirmation');
         $this->db->from('materialentry');
         $this->db->join('purchaseorder', 'materialentry.purchaseOrder = purchaseorder.purchaseOrderID');
-        $this->db->join('material', 'purchaseOrder.material = material.materialID');
-        $this->db->join('supplier', 'purchaseOrder.supplier = supplier.supplierID');
-        $this->db->join('packaging', 'purchaseOrder.packaging = packaging.packagingID');
-        $this->db->join('materialusage', 'purchaseOrder.material = materialusage.material');
+        $this->db->join('material', 'purchaseorder.material = material.materialID');
+        $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
+        $this->db->join('materialusage', 'purchaseorder.material = materialusage.material');
         $this->db->where('materialentry.confirmation', $isConfirmed);
         $this->db->order_by('materialentry.materialEntryID', 'ASC');
         $result = $this->db->get();
