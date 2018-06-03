@@ -10,7 +10,7 @@ class Purchaseordermodel extends CI_Model {
         return $result;
     }
 
-    public function queryPurchaseOrderData()
+    public function queryPurchaseOrderData($purchaseOrderID)
     {
         $this->db->select('
             purchaseorder.purchaseOrderID,
@@ -19,11 +19,16 @@ class Purchaseordermodel extends CI_Model {
             supplier.unitPrice,
             packaging.packaging,
             packaging.unitWeight,
-            purchaseorder.purchaseCondition');
+            purchaseorder.purchaseCondition,
+            purchaseorder.purchasedPackageNumber,
+            purchaseorder.notEnteringPackageNumber');
         $this->db->from('purchaseorder');
         $this->db->join('material', 'purchaseorder.material = material.materialID');
         $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
         $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
+        if (false != $purchaseOrderID) {
+            $this->db->where('purchaseOrderID', $purchaseOrderID);
+        }
         $result = $this->db->get();
 
         return $result;

@@ -40,6 +40,8 @@ class Purchaseorder extends CI_Controller {
         $purchaseOrderData['supplier'] = $this->input->post('supplier');
         $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
+        $purchaseOrderData['purchasedPackageNumber'] = $this->input->post('purchasedPackageNumber');
+        $purchaseOrderData['notEnteringPackageNumber'] = $this->input->post('purchasedPackageNumber');
 
         $result = $this->purchaseordermodel->insertPurchaseOrderData($purchaseOrderData);
         if (true == $result) {
@@ -66,11 +68,16 @@ class Purchaseorder extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function queryPurchaseOrder()
+    public function queryPurchaseOrder($purchaseOrderID)
     {
         $this->load->model('purchaseordermodel');
 
-        $query = $this->purchaseordermodel->queryPurchaseOrderData();
+        if ("false" != $purchaseOrderID) {
+            $query = $this->purchaseordermodel->queryPurchaseOrderData($purchaseOrderID);
+        }
+        else {
+            $query = $this->purchaseordermodel->queryPurchaseOrderData(false);
+        }
         echo json_encode($query->result_array());
     }
 
@@ -78,7 +85,7 @@ class Purchaseorder extends CI_Controller {
     {
         $this->load->model('purchaseordermodel');
 
-        $queryData = 'SELECT purchaseOrderID FROM purchaseorder';
+        $queryData = 'SELECT purchaseOrderID FROM purchaseorder ORDER BY purchaseOrderID';
         $query = $this->purchaseordermodel->queryPurchaseOrderSpecificColumn($queryData, false);
         echo json_encode($query->result_array());
     }
