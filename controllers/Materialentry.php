@@ -62,7 +62,7 @@ class Materialentry extends CI_Controller {
         }
     }
 
-    public function queryMaterialEntryView($isConfirmed)
+    public function queryMaterialEntryView()
     {
         /*
         if (false == isset($_SESSION['userID'])) {
@@ -71,23 +71,9 @@ class Materialentry extends CI_Controller {
         }*/
 
         $data = array(
-            'theme' => 'b'
+            'theme' => 'b',
+            'title' => "查詢已確認入料"
         );
-
-        if (true == $isConfirmed) {
-            $data['title'] = "查詢已確認入料";
-            $data['confirmedTheme'] = 'd';
-            $data['unconfirmedTheme'] = 'c';
-            $data['buttonCaption'] = '已確認入料查詢';
-            $data['queryFunction'] = 'queryMaterialEntry(1)';
-        }
-        else {
-            $data['title'] = "查詢未確認入料";
-            $data['confirmedTheme'] = 'c';
-            $data['unconfirmedTheme'] = 'd';
-            $data['buttonCaption'] = '未確認入料查詢';
-            $data['queryFunction'] = 'queryMaterialEntry(0)';
-        }
 
         $this->load->view('header');
         $this->load->view('panel', $data);
@@ -104,14 +90,9 @@ class Materialentry extends CI_Controller {
         }*/
 
         $data = array(
-            'theme' => 'b'
+            'theme' => 'b',
+            'title' => "入庫管理"
         );
-
-        $data['title'] = "入庫管理";
-        $data['confirmedTheme'] = 'c';
-        $data['unconfirmedTheme'] = 'd';
-        $data['buttonCaption'] = '顯示入庫清單';
-        $data['queryFunction'] = 'queryMaterialEntry(0)';
 
         $this->load->view('header');
         $this->load->view('panel', $data);

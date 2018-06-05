@@ -12,16 +12,16 @@ function deleteMaterialEntry(deleteURL) {
     $.ajax({
         url: deleteURL,
         success: function(result) {
-            queryMaterialEntry();
+            queryUnconfirmedMaterialEntry();
         }
     });
 }
 
-function confirmMaterialEntry(confirmURL, isConfirmed) {
+function confirmMaterialEntry(confirmURL) {
     $.ajax({
         url: confirmURL,
         success: function(result) {
-            queryMaterialEntry(isConfirmed);
+            queryUnconfirmedMaterialEntry(0);
         }
     });
 }
@@ -30,8 +30,7 @@ function revisedMaterialEntry(
         materialEntryID, 
         packageNumberOfPallet,
         palletNumber,
-        purchaseOrder,
-        isConfirmed) {
+        purchaseOrder) {
     $('#queryMaterialEntryTable').remove();
     $('#reviseMaterialEntryForm').remove();
 
@@ -95,18 +94,14 @@ $('#reviseMaterialEntryForm').submit(function(event) {
     });
 });
 
-function queryMaterialEntry(isConfirmed) {
+function queryUnconfirmedMaterialEntry() {
     $.ajax({
-        url: "/materialentry/queryMaterialEntry/" + isConfirmed,
+        url: "/materialentry/queryMaterialEntry/0",
         success: function(result) {
             $('#queryMaterialEntryTable').remove();
             $('#reviseMaterialEntryForm').remove();
             var row = JSON.parse(result);
-            var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "批號", "進貨條件", "進貨日期", "供應商", "包裝", "單位重量", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "使用單位", "單價", "入料金額"];
-            if (0 == isConfirmed) {
-                header.push("確認");
-                header.push("修改");
-            }
+            var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "批號", "進貨條件", "進貨日期", "供應商", "包裝", "單位重量", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "使用單位", "單價", "入料金額", "確認", "修改"];
             //header.push("刪除");
 
             var table = $(document.createElement('table'));
@@ -144,35 +139,29 @@ function queryMaterialEntry(isConfirmed) {
                     }
 
                     if ("confirmation" == k) {
-                        if (1 == isConfirmed) {
-                            continue;
-                        }
-                        else {
-                            // Create confirmed button
-                            var confirmedButton = $(document.createElement('button'));
-                            var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + "\", " + isConfirmed + ")";
-                            confirmedButton.attr({"class":"selfButtonG", "onclick":onclickFunction});
-                            confirmedButton.text("確認");
+                        // Create confirmed button
+                        var confirmedButton = $(document.createElement('button'));
+                        var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + ")";
+                        confirmedButton.attr({"class":"selfButtonG", "onclick":onclickFunction});
+                        confirmedButton.text("確認");
 
-                            td = $(document.createElement('td'));
-                            confirmedButton.appendTo(td);
-                            td.appendTo(tr);
+                        td = $(document.createElement('td'));
+                        confirmedButton.appendTo(td);
+                        td.appendTo(tr);
 
-                            // Create revised button
-                            var revisedButton = $(document.createElement('button'));
-                            var onclickFunction = "revisedMaterialEntry(\"" 
-                            + materialEntryID + "\", " 
-                            + packageNumberOfPallet + ", " 
-                            + palletNumber + ", \"" 
-                            + purchaseOrder + "\", " 
-                            + isConfirmed + ")";
-                            revisedButton.attr({"class":"selfButtonB", "onclick":onclickFunction});
-                            revisedButton.text("修改");
+                        // Create revised button
+                        var revisedButton = $(document.createElement('button'));
+                        var onclickFunction = "revisedMaterialEntry(\"" 
+                        + materialEntryID + "\", " 
+                        + packageNumberOfPallet + ", " 
+                        + palletNumber + ", \"" 
+                        + purchaseOrder + ")";
+                        revisedButton.attr({"class":"selfButtonB", "onclick":onclickFunction});
+                        revisedButton.text("修改");
 
-                            td = $(document.createElement('td'));
-                            revisedButton.appendTo(td);
-                            td.appendTo(tr);
-                        }
+                        td = $(document.createElement('td'));
+                        revisedButton.appendTo(td);
+                        td.appendTo(tr);
                     }
                     else {
                         var td = $(document.createElement('td'));
@@ -199,12 +188,12 @@ function queryMaterialEntry(isConfirmed) {
 
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
-    <div class="ui-block-a"><a href="<?php echo base_url('materialentry/queryMaterialEntryView/0');?>" data-role="button" data-icon="flat-bubble" data-theme="<?php echo $unconfirmedTheme; ?>">入庫</a></div>
+    <div class="ui-block-a"><a href="<?php echo base_url('materialentry/queryUnconfirmedMaterialEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">入庫</a></div>
 </fieldset>
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="d" onclick="<?php echo $queryFunction; ?>"><?php echo $buttonCaption; ?></button>
+<button data-icon="flat-man" data-theme="d" onclick="queryUnconfirmedMaterialEntry()">顯示入庫清單</button>
 </div>
 
 <br><br>
