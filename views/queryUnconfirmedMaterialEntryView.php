@@ -39,10 +39,18 @@ function revisedMaterialEntry(
     form.appendTo($('#reviseMaterialEntryArea'));
 
     var div = $(document.createElement('div'));
-    div.html("每棧板的原料數量");
+    div.html("採購單編號");
     div.appendTo(form);
 
     var input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"purchaseOrder", "value":purchaseOrder, "readonly":true});
+    input.appendTo(form);
+
+    div = $(document.createElement('div'));
+    div.html("每棧板的原料數量");
+    div.appendTo(form);
+
+    input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"packageNumberOfPallet", "value":packageNumberOfPallet});
     input.appendTo(form);
 
@@ -64,10 +72,6 @@ function revisedMaterialEntry(
 
     input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"originalPalletNumber", "value":palletNumber, "hidden":true});
-    input.appendTo(form);
-
-    input = $(document.createElement('input'));
-    input.attr({"type":"number", "name":"purchaseOrder", "value":purchaseOrder, "hidden":true});
     input.appendTo(form);
 
     div = $(document.createElement('div'));
@@ -141,7 +145,7 @@ function queryUnconfirmedMaterialEntry() {
                     if ("confirmation" == k) {
                         // Create confirmed button
                         var confirmedButton = $(document.createElement('button'));
-                        var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + ")";
+                        var onclickFunction = "confirmMaterialEntry(\"/materialentry/confirmMaterialEntry/" + materialEntryID + "\")";
                         confirmedButton.attr({"class":"selfButtonG", "onclick":onclickFunction});
                         confirmedButton.text("確認");
 
@@ -155,7 +159,7 @@ function queryUnconfirmedMaterialEntry() {
                         + materialEntryID + "\", " 
                         + packageNumberOfPallet + ", " 
                         + palletNumber + ", \"" 
-                        + purchaseOrder + ")";
+                        + purchaseOrder + "\")";
                         revisedButton.attr({"class":"selfButtonB", "onclick":onclickFunction});
                         revisedButton.text("修改");
 
