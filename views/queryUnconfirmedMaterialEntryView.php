@@ -26,6 +26,27 @@ function confirmMaterialEntry(confirmURL) {
     });
 }
 
+function updateMaterialEntryPackage() {
+    var materialEntryID = $("input[name='materialEntryID']").val();
+    var purchaseOrder = $("input[name='purchaseOrder']").val();
+    var packageNumberOfPallet = $("input[name='packageNumberOfPallet']").val();
+    var palletNumber = $("input[name='palletNumber']").val();
+    var originalPackageNumberOfPallet = $("input[name='originalPackageNumberOfPallet']").val();
+    var originalPalletNumber = $("input[name='originalPalletNumber']").val();
+
+    $.ajax({
+        url: "/materialentry/updateMaterialEntryPackageNumber/" +materialEntryID + "/" + 
+        purchaseOrder + "/" + 
+        packageNumberOfPallet + "/" + 
+        palletNumber + "/" + 
+        originalPackageNumberOfPallet + "/" + 
+        originalPalletNumber + "\"",
+        success: function(result) {
+            queryUnconfirmedMaterialEntry(materialEntryID);
+        }
+    });
+}
+
 function revisedMaterialEntry(
         materialEntryID, 
         packageNumberOfPallet,
@@ -34,73 +55,59 @@ function revisedMaterialEntry(
     $('#queryMaterialEntryTable').remove();
     $('#reviseMaterialEntryForm').remove();
 
-    var form = $(document.createElement('form'));
-    form.attr('id', 'reviseMaterialEntryForm');
-    form.appendTo($('#reviseMaterialEntryArea'));
+    var divForm = $(document.createElement('div'));
+    divForm.attr('id', 'reviseMaterialEntryForm');
+    divForm.appendTo($('#reviseMaterialEntryArea'));
 
     var div = $(document.createElement('div'));
     div.html("採購單編號");
-    div.appendTo(form);
+    div.appendTo(divForm);
 
     var input = $(document.createElement('input'));
     input.attr({"type":"text", "name":"purchaseOrder", "value":purchaseOrder, "readonly":true});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     div = $(document.createElement('div'));
     div.html("每棧板的原料數量");
-    div.appendTo(form);
+    div.appendTo(divForm);
 
     input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"packageNumberOfPallet", "value":packageNumberOfPallet});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     div = $(document.createElement('div'));
     div.html("棧板數");
-    div.appendTo(form);
+    div.appendTo(divForm);
 
     input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"palletNumber", "value":palletNumber});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     input = $(document.createElement('input'));
     input.attr({"type":"text", "name":"materialEntryID", "value":materialEntryID, "hidden":true});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"originalPackageNumberOfPallet", "value":packageNumberOfPallet, "hidden":true});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     input = $(document.createElement('input'));
     input.attr({"type":"number", "name":"originalPalletNumber", "value":palletNumber, "hidden":true});
-    input.appendTo(form);
+    input.appendTo(divForm);
 
     div = $(document.createElement('div'));
     div.html("");
-    div.appendTo(form);
+    div.appendTo(divForm);
 
-    input = $(document.createElement('input'));
-    input.attr({"type":"submit", "class":"selfButtonB", "value":"修改"});
-    input.appendTo(form);
+    var button = $(document.createElement('button'));
+    button.attr({'id':'testButton', "class":"selfButtonB",'onclick':'updateMaterialEntryPackage()'});
+    button.text("修改!!");
+    button.appendTo(divForm);
 }
 
-$('#reviseMaterialEntryForm').submit(function(event) {
-    alert("here");
-    var formData = $('#reviseMaterialEntryForm').serialize();
-
-    alert(formData);
+function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
     $.ajax({
-        url: "/materialentry/updateMaterialEntryPackageNumber",
-        type: "POST",
-        data: formData,
-        success: function(result) {
-            alert(result);
-        }
-    });
-});
-
-function queryUnconfirmedMaterialEntry() {
-    $.ajax({
-        url: "/materialentry/queryMaterialEntry/0",
+        url: "/materialentry/queryMaterialEntry/0/" + isMaterialEntryID,
         success: function(result) {
             $('#queryMaterialEntryTable').remove();
             $('#reviseMaterialEntryForm').remove();
@@ -197,7 +204,7 @@ function queryUnconfirmedMaterialEntry() {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="d" onclick="queryUnconfirmedMaterialEntry()">顯示入庫清單</button>
+<button data-icon="flat-man" data-theme="d" onclick="queryUnconfirmedMaterialEntry(0)">顯示入庫清單</button>
 </div>
 
 <br><br>

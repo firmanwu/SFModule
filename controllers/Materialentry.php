@@ -100,11 +100,11 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function queryMaterialEntry($isConfirmed)
+    public function queryMaterialEntry($isConfirmed, $materialEntryID)
     {
         $this->load->model('materialentrymodel');
 
-        $query = $this->materialentrymodel->queryMaterialEntryData($isConfirmed);
+        $query = $this->materialentrymodel->queryMaterialEntryData($isConfirmed, $materialEntryID);
         echo json_encode($query->result_array());
     }
 
@@ -133,66 +133,65 @@ class Materialentry extends CI_Controller {
         $this->materialentrymodel->updateMaterialEntryConfirmationData($materialEntryID);
     }
 
-    public function updateMaterialEntryPackageNumber()
+    public function updateMaterialEntryPackageNumber(
+        $materialEntryID,
+        $purchaseOrder,
+        $packageNumberOfPalletString,
+        $palletNumberString,
+        $originalPackageNumberOfPalletString,
+        $originalPalletNumberString
+    )
     {
         $this->load->model('materialentrymodel');
         $this->load->model('purchaseordermodel');
 
-        $materialEntryID = $this->input->post('materialEntryID');
-        echo $materialEntryID;
-        return;
-        $purchaseOrder = $this->input->post('purchaseOrder');
+        $packageNumberOfPallet = intval($packageNumberOfPalletString);
+        $palletNumber = intval($palletNumberString);
+        $originalPackageNumberOfPallet = intval($originalPackageNumberOfPalletString);
+        $originalPalletNumber = intval($originalPalletNumberString);
+
         $purchaseOrderData = $this->purchaseordermodel->queryPurchaseOrderForUnitWeightUnitPrice($purchaseOrder);
 
-        $materialEntryData['originalPackageNumberOfPallet'] = $this->input->post('originalPackageNumberOfPallet');
-        $materialEntryData['originalPalletNumber'] = $this->input->post('originalPalletNumber');
-        $materialEntryData['originalStoredPackageNumber'] = $materialEntryData['originalPackageNumberOfPallet'] * $materialEntryData['originalPalletNumber'];
+        $originalStoredPackageNumber = $originalPackageNumberOfPallet * $originalPalletNumber;
+        $originalStoredWeight = $originalStoredPackageNumber * $purchaseOrderData['unitWeight'];
+        $originalStoredMoney = $originalStoredWeight * $purchaseOrderData['unitPrice'];
 
-        $materialEntryData['originalStoredWeight'] = $materialEntryData['originalStoredPackageNumber'] * $purchaseOrderData['unitWeight'];
-        $materialEntryData['originalStoredMoney'] = $materialEntryData['originalStoredWeight'] * $purchaseOrderData['unitPrice'];
-
+        // Restore the notEnteredPackageNumber because the information will be updated later
         $this->purchaseordermodel->updatePurchaseOrderQuantityData(
             $purchaseOrder,
-            $materialEntryData['originalStoredPackageNumber']
+            $originalStoredPackageNumber
         );
 
+        // Restore the related stored information because the information will be updated later
         $result = $this->materialentrymodel->updateMaterialEntryPackageNumberData(
             $materialEntryID,
-            (-$materialEntryData['originalPackageNumberOfPallet']),
-            (-$materialEntryData['originalPalletNumber']),
-            (-$materialEntryData['originalStoredPackageNumber']),
-            (-$materialEntryData['originalStoredWeight']),
-            (-$materialEntryData['originalStoredMoney'])
+            (-$originalPackageNumberOfPallet),
+            (-$originalPalletNumber),
+            (-$originalStoredPackageNumber),
+            (-$originalStoredWeight),
+            (-$originalStoredMoney)
         );
-        if (true == $result) {
-            echo json_encode($materialEntryData);
-        }
-        return;
-        //$this->restoreMaterialEntryPackageNumber($materialEntryID, $purchaseOrder, $purchaseOrderData);
 
-        $materialEntryData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
-        $materialEntryData['palletNumber'] = $this->input->post('palletNumber');
-        $materialEntryData['storedPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
+        $storedPackageNumber = $packageNumberOfPallet * $palletNumber;
+        $storedWeight = $storedPackageNumber * $purchaseOrderData['unitWeight'];
+        $storedMoney = $storedWeight * $purchaseOrderData['unitPrice'];
 
-        $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $purchaseOrderData['unitWeight'];
-        $materialEntryData['storedMoney'] = $materialEntryData['storedWeight'] * $purchaseOrderData['unitPrice'];
-
+        // Re-calculate the stored package number into notEnteredPackageNumber of purchase order
         $this->purchaseordermodel->updatePurchaseOrderQuantityData(
             $purchaseOrder,
-            (-$materialEntryData['storedPackageNumber'])
+            (-$storedPackageNumber)
         );
 
+        // Re-fill the related stored information
         $result = $this->materialentrymodel->updateMaterialEntryPackageNumberData(
             $materialEntryID,
-            $materialEntryData['packageNumberOfPallet'],
-            $materialEntryData['palletNumber'],
-            $materialEntryData['storedPackageNumber'],
-            $materialEntryData['storedWeight'],
-            $materialEntryData['storedMoney']
+            $packageNumberOfPallet,
+            $palletNumber,
+            $storedPackageNumber,
+            $storedWeight,
+            $storedMoney
         );
-        if (true == $result) {
-            echo json_encode($materialEntryData);
-        }
+        echo "success";
     }
 
     public function getSerialNumber()

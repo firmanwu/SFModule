@@ -10,7 +10,7 @@ class Materialentrymodel extends CI_Model {
         return $result;
     }
 
-    public function queryMaterialEntryData($isConfirmed)
+    public function queryMaterialEntryData($isConfirmed, $materialEntryID)
     {
         $this->db->select('
             materialentry.materialEntryID,
@@ -39,6 +39,9 @@ class Materialentrymodel extends CI_Model {
         $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
         $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
         $this->db->join('materialusage', 'purchaseorder.material = materialusage.material');
+        if ("0" != $materialEntryID) {
+            $this->db->where('materialentry.materialEntryID', $materialEntryID);
+        }
         $this->db->where('materialentry.confirmation', $isConfirmed);
         $this->db->order_by('materialentry.materialEntryID', 'ASC');
         $result = $this->db->get();

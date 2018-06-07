@@ -14,7 +14,7 @@ function deleteMaterialEntry(deleteURL) {
 
 function queryConfirmedMaterialEntry() {
     $.ajax({
-        url: "/materialentry/queryMaterialEntry/1",
+        url: "/materialentry/queryMaterialEntry/1/0",
         success: function(result) {
             $('#queryMaterialEntryTable').remove();
             var row = JSON.parse(result);
