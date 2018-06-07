@@ -41,7 +41,6 @@ class Materialentry extends CI_Controller {
         $materialEntryData['purchaseOrder'] = $this->input->post('purchaseOrder');
         $materialEntryData['storedArea'] = $this->input->post('storedArea');
         //$materialEntryData['QRCode'] = $this->input->post('QRCode');
-        $materialEntryData['batchNumber'] = $this->input->post('batchNumber');
         $materialEntryData['storedDate'] = $this->input->post('storedDate');
         $materialEntryData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
         $materialEntryData['palletNumber'] = $this->input->post('palletNumber');

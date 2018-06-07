@@ -19,7 +19,6 @@ class Materialentrymodel extends CI_Model {
             materialentry.storedArea,
             purchaseorder.material,
             material.materialName,
-            materialentry.batchNumber,
             purchaseorder.purchaseCondition,
             materialentry.storedDate,
             supplier.supplierName,
