@@ -50,6 +50,16 @@ class Materialmodel extends CI_Model {
         }
     }
 
+    public function queryMaterialNameByMaterialID($materialID)
+    {
+        $this->db->select('materialName');
+        $this->db->from('material');
+        $this->db->where('materialID', $materialID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function updateMaterialQuantityData($material, $packageNumber, $weight, $money)
     {
         $this->db->set('totalPackageNumber', 'totalPackageNumber + ' . $packageNumber, FALSE);

@@ -34,9 +34,12 @@ class Purchaseorder extends CI_Controller {
     public function addPurchaseOrder()
     {
         $this->load->model('purchaseordermodel');
+        $this->load->model('materialmodel');
 
         $purchaseOrderData['purchaseOrderID'] = $this->input->post('purchaseOrderID');
         $purchaseOrderData['material'] = $this->input->post('material');
+        $materialData = $this->materialmodel->queryMaterialNameByMaterialID($purchaseOrderData['material']);
+        $purchaseOrderData['materialName'] = $materialData['materialName'];
         $purchaseOrderData['supplier'] = $this->input->post('supplier');
         $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
