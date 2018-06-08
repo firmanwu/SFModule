@@ -135,6 +135,7 @@ class Materialentry extends CI_Controller {
     public function updateMaterialEntryPackageNumber(
         $materialEntryID,
         $purchaseOrder,
+        $storedArea,
         $packageNumberOfPalletString,
         $palletNumberString,
         $originalPackageNumberOfPalletString,
@@ -164,6 +165,7 @@ class Materialentry extends CI_Controller {
         // Restore the related stored information because the information will be updated later
         $result = $this->materialentrymodel->updateMaterialEntryPackageNumberData(
             $materialEntryID,
+            null,
             (-$originalPackageNumberOfPallet),
             (-$originalPalletNumber),
             (-$originalStoredPackageNumber),
@@ -184,6 +186,7 @@ class Materialentry extends CI_Controller {
         // Re-fill the related stored information
         $result = $this->materialentrymodel->updateMaterialEntryPackageNumberData(
             $materialEntryID,
+            $storedArea,
             $packageNumberOfPallet,
             $palletNumber,
             $storedPackageNumber,

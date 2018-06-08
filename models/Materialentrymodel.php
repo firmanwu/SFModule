@@ -81,6 +81,7 @@ class Materialentrymodel extends CI_Model {
 
     public function updateMaterialEntryPackageNumberData(
         $materialEntryID,
+        $storedArea,
         $packageNumberOfPallet,
         $palletNumber,
         $storedPackageNumber,
@@ -88,6 +89,9 @@ class Materialentrymodel extends CI_Model {
         $storedMoney
     )
     {
+        if (null != $storedArea) {
+            $this->db->set('storedArea', $storedArea);
+        }
         $this->db->set('packageNumberOfPallet', 'packageNumberOfPallet + ' . $packageNumberOfPallet, FALSE);
         $this->db->set('palletNumber', 'palletNumber + ' . $palletNumber, FALSE);
         $this->db->set('storedPackageNumber', 'storedPackageNumber + ' . $storedPackageNumber, FALSE);

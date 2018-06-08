@@ -29,6 +29,7 @@ function confirmMaterialEntry(confirmURL) {
 function updateMaterialEntryPackage() {
     var materialEntryID = $("input[name='materialEntryID']").val();
     var purchaseOrder = $("input[name='purchaseOrder']").val();
+    var storedArea = $("input[name='storedArea']").val();
     var packageNumberOfPallet = $("input[name='packageNumberOfPallet']").val();
     var palletNumber = $("input[name='palletNumber']").val();
     var originalPackageNumberOfPallet = $("input[name='originalPackageNumberOfPallet']").val();
@@ -37,10 +38,11 @@ function updateMaterialEntryPackage() {
     $.ajax({
         url: "/materialentry/updateMaterialEntryPackageNumber/" +materialEntryID + "/" + 
         purchaseOrder + "/" + 
+        storedArea + "/" + 
         packageNumberOfPallet + "/" + 
         palletNumber + "/" + 
         originalPackageNumberOfPallet + "/" + 
-        originalPalletNumber + "\"",
+        originalPalletNumber,
         success: function(result) {
             queryUnconfirmedMaterialEntry(materialEntryID);
         }
@@ -48,7 +50,8 @@ function updateMaterialEntryPackage() {
 }
 
 function revisedMaterialEntry(
-        materialEntryID, 
+        materialEntryID,
+        storedArea,
         packageNumberOfPallet,
         palletNumber,
         purchaseOrder) {
@@ -65,6 +68,14 @@ function revisedMaterialEntry(
 
     var input = $(document.createElement('input'));
     input.attr({"type":"text", "name":"purchaseOrder", "value":purchaseOrder, "readonly":true});
+    input.appendTo(divForm);
+
+    var div = $(document.createElement('div'));
+    div.html("儲放區域");
+    div.appendTo(divForm);
+
+    var input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"storedArea", "value":storedArea});
     input.appendTo(divForm);
 
     div = $(document.createElement('div'));
@@ -137,6 +148,10 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
                         materialEntryID = row[j][k];
                     }
 
+                    if ("storedArea" == k) {
+                        storedArea = row[j][k];
+                    }
+
                     if ("packageNumberOfPallet" == k) {
                         packageNumberOfPallet = row[j][k];
                     }
@@ -163,7 +178,8 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
                         // Create revised button
                         var revisedButton = $(document.createElement('button'));
                         var onclickFunction = "revisedMaterialEntry(\"" 
-                        + materialEntryID + "\", " 
+                        + materialEntryID + "\", \"" 
+                        + storedArea + "\", " 
                         + packageNumberOfPallet + ", " 
                         + palletNumber + ", \"" 
                         + purchaseOrder + "\")";
