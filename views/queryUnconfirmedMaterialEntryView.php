@@ -111,8 +111,8 @@ function revisedMaterialEntry(
     div.appendTo(divForm);
 
     var button = $(document.createElement('button'));
-    button.attr({'id':'testButton', "class":"selfButtonB",'onclick':'updateMaterialEntryPackage()'});
-    button.text("修改!!");
+    button.attr({'id':'revisionButton', 'class':'selfButtonB', 'onclick':'updateMaterialEntryPackage()'});
+    button.text("修改");
     button.appendTo(divForm);
 }
 
