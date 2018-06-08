@@ -35,11 +35,11 @@ class Purchaseorder extends CI_Controller {
     {
         $this->load->model('purchaseordermodel');
         $this->load->model('materialmodel');
+        $this->load->model('suppliermodel');
+        $this->load->model('packagingmodel');
 
         $purchaseOrderData['purchaseOrderID'] = $this->input->post('purchaseOrderID');
         $purchaseOrderData['material'] = $this->input->post('material');
-        $materialData = $this->materialmodel->queryMaterialNameByMaterialID($purchaseOrderData['material']);
-        $purchaseOrderData['materialName'] = $materialData['materialName'];
         $purchaseOrderData['supplier'] = $this->input->post('supplier');
         $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
@@ -47,8 +47,24 @@ class Purchaseorder extends CI_Controller {
         $purchaseOrderData['notEnteredPackageNumber'] = $this->input->post('purchasedPackageNumber');
 
         $result = $this->purchaseordermodel->insertPurchaseOrderData($purchaseOrderData);
+
+        $addPurchaseOrderList['purchaseOrderID'] = $purchaseOrderData['purchaseOrderID'];
+        // Get material name by material ID
+        $listPreparedData = $this->materialmodel->queryMaterialNameByMaterialID($purchaseOrderData['material']);
+        $addPurchaseOrderList['materialName'] = $listPreparedData['materialName'];
+        // Get supplier name by supplier ID
+        $listPreparedData = $this->suppliermodel->querySupplierNameBySupplierNameID($purchaseOrderData['supplier']);
+        $addPurchaseOrderList['supplierName'] = $listPreparedData['supplierName'];
+        // Get packaging by packaging ID
+        $listPreparedData = $this->packagingmodel->queryPackagingByPackagingID($purchaseOrderData['packaging']);
+        $addPurchaseOrderList['packaging'] = $listPreparedData['packaging'];
+        // Set the rest parts
+        $addPurchaseOrderList['purchaseCondition'] = $purchaseOrderData['purchaseCondition'];
+        $addPurchaseOrderList['purchasedPackageNumber'] = $purchaseOrderData['purchasedPackageNumber'];
+        $addPurchaseOrderList['notEnteredPackageNumber'] = $purchaseOrderData['notEnteredPackageNumber'];
+
         if (true == $result) {
-            echo json_encode($purchaseOrderData);
+            echo json_encode($addPurchaseOrderList);
         }
     }
 

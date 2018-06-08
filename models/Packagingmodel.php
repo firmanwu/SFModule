@@ -43,4 +43,14 @@ class Packagingmodel extends CI_Model {
             return $result;
         }
     }
+
+    public function queryPackagingByPackagingID($packagingID)
+    {
+        $this->db->select('packaging');
+        $this->db->from('packaging');
+        $this->db->where('packagingID', $packagingID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
 }

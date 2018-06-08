@@ -43,4 +43,14 @@ class Suppliermodel extends CI_Model {
             return $result;
         }
     }
+
+    public function querySupplierNameBySupplierNameID($supplierID)
+    {
+        $this->db->select('supplierName');
+        $this->db->from('supplier');
+        $this->db->where('supplierID', $supplierID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
 }

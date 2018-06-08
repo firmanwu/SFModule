@@ -193,7 +193,6 @@ class Materialentry extends CI_Controller {
             $storedWeight,
             $storedMoney
         );
-        echo "success";
     }
 
     public function getSerialNumber()
