@@ -48,23 +48,19 @@ class Purchaseorder extends CI_Controller {
 
         $result = $this->purchaseordermodel->insertPurchaseOrderData($purchaseOrderData);
 
-        $addPurchaseOrderList['purchaseOrderID'] = $purchaseOrderData['purchaseOrderID'];
+        // Prepare the data for UI display
         // Get material name by material ID
         $listPreparedData = $this->materialmodel->queryMaterialNameByMaterialID($purchaseOrderData['material']);
-        $addPurchaseOrderList['materialName'] = $listPreparedData['materialName'];
+        $purchaseOrderData['material'] = $listPreparedData['materialName'];
         // Get supplier name by supplier ID
         $listPreparedData = $this->suppliermodel->querySupplierNameBySupplierNameID($purchaseOrderData['supplier']);
-        $addPurchaseOrderList['supplierName'] = $listPreparedData['supplierName'];
+        $purchaseOrderData['supplier'] = $listPreparedData['supplierName'];
         // Get packaging by packaging ID
         $listPreparedData = $this->packagingmodel->queryPackagingByPackagingID($purchaseOrderData['packaging']);
-        $addPurchaseOrderList['packaging'] = $listPreparedData['packaging'];
-        // Set the rest parts
-        $addPurchaseOrderList['purchaseCondition'] = $purchaseOrderData['purchaseCondition'];
-        $addPurchaseOrderList['purchasedPackageNumber'] = $purchaseOrderData['purchasedPackageNumber'];
-        $addPurchaseOrderList['notEnteredPackageNumber'] = $purchaseOrderData['notEnteredPackageNumber'];
+        $purchaseOrderData['packaging'] = $listPreparedData['packaging'];
 
         if (true == $result) {
-            echo json_encode($addPurchaseOrderList);
+            echo json_encode($purchaseOrderData);
         }
     }
 

@@ -27,8 +27,8 @@ $(document).ready(function() {
         }
     });
 
-    // Auto-fill supplier and packaging
-    $('#materialSelection').on("change", '#materialInPurchaseOrder', function() {
+    // Auto-fill in supplier and packaging
+    $('#materialInPurchaseOrderSelection').on("change", '#materialInPurchaseOrder', function() {
         var materialID = $('select#materialInPurchaseOrder').find("option:selected").val();
 
         if ("請選擇" != materialID) {
@@ -38,12 +38,12 @@ $(document).ready(function() {
                 success: function(result) {
                     var row = JSON.parse(result);
 
-                    $('select#supplier option').each( function() {
+                    $('select#supplierInPurchaseOrder option').each( function() {
                         $(this).remove();
                     });
                     var selectOption = $(document.createElement('option'));
                     selectOption.text("請選擇");
-                    selectOption.appendTo($('#supplier'));
+                    selectOption.appendTo($('#supplierInPurchaseOrder'));
 
                     for(var i in row)
                     {
@@ -57,7 +57,7 @@ $(document).ready(function() {
                                 selectOption.text(row[i][j]);
                             }
                         }
-                        selectOption.appendTo($('#supplier'));
+                        selectOption.appendTo($('#supplierInPurchaseOrder'));
                     }
                 }
             });
@@ -121,9 +121,6 @@ $(document).ready(function() {
                 tr.appendTo(table);
                 for(var j in row)
                 {
-                    if ("material" == j) {
-                        continue;
-                    }
                     td = $(document.createElement('td'));
                     td.text(row[j]);
                     td.appendTo(tr);
@@ -148,7 +145,7 @@ $(document).ready(function() {
         <input type="text" name="purchaseOrderID" size=20 maxlength=16>
         原料
     </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialInPurchaseOrderSelection">
         <select id="materialInPurchaseOrder" name="material">
         <option>請選擇</option>
         </select>
@@ -157,7 +154,7 @@ $(document).ready(function() {
         供應商
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierSelection">
-        <select id="supplier" name="supplier">
+        <select id="supplierInPurchaseOrder" name="supplier">
         <option>請選擇</option>
         </select>
     </div>
