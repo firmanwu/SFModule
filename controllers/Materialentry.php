@@ -76,7 +76,7 @@ class Materialentry extends CI_Controller {
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('queryMaterialEntryView', $data);
+        $this->load->view('queryMaterialEntryView');
         $this->load->view('footer');
     }
 
@@ -95,7 +95,7 @@ class Materialentry extends CI_Controller {
 
         $this->load->view('header');
         $this->load->view('panel', $data);
-        $this->load->view('queryUnconfirmedMaterialEntryView', $data);
+        $this->load->view('queryUnconfirmedMaterialEntryView');
         $this->load->view('footer');
     }
 
@@ -119,17 +119,21 @@ class Materialentry extends CI_Controller {
     {
         $this->load->model('materialentrymodel');
         $this->load->model('materialmodel');
+        $this->load->model('materialinwarehousemodel');
 
         $materialEntryData = $this->materialentrymodel->queryMaterialEntryDataToUpdateMaterial($materialEntryID);
 
         $this->materialmodel->updateMaterialQuantityData(
             $materialEntryData['material'],
-            $materialEntryData['storedPackageNumber'],
-            $materialEntryData['storedWeight'],
-            $materialEntryData['storedMoney']
+            $materialEntryData['expectedStoredPackageNumber'],
+            $materialEntryData['expectedStoredWeight'],
+            $materialEntryData['expectedStoredMoney']
         );
 
+        $this->materialinwarehousemodel->insertMaterialInWarehouseData($materialEntryData);
         $this->materialentrymodel->updateMaterialEntryConfirmationData($materialEntryID);
+
+        echo json_encode($materialEntryData);
     }
 
     public function updateMaterialEntryPackageNumber(

@@ -53,11 +53,15 @@ class Materialentrymodel extends CI_Model {
     {
         $this->db->select('
             purchaseorder.material,
-            materialentry.storedPackageNumber,
-            materialentry.storedWeight,
-            materialentry.storedMoney');
+            materialentry.materialEntryID,
+            packaging.packagingID,
+            materialentry.expectedStoredArea,
+            materialentry.expectedStoredPackageNumber,
+            materialentry.expectedStoredWeight,
+            materialentry.expectedStoredMoney');
         $this->db->from('materialentry');
         $this->db->join('purchaseorder', 'materialentry.purchaseOrder = purchaseorder.purchaseOrderID');
+        $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
         $this->db->where('materialentry.materialEntryID', $materialEntryID);
         $result = $this->db->get();
 
