@@ -4,34 +4,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
-    // Auto-generate serial number
-    $.ajax({
-        url: "/materialentry/getSerialNumber",
-        success: function(serialNumber) {
-            $("input[name = 'serialNumber']").attr({"value":serialNumber, "readonly":true});
-        }
-    });
-
-    // Auto-fill purchase order ID
-    $.ajax({
-        url: "/purchaseorder/queryPurchaseOrderID",
-        success: function(result) {
-            var row = JSON.parse(result);
-
-            for(var i in row)
-            {
-                var selectOption = $(document.createElement('option'));
-                for(var j in row[i])
-                {
-                    selectOption.attr('value', row[i][j]);
-                    selectOption.text(row[i][j]);
-                }
-                selectOption.appendTo($('#purchaseOrder'));
+    function autoGenerateSerialNumber() {
+        // Auto-generate serial number
+        $.ajax({
+            url: "/materialentry/getSerialNumber",
+            success: function(serialNumber) {
+                $("input[name = 'serialNumber']").attr({"value":serialNumber, "readonly":true});
             }
-        }
-    });
+        });
+    }
 
-    // Display purchase order information
+    function autoFillPurchaseOrder() {
+        // Auto-fill purchase order ID
+        $.ajax({
+            url: "/purchaseorder/queryPurchaseOrderID",
+            success: function(result) {
+                var row = JSON.parse(result);
+
+                for(var i in row)
+                {
+                    var selectOption = $(document.createElement('option'));
+                    for(var j in row[i])
+                    {
+                        selectOption.attr('value', row[i][j]);
+                        selectOption.text(row[i][j]);
+                    }
+                    selectOption.appendTo($('#purchaseOrder'));
+                }
+            }
+        });
+
+    }
+
+    function autoFillStoredDate() {
+        // Auto-fill current date into storeDate
+        var dateObject = new Date();
+        var month = (dateObject.getMonth() + 1);
+        var date = dateObject.getDate();
+
+        if (2 > month.toString().length) {
+            month = '0' + month;
+        }
+        if (2 > date.toString().length) {
+            date = '0' + date;
+        }
+        currentDate = dateObject.getFullYear() + "-" + month + "-" + date;
+        $("input[name = 'expectedStoredDate']").attr('value', currentDate);
+    }
+
+    autoGenerateSerialNumber();
+    autoFillPurchaseOrder();
+    autoFillStoredDate();
+
+    // Display purchase order information when purchase order ID selected
     $('#purchaseOrderSelection').on("change", '#purchaseOrder', function() {
         var purchaseOrderID = $('select#purchaseOrder').find("option:selected").val();
 
@@ -41,7 +66,6 @@ $(document).ready(function() {
                 success: function(result) {
                     $('#queryPurchaseOrderTable').remove();
                     var row = JSON.parse(result);
-                    //var header = ["採購單編號", "原料", "進貨條件", "刪除];
                     var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "採購數量", "未入料數量"];
                     var table = $(document.createElement('table'));
                     table.attr('id', 'queryPurchaseOrderTable');
@@ -70,20 +94,6 @@ $(document).ready(function() {
             });
         }
     });
-
-    // Auto-fill in current date into storeDate
-    var dateObject = new Date();
-    var month = (dateObject.getMonth() + 1);
-    var date = dateObject.getDate();
-
-    if (2 > month.toString().length) {
-        month = '0' + month;
-    }
-    if (2 > date.toString().length) {
-        date = '0' + date;
-    }
-    currentDate = dateObject.getFullYear() + "-" + month + "-" + date;
-    $("input[name = 'storedDate']").attr('value', currentDate);
 
     $('#addMaterialEntryForm').submit(function(event) {
         var formData = $('#addMaterialEntryForm').serialize();
@@ -124,6 +134,28 @@ $(document).ready(function() {
         });
         event.preventDefault();
     });
+
+    // When click reset button
+    $('input[type="reset"]').click(function() {
+        // Generate serial button again
+        autoGenerateSerialNumber();
+
+        // Remove options of purchase order then create again
+        $('select#purchaseOrder option').each( function() {
+            if ("請選擇" != $(this).text()) {
+                $(this).remove();
+            }
+        });
+        autoFillPurchaseOrder();
+        // Remove purchase order information table
+        $('#queryPurchaseOrderTable').remove();
+
+        // Fill stored date again
+        autoFillStoredDate();
+
+        // Remove added material entry information table
+        $('#addMaterialEntryTable').remove();
+    });
 });
 </script>
 
@@ -150,9 +182,9 @@ $(document).ready(function() {
     <div id="purchaseOrderList"></div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         儲放區域
-        <input type="text" name="storedArea" size=20 maxlength=16>
+        <input type="text" name="expectedStoredArea" size=20 maxlength=16>
         進貨日期
-        <input type="date" name="storedDate" min="2017-01-01">
+        <input type="date" name="expectedStoredDate" min="2017-01-01">
         每棧板的原料數量
         <input type="number" name="packageNumberOfPallet">
         棧板數

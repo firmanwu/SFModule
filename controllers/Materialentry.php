@@ -39,20 +39,20 @@ class Materialentry extends CI_Controller {
         $materialEntryData['materialEntryID'] = $this->input->post('materialEntryID');
         $materialEntryData['serialNumber'] = $this->input->post('serialNumber');
         $materialEntryData['purchaseOrder'] = $this->input->post('purchaseOrder');
-        $materialEntryData['storedArea'] = $this->input->post('storedArea');
+        $materialEntryData['expectedStoredArea'] = $this->input->post('expectedStoredArea');
         //$materialEntryData['QRCode'] = $this->input->post('QRCode');
-        $materialEntryData['storedDate'] = $this->input->post('storedDate');
+        $materialEntryData['expectedStoredDate'] = $this->input->post('expectedStoredDate');
         $materialEntryData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
         $materialEntryData['palletNumber'] = $this->input->post('palletNumber');
-        $materialEntryData['storedPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
+        $materialEntryData['expectedStoredPackageNumber'] = $materialEntryData['packageNumberOfPallet'] * $materialEntryData['palletNumber'];
 
         $purchaseOrderData = $this->purchaseordermodel->queryPurchaseOrderForUnitWeightUnitPrice($materialEntryData['purchaseOrder']);
-        $materialEntryData['storedWeight'] = $materialEntryData['storedPackageNumber'] * $purchaseOrderData['unitWeight'];
-        $materialEntryData['storedMoney'] = $materialEntryData['storedWeight'] * $purchaseOrderData['unitPrice'];
+        $materialEntryData['expectedStoredWeight'] = $materialEntryData['expectedStoredPackageNumber'] * $purchaseOrderData['unitWeight'];
+        $materialEntryData['expectedStoredMoney'] = $materialEntryData['expectedStoredWeight'] * $purchaseOrderData['unitPrice'];
 
         $this->purchaseordermodel->updatePurchaseOrderQuantityData(
             $materialEntryData['purchaseOrder'],
-            (-$materialEntryData['storedPackageNumber'])
+            (-$materialEntryData['expectedStoredPackageNumber'])
         );
 
         $result = $this->materialentrymodel->insertMaterialEntryData($materialEntryData);

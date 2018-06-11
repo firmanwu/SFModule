@@ -29,7 +29,7 @@ function confirmMaterialEntry(confirmURL) {
 function updateMaterialEntryPackage() {
     var materialEntryID = $("input[name='materialEntryID']").val();
     var purchaseOrder = $("input[name='purchaseOrder']").val();
-    var storedArea = $("input[name='storedArea']").val();
+    var storedArea = $("input[name='expectedStoredArea']").val();
     var packageNumberOfPallet = $("input[name='packageNumberOfPallet']").val();
     var palletNumber = $("input[name='palletNumber']").val();
     var originalPackageNumberOfPallet = $("input[name='originalPackageNumberOfPallet']").val();
@@ -75,7 +75,7 @@ function revisedMaterialEntry(
     div.appendTo(divForm);
 
     var input = $(document.createElement('input'));
-    input.attr({"type":"text", "name":"storedArea", "value":storedArea});
+    input.attr({"type":"text", "name":"expectedStoredArea", "value":storedArea});
     input.appendTo(divForm);
 
     div = $(document.createElement('div'));
@@ -124,7 +124,6 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
             $('#reviseMaterialEntryForm').remove();
             var row = JSON.parse(result);
             var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "進貨條件", "進貨日期", "供應商", "包裝", "單位重量", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "使用單位", "單價", "入料金額", "確認", "修改"];
-            //header.push("刪除");
 
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialEntryTable');
@@ -148,7 +147,7 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
                         materialEntryID = row[j][k];
                     }
 
-                    if ("storedArea" == k) {
+                    if ("expectedStoredArea" == k) {
                         storedArea = row[j][k];
                     }
 
@@ -196,17 +195,6 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
                         td.appendTo(tr);
                     }
                 }
-
-/*
-                var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteMaterialEntry(\"/materialentry/deleteMaterialEntry/" + materialEntryID + "\")";
-                deleteButton.attr({"class":"selfButtonR", "onclick":onclickFunction});
-                deleteButton.text("刪除");
-
-                td = $(document.createElement('td'));
-                deleteButton.appendTo(td);
-                td.appendTo(tr);
-*/
             }
         }
     });
