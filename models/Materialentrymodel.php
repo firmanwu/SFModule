@@ -94,13 +94,13 @@ class Materialentrymodel extends CI_Model {
     )
     {
         if (null != $storedArea) {
-            $this->db->set('storedArea', $storedArea);
+            $this->db->set('expectedStoredArea', $storedArea);
         }
         $this->db->set('packageNumberOfPallet', 'packageNumberOfPallet + ' . $packageNumberOfPallet, FALSE);
         $this->db->set('palletNumber', 'palletNumber + ' . $palletNumber, FALSE);
-        $this->db->set('storedPackageNumber', 'storedPackageNumber + ' . $storedPackageNumber, FALSE);
-        $this->db->set('storedWeight', 'storedWeight + ' . $storedWeight, FALSE);
-        $this->db->set('storedMoney', 'storedMoney + ' . $storedMoney, FALSE);
+        $this->db->set('expectedStoredPackageNumber', 'expectedStoredPackageNumber + ' . $storedPackageNumber, FALSE);
+        $this->db->set('expectedStoredWeight', 'expectedStoredWeight + ' . $storedWeight, FALSE);
+        $this->db->set('expectedStoredMoney', 'expectedStoredMoney + ' . $storedMoney, FALSE);
         $this->db->where('materialEntryID', $materialEntryID);
         $this->db->update('materialentry');
     }
