@@ -6,8 +6,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-collapsed="true" data-theme="b">
             <h3>原料</h3>
             <a href="<?php echo base_url('materialentry/addMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b">入料管理</a>
-            <a href="<?php echo base_url('materialentry/queryUnconfirmedMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b">入庫</a>
-            <a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="b">領料</a>
+            <a href="<?php echo base_url('materialentry/queryUnconfirmedMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料入庫管理</a>
+            <a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="b">領料管理</a>
             <a href="<?php echo base_url('purchaseorder/addPurchaseOrderView');?>" data-role="button" data-icon="flat-new" data-theme="b">採購單管理</a>
             <a href="<?php echo base_url('material/addMaterialView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料管理</a>
             <a href="<?php echo base_url('supplier/addSupplierView');?>" data-role="button" data-icon="flat-new" data-theme="b">供應商管理</a>

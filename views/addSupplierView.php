@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
+    // Auto-fill in material ID and display material name
     $.ajax({
         url: "/material/queryMaterialNameWithID",
         success: function(result) {
