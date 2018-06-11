@@ -68,12 +68,12 @@ $(document).ready(function() {
                 success: function(result) {
                     var row = JSON.parse(result);
 
-                    $('select#packaging option').each( function() {
+                    $('select#packagingInPurchaseOrder option').each( function() {
                         $(this).remove();
                     });
                     var selectOption = $(document.createElement('option'));
                     selectOption.text("請選擇");
-                    selectOption.appendTo($('#packaging'));
+                    selectOption.appendTo($('#packagingInPurchaseOrder'));
 
                     for(var i in row)
                     {
@@ -87,7 +87,7 @@ $(document).ready(function() {
                                 selectOption.text(row[i][j]);
                             }
                         }
-                        selectOption.appendTo($('#packaging'));
+                        selectOption.appendTo($('#packagingInPurchaseOrder'));
                     }
                 }
             });
@@ -162,7 +162,7 @@ $(document).ready(function() {
         包裝
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="packagingSelection">
-        <select id="packaging" name="packaging">
+        <select id="packagingInPurchaseOrder" name="packaging">
         <option>請選擇</option>
         </select>
     </div>
