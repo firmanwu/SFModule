@@ -27,14 +27,14 @@ $(document).ready(function() {
         }
     });
 
-    // Auto-fill in supplier and packaging
+    // Auto-fill in supplier and packaging when material ID is selected
     $('#materialInPurchaseOrderSelection').on("change", '#materialInPurchaseOrder', function() {
         var materialID = $('select#materialInPurchaseOrder').find("option:selected").val();
 
         if ("請選擇" != materialID) {
             // For supplier
             $.ajax({
-                url: "/supplier/querysSupplierNamebyMaterialID/" + materialID,
+                url: "/supplier/querysSupplierNameIDByMaterialID/" + materialID,
                 success: function(result) {
                     var row = JSON.parse(result);
 

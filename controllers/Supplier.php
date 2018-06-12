@@ -72,12 +72,11 @@ class Supplier extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function querysSupplierNamebyMaterialID($materialID)
+    public function querysSupplierNameIDByMaterialID($materialID)
     {
         $this->load->model('suppliermodel');
 
-        $queryData = 'SELECT supplierID, supplierName FROM supplier WHERE material = ' . "\"" . $materialID . "\"";
-        $query = $this->suppliermodel->querySupplierSpecificColumn($queryData, false);
+        $query = $this->suppliermodel->querysSupplierNameIDByMaterialIDData($materialID);
         echo json_encode($query->result_array());
     }
 

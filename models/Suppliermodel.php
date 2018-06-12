@@ -32,21 +32,29 @@ class Suppliermodel extends CI_Model {
         return $result;
     }
 
-    public function querySupplierSpecificColumn($queryData, $isOneRow)
+    public function querysSupplierNameIDByMaterialIDData($materialID)
     {
-        $result = $this->db->query($queryData);
+        $this->db->select('supplierID, supplierName');
+        $this->db->from('supplier');
+        $this->db->where('material', $materialID);
+        $result = $this->db->get();
 
-        if (true == $isOneRow) {
-            return $result->row_array();
-        }
-        else {
-            return $result;
-        }
+        return $result;
     }
 
-    public function querySupplierNameBySupplierNameID($supplierID)
+    public function querySupplierNameBySupplierID($supplierID)
     {
         $this->db->select('supplierName');
+        $this->db->from('supplier');
+        $this->db->where('supplierID', $supplierID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
+    public function querySupplierUnitPriceBySupplierID($supplierID)
+    {
+        $this->db->select('unitPrice');
         $this->db->from('supplier');
         $this->db->where('supplierID', $supplierID);
         $result = $this->db->get();
