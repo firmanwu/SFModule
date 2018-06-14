@@ -71,6 +71,14 @@ class Materialusage extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryMaterialUsageUsingDepartmentByMaterialID($materialID)
+    {
+        $this->load->model('materialusagemodel');
+
+        $query = $this->materialusagemodel->queryMaterialUsageUsingDepartmentByMaterialIDData($materialID);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteMaterialUsage($materialUsageID)
     {
         $this->load->model('materialusagemodel');

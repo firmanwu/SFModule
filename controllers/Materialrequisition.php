@@ -22,7 +22,7 @@ class Materialrequisition extends CI_Controller {
 
         $data = array(
             'theme' => 'b',
-            'title' => '新增領料'
+            'title' => '新增領料單'
         );
 
         $this->load->view('header');
@@ -34,29 +34,49 @@ class Materialrequisition extends CI_Controller {
     public function addMaterialRequisition()
     {
         $this->load->model('materialrequisitionmodel');
+        $this->load->model('packagingmodel');
         $this->load->model('suppliermodel');
-        $this->load->model('materialmodel');
+        $this->load->model('materialinwarehousemodel');
 
         $materialRequisitionData['materialRequisitionID'] = $this->input->post('materialRequisitionID');
         $materialRequisitionData['material'] = $this->input->post('material');
         $materialRequisitionData['supplier'] = $this->input->post('supplier');
+        $materialRequisitionData['packaging'] = $this->input->post('packaging');
         $materialRequisitionData['requisitioningDate'] = $this->input->post('requisitioningDate');
         $materialRequisitionData['requisitioningDepartment'] = $this->input->post('requisitioningDepartment');
         $materialRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $materialRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
 
-        $unitWeight = $this->suppliermodel->querySupplierMaterialUnitWeightData($materialRequisitionData['supplier']);
+        // Get unit weight by packaging ID
+        $queryData = $this->packagingmodel->queryPackagingUnitWeightByPackagingID($materialRequisitionData['packaging']);
+        $unitWeight = $queryData['unitWeight'];
+
+        // Get unit price by supplier ID and material ID
+        $queryData = $this->suppliermodel->querySupplierUnitPriceBySupplierID($materialRequisitionData['supplier']);
+        $unitPrice = $queryData['unitPrice'];
+
+        // Calculate requisitioned wegiht and money
         $materialRequisitionData['requisitionedWeight'] = $materialRequisitionData['requisitionedPackageNumber'] * $unitWeight;
+        $requisitionedMoney = $materialRequisitionData['requisitionedWeight'] * $unitPrice;
 
-        // Minus the requisitioned package number and weight of material
-        $this->materialmodel->updateMaterialQuantityData($materialRequisitionData['material'], (-$materialRequisitionData['requisitionedPackageNumber']), (-$materialRequisitionData['requisitionedWeight']));
+        // Minus the requisitioned package number, weight of material and money
+        $this->materialinwarehousemodel->updateMaterialInWareHouseQuantityData(
+            $materialRequisitionData['material'],
+            $materialRequisitionData['supplier'],
+            $materialRequisitionData['packaging'],
+            (-$materialRequisitionData['requisitionedPackageNumber']),
+            (-$materialRequisitionData['requisitionedWeight']),
+            (-$requisitionedMoney));
 
-        // Get the remaining package number and weight of material
-        $queryData = 'SELECT totalPackageNumber, totalWeight FROM material WHERE materialID = \'' . $materialRequisitionData['material'] . '\'';
-        $query = $this->materialmodel->queryMaterialSpecificColumn($queryData, true);
+        // Get the remaining package number, weight and money in warehouse
+        $materialInWarehouseData = $this->materialinwarehousemodel->queryMaterialInWareHouseStoredPackageNumberWeightMoney(
+            $materialRequisitionData['material'],
+            $materialRequisitionData['supplier'],
+            $materialRequisitionData['packaging']);
 
-        $materialRequisitionData['remainingPackageNumber'] = $query['totalPackageNumber'];
-        $materialRequisitionData['remainingWeight'] = $query['totalWeight'];
+        $materialRequisitionData['remainingPackageNumber'] = $materialInWarehouseData['storedPackageNumber'];
+        $materialRequisitionData['remainingWeight'] = $materialInWarehouseData['storedWeight'];
+        $materialRequisitionData['remainingMoney'] = $materialInWarehouseData['storedMoney'];
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
         if (true == $result) {
@@ -74,7 +94,7 @@ class Materialrequisition extends CI_Controller {
 
         $data = array(
             'theme' => 'b',
-            'title' => '查詢領料'
+            'title' => '查詢領料單'
         );
 
         $this->load->view('header');

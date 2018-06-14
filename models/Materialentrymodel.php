@@ -54,6 +54,7 @@ class Materialentrymodel extends CI_Model {
         $this->db->select('
             purchaseorder.material,
             materialentry.materialEntryID,
+            purchaseorder.supplier,
             packaging.packagingID,
             materialentry.expectedStoredArea,
             materialentry.expectedStoredPackageNumber,
