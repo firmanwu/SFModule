@@ -29,24 +29,7 @@ $(document).ready(function() {
         });
     }
 
-    // Auto-fill in current date into requisitioningDate
-    function autoFillRequisitionDate() {
-        var dateObject = new Date();
-        var month = (dateObject.getMonth() + 1);
-        var date = dateObject.getDate();
-
-        if (2 > month.toString().length) {
-            month = '0' + month;
-        }
-        if (2 > date.toString().length) {
-            date = '0' + date;
-        }
-        currentDate = dateObject.getFullYear() + "-" + month + "-" + date;
-        $("input[name = 'requisitioningDate']").attr('value', currentDate);
-    }
-
     autoFillMaterial();
-    autoFillRequisitionDate();
 
     var materialID = "";
     // Auto-fill in supplier and material usage when material ID is selected
@@ -163,6 +146,7 @@ $(document).ready(function() {
                 url: "/materialinwarehouse/queryMaterialInWarehouseDataByMaterialSupplierPackagingID/" + materialID + "/" + supplierID + "/" + packagingID,
                 success: function(result) {
                     $('#queryMaterialInWarehouseTable').remove();
+
                     var row = JSON.parse(result);
                     var header = ["入料單編號", "原料", "供應商", "包裝", "儲放區域", "儲放數量"];
                     var table = $(document.createElement('table'));
@@ -170,6 +154,7 @@ $(document).ready(function() {
                     table.appendTo($('#materialInWarehouseList'));
                     var tr = $(document.createElement('tr'));
                     tr.appendTo(table);
+
                     for(var i in header)
                     {
                         var th = $(document.createElement('th'));
@@ -181,6 +166,7 @@ $(document).ready(function() {
                     {
                         tr = $(document.createElement('tr'));
                         tr.appendTo(table);
+
                         for(var k in row[j])
                         {
                             var td = $(document.createElement('td'));
@@ -203,7 +189,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialRequisitionTable').remove();
                 var row = JSON.parse(result);
-                var header = ["領料單編號", "原料", "供應商", "包裝", "領料日期", "領料單位", "領料人員", "領料數量", "領料重量", "尚餘數量", "尚餘重量", "尚餘金額"];
+                var header = ["領料單編號", "原料", "供應商", "包裝", "領料單位", "領料人員", "領料數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialRequisitionTable');
                 table.appendTo($('#addMaterialRequisitionList'));
@@ -263,9 +249,6 @@ $(document).ready(function() {
         // Remove material in warehouse information table
         $('#materialInWarehouseList').remove();
 
-        // Fill requisition date again
-        autoFillRequisitionDate();
-
         // Remove added material requisition information table
         $('#addMaterialRequisitionTable').remove();
     });
@@ -308,8 +291,6 @@ $(document).ready(function() {
     </div>
     <div id="materialInWarehouseList"></div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        領料日期
-        <input type="date" name="requisitioningDate" min="2017-01-01">
         領料單位
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="usingDepartmentInMaterialRequisitionSelection">

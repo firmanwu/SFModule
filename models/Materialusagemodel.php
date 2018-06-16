@@ -33,6 +33,16 @@ class Materialusagemodel extends CI_Model {
         return $result;
     }
 
+    public function queryUsingDepartmentByMaterialUsageID($materialUsageID)
+    {
+        $this->db->select('usingDepartment');
+        $this->db->from('materialusage');
+        $this->db->where('materialUsageID', $materialUsageID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function deleteMaterialUsageData($materialUsageData)
     {
         $this->db->where('materialUsageID', $materialUsageData['materialUsageID']);
