@@ -18,7 +18,7 @@ function queryMaterialRequisition() {
         success: function(result) {
             $('#queryMaterialRequisitionTable').remove();
             var row = JSON.parse(result);
-            var header = ["領料單編號", "領料日期", "原料", "領料單位", "領料人員", "供應商", "包裝", "單位重量", "領料數量", "領料重量", "尚餘數量", "尚餘重量", "刪除"];
+            var header = ["領料單編號", "原料", "供應商", "包裝", "領料單位", "領料人員", "領料數量", "未領料數量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialRequisitionTable');
             table.appendTo($('#queryMaterialRequisitionList'));
@@ -45,7 +45,7 @@ function queryMaterialRequisition() {
                     td.text(row[j][k]);
                     td.appendTo(tr);
                 }
-
+/*
                 var deleteButton = $(document.createElement('button'));
                 var onclickFunction = "deleteMaterialRequisition(\"/materialrequisition/deleteMaterialRequisition/" + materialRequisitionID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
@@ -53,7 +53,7 @@ function queryMaterialRequisition() {
 
                 td = $(document.createElement('td'));
                 deleteButton.appendTo(td);
-                td.appendTo(tr);
+                td.appendTo(tr);*/
             }
         }
     });
@@ -68,7 +68,7 @@ function queryMaterialRequisition() {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="d" onclick="queryMaterialRequisition()">領料查詢</button>
+<button data-icon="flat-man" data-theme="d" onclick="queryMaterialRequisition()">領料單查詢</button>
 </div>
 
 <br><br>
