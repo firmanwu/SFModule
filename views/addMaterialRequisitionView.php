@@ -189,7 +189,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialRequisitionTable').remove();
                 var row = JSON.parse(result);
-                var header = ["領料單編號", "原料", "供應商", "包裝", "領料單位", "領料人員", "領料數量"];
+                var header = ["領料單編號", "原料", "供應商", "包裝", "領料單位", "領料人員", "領料數量", "未領料數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialRequisitionTable');
                 table.appendTo($('#addMaterialRequisitionList'));

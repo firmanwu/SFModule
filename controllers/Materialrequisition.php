@@ -44,6 +44,7 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['requisitioningDepartment'] = $this->input->post('requisitioningDepartment');
         $materialRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $materialRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
+        $materialRequisitionData['notTakenOutPackageNumber'] = $this->input->post('requisitionedPackageNumber');
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
 
