@@ -105,7 +105,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialEntryTable').remove();
                 var row = JSON.parse(result);
-                var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "進貨日期", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "入料金額"];
+                var header = ["入料單編號", "倉儲流水號", "採購單編號", "儲放區域", "入料日期", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "入料金額"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialEntryTable');
                 table.appendTo($('#addMaterialEntryList'));
@@ -168,7 +168,7 @@ $(document).ready(function() {
 
 <form id="addMaterialEntryForm">
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        進貨單編號
+        入料單編號
         <input type="text" name="materialEntryID" size=20 maxlength=16>
         倉儲流水號
         <input type="text" name="serialNumber" size=20 maxlength=16>
@@ -183,7 +183,7 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         儲放區域
         <input type="text" name="expectedStoredArea" size=20 maxlength=16>
-        進貨日期
+        入料日期
         <input type="date" name="expectedStoredDate" min="2017-01-01">
         每棧板的原料數量
         <input type="number" name="packageNumberOfPallet">
