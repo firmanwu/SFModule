@@ -18,7 +18,7 @@ function queryFinishedGood() {
         success: function(result) {
             $('#queryFinishedGoodTable').remove();
             var row = JSON.parse(result);
-            var header = ["成品代號", "成品種類", "單位重量", "每棧板的單位個數", "總數量", "總重量", "刪除"];
+            var header = ["成品代號", "成品種類", "總數量", "總重量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodTable');
             table.appendTo($('#finishedGoodList'));
@@ -44,8 +44,13 @@ function queryFinishedGood() {
                     var td = $(document.createElement('td'));
                     td.text(row[j][k]);
                     td.appendTo(tr);
+
+                    if ("totalWeight" == k) {
+                        break;
+                    }
                 }
 
+/*
                 var deleteButton = $(document.createElement('button'));
                 var onclickFunction = "deleteFinishedGood(\"/finishedGood/deleteFinishedGood/" + finishedGoodID + "\")";
                 deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
@@ -53,7 +58,7 @@ function queryFinishedGood() {
 
                 td = $(document.createElement('td'));
                 deleteButton.appendTo(td);
-                td.appendTo(tr);
+                td.appendTo(tr);*/
             }
         }
     });

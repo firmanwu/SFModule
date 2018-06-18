@@ -14,7 +14,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addFinishedGoodTable').remove();
                 var row = JSON.parse(result);
-                var header = ["成品代號", "成品種類", "單位重量", "每棧板的單位個數"];
+                var header = ["成品代號", "成品種類"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addFinishedGoodTable');
                 table.appendTo($('#finishedGoodList'));
@@ -55,10 +55,6 @@ $(document).ready(function() {
         <input type="text" name="finishedGoodID" size=20 maxlength=16>
         成品種類
         <input type="text" name="finishedGoodType" size=20 maxlength=16>
-        單位重量
-        <input type="text" name="unitWeight" size=20 maxlength=16>
-        每棧板的原料數量
-        <input type="text" name="packageNumberOfPallet" size=20 maxlength=16>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f">
         <input type="submit" value="新增" data-role="button">

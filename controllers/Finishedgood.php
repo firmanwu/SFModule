@@ -37,8 +37,6 @@ class Finishedgood extends CI_Controller {
 
         $finishedGoodData['finishedGoodID'] = $this->input->post('finishedGoodID');
         $finishedGoodData['finishedGoodType'] = $this->input->post('finishedGoodType');
-        $finishedGoodData['unitWeight'] = $this->input->post('unitWeight');
-        $finishedGoodData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
 
         $result = $this->finishedgoodmodel->insertFinishedGoodData($finishedGoodData);
         if (true == $result) {
