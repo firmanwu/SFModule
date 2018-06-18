@@ -17,11 +17,13 @@ class Finishedgoodmodel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodSpecificColumn($queryData)
+    public function queryFinishedGoodIDTypeData()
     {
-        $result = $this->db->query($queryData);
+        $this->db->select('finishedGoodID, finishedGoodType');
+        $this->db->from('finishedgood');
+        $result = $this->db->get();
 
-        return $result->row_array();
+        return $result;
     }
 
     public function updateFinishedGoodQuantityData($product, $packageNumber, $weight)

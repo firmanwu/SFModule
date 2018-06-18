@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a href="<?php echo base_url('materialentry/addMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b">入料單管理</a>
             <a href="<?php echo base_url('materialentry/queryUnconfirmedMaterialEntryView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料入庫管理</a>
             <a href="<?php echo base_url('materialrequisition/addMaterialRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="b">領料單管理</a>
+            <a href="<?php echo base_url('materialoutwarehouse/addMaterialOutWarehouseView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料出庫管理</a>
             <a href="<?php echo base_url('purchaseorder/addPurchaseOrderView');?>" data-role="button" data-icon="flat-new" data-theme="b">採購單管理</a>
             <a href="<?php echo base_url('material/addMaterialView');?>" data-role="button" data-icon="flat-new" data-theme="b">原料管理</a>
             <a href="<?php echo base_url('supplier/addSupplierView');?>" data-role="button" data-icon="flat-new" data-theme="b">供應商管理</a>
@@ -20,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-new" data-theme="d">入庫</a>
             <a href="<?php echo base_url('finishedgoodrequisition/addFinishedGoodRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="d">出庫</a>
             <a href="<?php echo base_url('finishedgood/addFinishedGoodView');?>" data-role="button" data-icon="flat-new" data-theme="d">成品管理</a>
+            <a href="<?php echo base_url('finishedgoodpackaging/addFinishedGoodPackagingView');?>" data-role="button" data-icon="flat-new" data-theme="d">包裝管理</a>
         </div>
 
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-theme="f">

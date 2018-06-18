@@ -70,4 +70,12 @@ class Finishedgood extends CI_Controller {
         $query = $this->finishedgoodmodel->queryFinishedGoodData();
         echo json_encode($query->result_array());
     }
+
+    public function queryFinishedGoodIDType()
+    {
+        $this->load->model('finishedgoodmodel');
+
+        $query = $this->finishedgoodmodel->queryFinishedGoodIDTypeData();
+        echo json_encode($query->result_array());
+    }
 }
