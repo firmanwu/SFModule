@@ -80,6 +80,14 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function queryMaterialEntry($isConfirmed, $materialEntryID)
+    {
+        $this->load->model('materialentrymodel');
+
+        $query = $this->materialentrymodel->queryMaterialEntryData($isConfirmed, $materialEntryID);
+        echo json_encode($query->result_array());
+    }
+
     public function queryUnconfirmedMaterialEntryView()
     {
         /*
@@ -90,21 +98,13 @@ class Materialentry extends CI_Controller {
 
         $data = array(
             'theme' => 'b',
-            'title' => "入庫管理"
+            'title' => "原料入庫管理"
         );
 
         $this->load->view('header');
         $this->load->view('panel', $data);
         $this->load->view('queryUnconfirmedMaterialEntryView');
         $this->load->view('footer');
-    }
-
-    public function queryMaterialEntry($isConfirmed, $materialEntryID)
-    {
-        $this->load->model('materialentrymodel');
-
-        $query = $this->materialentrymodel->queryMaterialEntryData($isConfirmed, $materialEntryID);
-        echo json_encode($query->result_array());
     }
 
     public function deleteMaterialEntry($materialEntryID)
