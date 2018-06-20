@@ -25,23 +25,44 @@ class Finishedgoodpackagingmodel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodPackagingSpecificColumn($queryData, $isOneRow)
+    public function queryFinishedGoodPackagingbyProductIDData($productID)
     {
-        $result = $this->db->query($queryData);
+        $this->db->select('
+            finishedgoodpackaging.finishedGoodPackagingID,
+            finishedgoodpackaging.product,
+            finishedgood.finishedGoodType,
+            finishedgoodpackaging.packaging,
+            finishedgoodpackaging.unitWeight,
+            finishedgoodpackaging.packageNumberOfPallet');
+        $this->db->from('finishedgoodpackaging');
+        $this->db->join('finishedgood', 'finishedgoodpackaging.product = finishedgood.finishedGoodID');
+        $this->db->where('finishedgoodpackaging.product', $productID);
+        $result = $this->db->get();
 
-        if (true == $isOneRow) {
-            return $result->row_array();
-        }
-        else {
-            return $result;
-        }
+        return $result;
     }
 
-    public function queryFinishedGoodPackagingByPackagingID($packagingID)
+    public function queryFinishedGoodPackagingbyPackagingIDData($finishedGoodPackagingID)
     {
-        $this->db->select('packaging');
-        $this->db->from('packaging');
-        $this->db->where('packagingID', $packagingID);
+        $this->db->select('
+            finishedgoodpackaging.product,
+            finishedgood.finishedGoodType,
+            finishedgoodpackaging.packaging,
+            finishedgoodpackaging.unitWeight,
+            finishedgoodpackaging.packageNumberOfPallet');
+        $this->db->from('finishedgoodpackaging');
+        $this->db->join('finishedgood', 'finishedgoodpackaging.product = finishedgood.finishedGoodID');
+        $this->db->where('finishedgoodpackaging.finishedGoodPackagingID', $finishedGoodPackagingID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
+    public function queryUnitWeightPackageNumberOfPalletByFinishedGoodPackagingID($finishedGoodPackagingID)
+    {
+        $this->db->select('unitWeight, packageNumberOfPallet');
+        $this->db->from('finishedgoodpackaging');
+        $this->db->where('finishedGoodPackagingID', $finishedGoodPackagingID);
         $result = $this->db->get();
 
         return $result->row_array();

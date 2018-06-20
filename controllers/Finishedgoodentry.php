@@ -22,7 +22,7 @@ class Finishedgoodentry extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '新增入庫'
+            'title' => '新增入庫單'
         );
 
         $this->load->view('header');
@@ -33,34 +33,33 @@ class Finishedgoodentry extends CI_Controller {
 
     public function addFinishedGoodEntry()
     {
+        $this->load->model('finishedgoodpackagingmodel');
         $this->load->model('finishedgoodentrymodel');
-        $this->load->model('finishedgoodmodel');
 
         $finishedGoodEntryData['finishedGoodEntryID'] = $this->input->post('finishedGoodEntryID');
         $finishedGoodEntryData['serialNumber'] = $this->input->post('serialNumber');
-        $finishedGoodEntryData['status'] = $this->input->post('status');
-        $finishedGoodEntryData['storedArea'] = $this->input->post('storedArea');
         $finishedGoodEntryData['product'] = $this->input->post('product');
-        $finishedGoodEntryData['batchNumber'] = $this->input->post('batchNumber');
-        $finishedGoodEntryData['storedDate'] = $this->input->post('storedDate');
-        $finishedGoodEntryData['storedPackageNumber'] = $this->input->post('storedPackageNumber');
+        $finishedGoodEntryData['packaging'] = $this->input->post('packaging');
+        $finishedGoodEntryData['status'] = $this->input->post('status');
+        $finishedGoodEntryData['expectedStoredArea'] = $this->input->post('expectedStoredArea');
+        $finishedGoodEntryData['expectedStoredDate'] = $this->input->post('expectedStoredDate');
+        $finishedGoodEntryData['palletNumber'] = $this->input->post('palletNumber');
+        $finishedGoodEntryData['expectedStoredPackageNumber'] = $this->input->post('expectedStoredPackageNumber');
 
-        // Get package number of 1 pallet and unit weight
-        $queryData = 'SELECT unitWeight, packageNumberOfPallet FROM finishedgood WHERE finishedGoodID = \'' . $finishedGoodEntryData['product'] . '\'';
-        $query = $this->finishedgoodmodel->queryFinishedGoodSpecificColumn($queryData);
-        $unitWeight = $query['unitWeight'];
-        $packageNumberOfPallet = $query['packageNumberOfPallet'];
+        $queryData = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingbyPackagingIDData($finishedGoodEntryData['packaging']);
+        $unitWeight = $queryData['unitWeight'];
 
-        $finishedGoodEntryData['palletNumber'] = $finishedGoodEntryData['storedPackageNumber'] / $packageNumberOfPallet;
-
-        $finishedGoodEntryData['storedWeight'] = $finishedGoodEntryData['storedPackageNumber'] * $unitWeight;
+        $finishedGoodEntryData['expectedStoredWeight'] = $finishedGoodEntryData['expectedStoredPackageNumber'] * $unitWeight;
+        $finishedGoodEntryData['notEnteredPackageNumber'] = $finishedGoodEntryData['expectedStoredPackageNumber'];
 
         $result = $this->finishedgoodentrymodel->insertFinishedGoodEntryData($finishedGoodEntryData);
+
+        // Make the data for displaying the result
+        $finishedGoodEntryData['product'] = $queryData['finishedGoodType'] . '(' . $finishedGoodEntryData['product'] . ')';
+        $finishedGoodEntryData['packaging'] = $queryData['packaging'] . '(' . $unitWeight . '/' . $queryData['packageNumberOfPallet'] . ')';
         if (true == $result) {
             echo json_encode($finishedGoodEntryData);
         }
-
-        $this->finishedgoodmodel->updateFinishedGoodQuantityData($finishedGoodEntryData['product'], $finishedGoodEntryData['storedPackageNumber'], $finishedGoodEntryData['storedWeight']);
     }
 
     public function queryFinishedGoodEntryView()
@@ -96,5 +95,61 @@ class Finishedgoodentry extends CI_Controller {
 
         $finishedGoodEntryData['finishedGoodEntryID'] = $finishedGoodEntryID;
         $result = $this->finishedgoodentrymodel->deleteFinishedGoodEntryData($finishedGoodEntryData);
+    }
+
+    public function getSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+        $this->load->helper('string');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'ProductEntrySN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+                write_file($fileName, $newSerialNumber);
+
+                echo $newSerialNumber;
+            }
+            else {
+                echo $currentSerialNumber;
+            }
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+
+            echo $newSerialNumber;
+        }
+    }
+
+    public function increaseSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+        $this->load->helper('string');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'ProductEntrySN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+            }
+            else {
+                $newSerialNumber = increment_string($currentSerialNumber, '');
+            }
+            write_file($fileName, $newSerialNumber);
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+        }
     }
 }

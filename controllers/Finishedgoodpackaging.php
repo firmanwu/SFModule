@@ -73,12 +73,11 @@ class Finishedgoodpackaging extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function queryFinishedGoodPackagingbyMaterialID($materialID)
+    public function queryFinishedGoodPackagingbyProductID($productID)
     {
-        $this->load->model('packagingmodel');
+        $this->load->model('finishedgoodpackagingmodel');
 
-        $queryData = 'SELECT packagingID, packaging FROM packaging WHERE material = ' . "\"" . $materialID . "\"";
-        $query = $this->packagingmodel->queryFinishedGoodPackagingSpecificColumn($queryData, false);
+        $query = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingbyProductIDData($productID);
         echo json_encode($query->result_array());
     }
 
