@@ -10,26 +10,47 @@ class Finishedgoodentrymodel extends CI_Model {
         return $result;
     }
 
-    public function queryFinishedGoodEntryData()
+    public function queryFinishedGoodEntryData($isConfirmed, $finishedGoodEntryID)
     {
         $this->db->select('
             finishedgoodentry.finishedGoodEntryID,
-            finishedgoodentry.storedArea,
             finishedgoodentry.serialNumber,
-            finishedgoodentry.status,
             finishedgoodentry.product,
             finishedgood.finishedGoodType,
-            finishedgoodentry.storedDate,
-            finishedgoodentry.batchNumber,
-            finishedgoodentry.storedPackageNumber,
-            finishedgood.unitWeight,
+            finishedgoodpackaging.packaging,
+            finishedgoodpackaging.unitWeight,
+            finishedgoodpackaging.packageNumberOfPallet,
+            finishedgoodentry.status,
+            finishedgoodentry.expectedStoredArea,
+            finishedgoodentry.expectedStoredDate,
             finishedgoodentry.palletNumber,
-            finishedgoodentry.storedWeight');
+            finishedgoodentry.expectedStoredPackageNumber,
+            finishedgoodentry.expectedStoredWeight,
+            finishedgoodentry.notEnteredPalletNumber,
+            finishedgoodentry.notEnteredPackageNumber');
         $this->db->from('finishedgoodentry');
         $this->db->join('finishedgood', 'finishedgoodentry.product = finishedgood.finishedGoodID');
+        $this->db->join('finishedgoodpackaging', 'finishedgoodentry.packaging = finishedgoodpackaging.finishedGoodPackagingID');
+        if ("0" != $finishedGoodEntryID) {
+            $this->db->where('finishedgoodentry.finishedGoodEntryID', $finishedGoodEntryID);
+        }
+        $this->db->where('finishedgoodentry.notEnteredPalletNumber >', 0);
+        $this->db->where('finishedgoodentry.notEnteredPackageNumber >', 0);
+        $this->db->order_by('finishedgoodentry.finishedGoodEntryID', 'ASC');
         $result = $this->db->get();
 
         return $result;
+    }
+
+    public function queryPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID)
+    {
+        $this->db->select('finishedgoodpackaging.unitWeight');
+        $this->db->from('finishedgoodentry');
+        $this->db->join('finishedgoodpackaging', 'finishedgoodentry.packaging = finishedgoodpackaging.finishedGoodPackagingID');
+        $this->db->where('finishedgoodentry.finishedGoodEntryID', $finishedGoodEntryID);
+        $result = $this->db->get();
+
+        return $result->row_array();
     }
 
     public function deleteFinishedGoodEntryData($finishedGoodEntryData)
@@ -38,5 +59,13 @@ class Finishedgoodentrymodel extends CI_Model {
         $result = $this->db->delete('finishedgoodentry');
 
         return $result;
+    }
+
+    public function updateFinishedGoodEntryNotEnteredData($finishedGoodEntryID, $storedPalletNumber, $storedPackageNumber)
+    {
+        $this->db->set('notEnteredPalletNumber', 'notEnteredPalletNumber + ' . $storedPalletNumber, FALSE);
+        $this->db->set('notEnteredPackageNumber', 'notEnteredPackageNumber + ' . $storedPackageNumber, FALSE);
+        $this->db->where('finishedGoodEntryID', $finishedGoodEntryID);
+        $this->db->update('finishedgoodentry');
     }
 }

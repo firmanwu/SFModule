@@ -120,8 +120,6 @@ $(document).ready(function() {
             type: "POST",
             data: formData,
             success: function(result) {
-                //alert(result);
-                //return;
                 $('#addFinishedGoodEntryTable').remove();
                 var row = JSON.parse(result);
                 var header = ["入庫編號", "倉儲流水號", "成品代號", "包裝", "狀態", "儲放區域", "入庫日期", "棧板", "入庫數量", "入庫重量"];

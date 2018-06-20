@@ -50,6 +50,7 @@ class Finishedgoodentry extends CI_Controller {
         $unitWeight = $queryData['unitWeight'];
 
         $finishedGoodEntryData['expectedStoredWeight'] = $finishedGoodEntryData['expectedStoredPackageNumber'] * $unitWeight;
+        $finishedGoodEntryData['notEnteredPalletNumber'] = $finishedGoodEntryData['palletNumber'];
         $finishedGoodEntryData['notEnteredPackageNumber'] = $finishedGoodEntryData['expectedStoredPackageNumber'];
 
         $result = $this->finishedgoodentrymodel->insertFinishedGoodEntryData($finishedGoodEntryData);
@@ -72,7 +73,7 @@ class Finishedgoodentry extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '查詢入庫'
+            'title' => '查詢已確認入庫'
         );
 
         $this->load->view('header');
@@ -81,12 +82,56 @@ class Finishedgoodentry extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function queryFinishedGoodEntry()
+    public function queryFinishedGoodEntry($isConfirmed, $finishedGoodEntryID)
     {
         $this->load->model('finishedgoodentrymodel');
 
-        $query = $this->finishedgoodentrymodel->queryFinishedGoodEntryData();
+        $query = $this->finishedgoodentrymodel->queryFinishedGoodEntryData($isConfirmed, $finishedGoodEntryID);
         echo json_encode($query->result_array());
+    }
+
+    public function queryUnconfirmedFinishedGoodEntryView()
+    {
+        /*
+        if (false == isset($_SESSION['userID'])) {
+            redirect('welcome/iframeContent');
+            return;
+        }*/
+
+        $data = array(
+            'theme' => 'd',
+            'title' => "成品入庫管理"
+        );
+
+        $this->load->view('header');
+        $this->load->view('panel', $data);
+        $this->load->view('queryUnconfirmedFinishedGoodEntryView');
+        $this->load->view('footer');
+    }
+
+    public function confirmFinishedGoodEntry($finishedGoodEntryID, $storedArea, $storedPalletNumber, $storedPackageNumber)
+    {
+        $this->load->model('finishedgoodinwarehousemodel');
+        $this->load->model('finishedgoodentrymodel');
+
+        $finishedGoodEntryData['finishedGoodEntry'] = $finishedGoodEntryID;
+        $finishedGoodEntryData['storedArea'] = $storedArea;
+        // For Taiwan GMT+8
+        $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
+        $finishedGoodEntryData['storedDate'] = $currentDateTime;
+        $finishedGoodEntryData['storedPalletNumber'] = $storedPalletNumber;
+        $finishedGoodEntryData['storedPackageNumber'] = $storedPackageNumber;
+
+        $queryData = $this->finishedgoodentrymodel->queryPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID);
+        $unitWeight = $queryData['unitWeight'];
+        $finishedGoodEntryData['storedWeight'] = $finishedGoodEntryData['storedPackageNumber'] * $unitWeight;
+
+        $result = $this->finishedgoodinwarehousemodel->insertFinishedGoodInWarehouseData($finishedGoodEntryData);
+        if (true == $result) {
+            echo json_encode($finishedGoodEntryData);
+        }
+
+        $this->finishedgoodentrymodel->updateFinishedGoodEntryNotEnteredData($finishedGoodEntryID, (-$storedPalletNumber), (-$storedPackageNumber));
     }
 
     public function deleteFinishedGoodEntry($finishedGoodEntryID)

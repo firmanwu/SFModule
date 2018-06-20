@@ -18,8 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <div data-role="collapsible" data-collapsed-icon="flat-plus" data-expanded-icon="flat-cross" data-theme="d">
             <h3>成品</h3>
-            <a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-new" data-theme="d">入庫</a>
-            <a href="<?php echo base_url('finishedgoodrequisition/addFinishedGoodRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="d">出庫</a>
+            <a href="<?php echo base_url('finishedgoodentry/addFinishedGoodEntryView');?>" data-role="button" data-icon="flat-new" data-theme="d">入庫單管理</a>
+            <a href="<?php echo base_url('finishedgoodentry/queryUnconfirmedFinishedGoodEntryView');?>" data-role="button" data-icon="flat-new" data-theme="d">成品入庫管理</a>
+            <a href="<?php echo base_url('finishedgoodrequisition/addFinishedGoodRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="d">出庫單管理</a>
+            <a href="<?php echo base_url('finishedgoodrequisition/queryUnconfirmedFinishedGoodRequisitionView');?>" data-role="button" data-icon="flat-new" data-theme="d">成品出庫管理</a>
             <a href="<?php echo base_url('finishedgood/addFinishedGoodView');?>" data-role="button" data-icon="flat-new" data-theme="d">成品管理</a>
             <a href="<?php echo base_url('finishedgoodpackaging/addFinishedGoodPackagingView');?>" data-role="button" data-icon="flat-new" data-theme="d">包裝管理</a>
         </div>
