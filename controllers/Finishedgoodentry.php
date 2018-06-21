@@ -117,7 +117,7 @@ class Finishedgoodentry extends CI_Controller {
         $queryData = $this->finishedgoodentrymodel->queryProductPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID);
         $finishedGoodEntryData['finishedGoodEntry'] = $finishedGoodEntryID;
         $finishedGoodEntryData['product'] = $queryData['product'];
-        $finishedGoodEntryData['packaging'] = $queryData['packaging'];
+        $finishedGoodEntryData['packagingID'] = $queryData['packaging'];
         $finishedGoodEntryData['storedArea'] = $storedArea;
         // For Taiwan GMT+8
         $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));

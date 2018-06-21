@@ -14,9 +14,9 @@ class Finishedgoodinwarehousemodel extends CI_Model {
     {
         $this->db->select('
             finishedgoodinwarehouse.finishedGoodEntry,
-            finishedgoodentry.product,
+            finishedgoodinwarehouse.product,
             finishedgood.finishedGoodType,
-            finishedgoodpackaging.packaging,
+            finishedgoodinwarehouse.packagingID,
             finishedgoodpackaging.unitWeight,
             finishedgoodpackaging.packageNumberOfPallet,
             finishedgoodinwarehouse.storedArea,
@@ -25,9 +25,48 @@ class Finishedgoodinwarehousemodel extends CI_Model {
             finishedgoodinwarehouse.storedPackageNumber,
             finishedgoodinwarehouse.storedWeight');
         $this->db->from('finishedgoodinwarehouse');
-        $this->db->join('finishedgoodentry', 'finishedgoodinwarehouse.finishedGoodEntry = finishedgoodentry.finishedGoodEntryID');
-        $this->db->join('finishedgood', 'finishedgoodentry.product = finishedgood.finishedGoodID');
-        $this->db->join('finishedgoodpackaging', 'finishedgoodentry.packaging = finishedgoodpackaging.finishedGoodPackagingID');
+        $this->db->join('finishedgood', 'finishedgoodinwarehouse.product = finishedgood.finishedGoodID');
+        $this->db->join('finishedgoodpackaging', 'finishedgoodinwarehouse.packagingID = finishedgoodpackaging.finishedGoodPackagingID');
+        $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function queryProductInWarehouseData()
+    {
+        $this->db->select('
+            finishedgoodinwarehouse.product,
+            finishedgood.finishedGoodType');
+        $this->db->distinct();
+        $this->db->from('finishedgoodinwarehouse');
+        $this->db->join('finishedgood', 'finishedgoodinwarehouse.product = finishedgood.finishedGoodID');
+        $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function queryPackagingInWarehouseByProductIDData($product)
+    {
+        $this->db->select('
+            finishedgoodinwarehouse.packagingID,
+            finishedgoodpackaging.packaging,
+            finishedgoodpackaging.unitWeight,
+            finishedgoodpackaging.packageNumberOfPallet');
+        $this->db->distinct();
+        $this->db->from('finishedgoodinwarehouse');
+        $this->db->join('finishedgoodpackaging', 'finishedgoodinwarehouse.packagingID = finishedgoodpackaging.finishedGoodPackagingID');
+        $this->db->where('finishedgoodinwarehouse.product', $product);
+        $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function queryPackagNumberInWarehouseByProductPackagingIDData($product, $packaging)
+    {
+        $this->db->select_sum('remainingPackageNumber');
+        $this->db->from('finishedgoodinwarehouse');
+        $this->db->where('product', $product);
+        $this->db->where('packagingID', $packaging);
         $result = $this->db->get();
 
         return $result;

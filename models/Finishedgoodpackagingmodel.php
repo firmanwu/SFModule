@@ -77,4 +77,14 @@ class Finishedgoodpackagingmodel extends CI_Model {
 
         return $result->row_array();
     }
+
+    public function queryFinishedGoodPackagingByPackagingID($packagingID)
+    {
+        $this->db->select('packaging');
+        $this->db->from('packaging');
+        $this->db->where('packagingID', $packagingID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
 }

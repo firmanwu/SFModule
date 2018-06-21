@@ -22,7 +22,7 @@ class Finishedgoodrequisition extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '新增出庫'
+            'title' => '新增領貨單'
         );
 
         $this->load->view('header');
@@ -34,35 +34,21 @@ class Finishedgoodrequisition extends CI_Controller {
     public function addFinishedGoodRequisition()
     {
         $this->load->model('finishedgoodrequisitionmodel');
-        $this->load->model('finishedgoodmodel');
+        $this->load->model('finishedgoodpackagingmodel');
 
         $finishedGoodRequisitionData['finishedGoodRequistionID'] = $this->input->post('finishedGoodRequistionID');
         $finishedGoodRequisitionData['product'] = $this->input->post('product');
+        $finishedGoodRequisitionData['packagingID'] = $this->input->post('packagingID');
         $finishedGoodRequisitionData['requisitioningDate'] = $this->input->post('requisitioningDate');
         $finishedGoodRequisitionData['requisitioningDepartment'] = $this->input->post('requisitioningDepartment');
         $finishedGoodRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $finishedGoodRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
-
-        // Get package number of 1 pallet and unit weight
-        $queryData = 'SELECT unitWeight, packageNumberOfPallet FROM finishedgood WHERE finishedGoodID = \'' . $finishedGoodRequisitionData['product'] . '\'';
-        $query = $this->finishedgoodmodel->queryFinishedGoodSpecificColumn($queryData);
-        $unitWeight = $query['unitWeight'];
-        $packageNumberOfPallet = $query['packageNumberOfPallet'];
-
-        $finishedGoodRequisitionData['requisitionedPalletNumber'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] / $packageNumberOfPallet;
-        $finishedGoodRequisitionData['requisitionedWeight'] = $finishedGoodRequisitionData['requisitionedPackageNumber'] * $unitWeight;
-
-        // Minus the requisitioned package number and weight of material
-        $this->finishedgoodmodel->updateFinishedGoodQuantityData($finishedGoodRequisitionData['product'], (-$finishedGoodRequisitionData['requisitionedPackageNumber']), (-$finishedGoodRequisitionData['requisitionedWeight']));
-
-        // Get the remaining package number and weight of finished good
-        $queryData = 'SELECT totalPackageNumber, totalWeight FROM finishedgood WHERE finishedGoodID = \'' . $finishedGoodRequisitionData['product'] . '\'';
-        $query = $this->finishedgoodmodel->queryFinishedGoodSpecificColumn($queryData);
-
-        $finishedGoodRequisitionData['remainingPackageNumber'] = $query['totalPackageNumber'];
-        $finishedGoodRequisitionData['remainingWeight'] = $query['totalWeight'];
+        $finishedGoodRequisitionData['notOutPackageNumber'] = $finishedGoodRequisitionData['requisitionedPackageNumber'];
 
         $result = $this->finishedgoodrequisitionmodel->insertFinishedGoodRequisitionData($finishedGoodRequisitionData);
+
+        $queryData = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingByPackagingID($finishedGoodRequisitionData['packagingID']);
+        $finishedGoodRequisitionData['packagingID'] = $queryData['packaging'];
         if (true == $result) {
             echo json_encode($finishedGoodRequisitionData);
         }
@@ -78,7 +64,7 @@ class Finishedgoodrequisition extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '查詢出庫'
+            'title' => '查詢領貨單'
         );
 
         $this->load->view('header');
