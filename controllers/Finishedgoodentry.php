@@ -73,7 +73,7 @@ class Finishedgoodentry extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '查詢已確認入庫'
+            'title' => '查詢入庫單'
         );
 
         $this->load->view('header');

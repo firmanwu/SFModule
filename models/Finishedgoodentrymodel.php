@@ -34,8 +34,11 @@ class Finishedgoodentrymodel extends CI_Model {
         if ("0" != $finishedGoodEntryID) {
             $this->db->where('finishedgoodentry.finishedGoodEntryID', $finishedGoodEntryID);
         }
-        $this->db->where('finishedgoodentry.notEnteredPalletNumber >', 0);
-        $this->db->where('finishedgoodentry.notEnteredPackageNumber >', 0);
+
+        if ("0" == $isConfirmed) {
+            $this->db->where('finishedgoodentry.notEnteredPalletNumber >', 0);
+            $this->db->where('finishedgoodentry.notEnteredPackageNumber >', 0);
+        }
         $this->db->order_by('finishedgoodentry.finishedGoodEntryID', 'ASC');
         $result = $this->db->get();
 
