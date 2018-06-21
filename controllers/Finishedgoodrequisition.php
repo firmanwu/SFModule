@@ -36,7 +36,7 @@ class Finishedgoodrequisition extends CI_Controller {
         $this->load->model('finishedgoodrequisitionmodel');
         $this->load->model('finishedgoodpackagingmodel');
 
-        $finishedGoodRequisitionData['finishedGoodRequistionID'] = $this->input->post('finishedGoodRequistionID');
+        $finishedGoodRequisitionData['finishedGoodRequisitionID'] = $this->input->post('finishedGoodRequisitionID');
         $finishedGoodRequisitionData['product'] = $this->input->post('product');
         $finishedGoodRequisitionData['packagingID'] = $this->input->post('packagingID');
         $finishedGoodRequisitionData['requisitioningDate'] = $this->input->post('requisitioningDate');

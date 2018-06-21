@@ -161,7 +161,7 @@ $(document).ready(function() {
                 var header = ["領貨單編號", "成品代號", "包裝", "領貨日期", "領貨單位", "領貨人員", "領貨數量", "尚未領取數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addFinishedGoodRequisitionTable');
-                table.appendTo($('#finishedGoodRequisitionList'));
+                table.appendTo($('#addFinishedGoodRequisitionList'));
                 var tr = $(document.createElement('tr'));
                 tr.appendTo(table);
                 for(var i in header)
@@ -227,7 +227,7 @@ $(document).ready(function() {
 <form id="addFinishedGoodRequisitionForm">
     <div data-role="controlgroup" data-type="horizontal" data-theme="f">
         領貨單編號
-        <input type="text" name="finishedGoodRequistionID" size=20 maxlength=16>
+        <input type="text" name="finishedGoodRequisitionID" size=20 maxlength=16>
         成品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="productInFinishedGoodRequisitionSelection">
@@ -259,4 +259,4 @@ $(document).ready(function() {
 </form>
 
 <br><br>
-<div id="finishedGoodRequisitionList"></div>
+<div id="addFinishedGoodRequisitionList"></div>

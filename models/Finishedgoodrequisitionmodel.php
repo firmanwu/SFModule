@@ -12,29 +12,14 @@ class Finishedgoodrequisitionmodel extends CI_Model {
 
     public function queryFinishedGoodRequisitionData()
     {
-        $this->db->select('
-            finishedgoodrequisition.finishedGoodRequistionID,
-            finishedgoodrequisition.requisitioningDate,
-            finishedgoodrequisition.product,
-            finishedgood.finishedGoodType,
-            finishedgoodrequisition.requisitioningDepartment,
-            finishedgoodrequisition.requisitioningMember,
-            finishedgoodrequisition.requisitionedPackageNumber,
-            finishedgood.unitWeight,
-            finishedgoodrequisition.requisitionedPalletNumber,
-            finishedgoodrequisition.requisitionedWeight,
-            finishedgoodrequisition.remainingPackageNumber,
-            finishedgoodrequisition.remainingWeight');
-        $this->db->from('finishedgoodrequisition');
-        $this->db->join('finishedgood', 'finishedgoodrequisition.product = finishedgood.finishedGoodID');
-        $result = $this->db->get();
+        $result = $this->db->get('finishedgoodrequisition');
 
         return $result;
     }
 
     public function deleteFinishedGoodRequisitionData($finishedGoodEntryData)
     {
-        $this->db->where('finishedGoodRequistionID', $finishedGoodEntryData['finishedGoodRequistionID']);
+        $this->db->where('finishedGoodRequisitionID', $finishedGoodEntryData['finishedGoodRequisitionID']);
         $result = $this->db->delete('finishedgoodrequisition');
 
         return $result;
