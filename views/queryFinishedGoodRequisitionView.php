@@ -3,25 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <script>
-function deleteFinishedGoodRequisition(deleteURL) {
-    $.ajax({
-        url: deleteURL,
-        success: function(result) {
-            queryFinishedGoodRequisition();
-        }
-    });
-}
-
 function queryFinishedGoodRequisition() {
     $.ajax({
         url: "/finishedgoodrequisition/queryFinishedGoodRequisition",
         success: function(result) {
             $('#queryFinishedGoodRequisitionTable').remove();
             var row = JSON.parse(result);
-            var header = ["領貨編號", "出庫日期", "成品代號", "成品種類", "出庫單位", "出庫人員", "出庫數量", "單位重量", "棧板數", "出庫重量", "尚餘數量", "尚餘重量", "刪除"];
+            var header = ["領貨單編號", "成品代號", "包裝", "領貨日期", "領貨單位", "領貨人員", "領貨數量", "尚未領取數量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodRequisitionTable');
-            table.appendTo($('#finishedGoodRequisitionList'));
+            table.appendTo($('#queryFinishedGoodRequisitionList'));
             var tr = $(document.createElement('tr'));
             tr.appendTo(table);
             for(var i in header)
@@ -37,23 +28,10 @@ function queryFinishedGoodRequisition() {
                 tr.appendTo(table);
                 for(var k in row[j])
                 {
-                    if ("finishedgoodrequisitionID" == k) {
-                        var finishedGoodRequisitionID = row[j][k];
-                    }
-
                     var td = $(document.createElement('td'));
                     td.text(row[j][k]);
                     td.appendTo(tr);
                 }
-
-                var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteFinishedGoodRequisition(\"/finishedgoodrequisition/deleteFinishedGoodRequisition/" + finishedGoodRequisitionID + "\")";
-                deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
-                deleteButton.text("刪除");
-
-                td = $(document.createElement('td'));
-                deleteButton.appendTo(td);
-                td.appendTo(tr);
             }
         }
     });
@@ -68,8 +46,8 @@ function queryFinishedGoodRequisition() {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="f" onclick="queryFinishedGoodRequisition()">出庫查詢</button>
+<button data-icon="flat-man" data-theme="f" onclick="queryFinishedGoodRequisition()">領貨單查詢</button>
 </div>
 
 <br><br>
-<div id="finishedGoodRequisitionList"></div>
+<div id="queryFinishedGoodRequisitionList"></div>
