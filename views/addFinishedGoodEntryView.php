@@ -67,7 +67,6 @@ $(document).ready(function() {
         productID = $('select#productInFinishedGoodEntry').find("option:selected").val();
 
         if ("請選擇" != productID) {
-            // For supplier
             $.ajax({
                 url: "/finishedgoodpackaging/queryFinishedGoodPackagingbyProductID/" + productID,
                 success: function(result) {
