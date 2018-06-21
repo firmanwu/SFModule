@@ -7,7 +7,7 @@ function queryFinishedGoodInWarehouse() {
     $.ajax({
         url: "/finishedgoodinwarehouse/queryFinishedGoodInWarehouse",
         success: function(result) {
-            $('#queryFinishedGoodEntryTable').remove();
+            $('#queryFinishedGoodInWarehouseTable').remove();
             var row = JSON.parse(result);
             var header = ["成品入庫單編號", "成品代號", "成品種類", "包裝", "單位重量", "每棧板的成品數量", "儲放區域", "入庫日期", "棧板數", "入庫數量", "入庫重量"];
             var table = $(document.createElement('table'));

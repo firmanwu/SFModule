@@ -114,17 +114,19 @@ class Finishedgoodentry extends CI_Controller {
         $this->load->model('finishedgoodinwarehousemodel');
         $this->load->model('finishedgoodentrymodel');
 
+        $queryData = $this->finishedgoodentrymodel->queryProductPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID);
         $finishedGoodEntryData['finishedGoodEntry'] = $finishedGoodEntryID;
+        $finishedGoodEntryData['product'] = $queryData['product'];
+        $finishedGoodEntryData['packaging'] = $queryData['packaging'];
         $finishedGoodEntryData['storedArea'] = $storedArea;
         // For Taiwan GMT+8
         $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
         $finishedGoodEntryData['storedDate'] = $currentDateTime;
         $finishedGoodEntryData['storedPalletNumber'] = $storedPalletNumber;
         $finishedGoodEntryData['storedPackageNumber'] = $storedPackageNumber;
-
-        $queryData = $this->finishedgoodentrymodel->queryPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID);
         $unitWeight = $queryData['unitWeight'];
         $finishedGoodEntryData['storedWeight'] = $finishedGoodEntryData['storedPackageNumber'] * $unitWeight;
+        $finishedGoodEntryData['remainingPackageNumber'] = $finishedGoodEntryData['storedPackageNumber'];
 
         $result = $this->finishedgoodinwarehousemodel->insertFinishedGoodInWarehouseData($finishedGoodEntryData);
         if (true == $result) {

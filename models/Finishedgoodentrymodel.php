@@ -45,9 +45,12 @@ class Finishedgoodentrymodel extends CI_Model {
         return $result;
     }
 
-    public function queryPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID)
+    public function queryProductPackagingUnitWeightByFinishedGoodEntryIDData($finishedGoodEntryID)
     {
-        $this->db->select('finishedgoodpackaging.unitWeight');
+        $this->db->select('
+            finishedgoodentry.product,
+            finishedgoodentry.packaging,
+            finishedgoodpackaging.unitWeight');
         $this->db->from('finishedgoodentry');
         $this->db->join('finishedgoodpackaging', 'finishedgoodentry.packaging = finishedgoodpackaging.finishedGoodPackagingID');
         $this->db->where('finishedgoodentry.finishedGoodEntryID', $finishedGoodEntryID);
