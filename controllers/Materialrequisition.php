@@ -98,6 +98,14 @@ class Materialrequisition extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryMaterialRequisitionByRequisitionID($materialRequisitionID)
+    {
+        $this->load->model('materialrequisitionmodel');
+
+        $query = $this->materialrequisitionmodel->queryMaterialRequisitionByRequisitionIDData($materialRequisitionID);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteMaterialRequisition($materialRequisitionID)
     {
         $this->load->model('materialrequisitionmodel');

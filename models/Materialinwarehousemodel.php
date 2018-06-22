@@ -90,6 +90,50 @@ class Materialinwarehousemodel extends CI_Model {
         return $result;
     }
 
+    public function queryMaterialInWarehouseDataByMaterialSupplierPackagingAreaData(
+        $materialID,
+        $supplierID,
+        $packagingID,
+        $area)
+    {
+        $this->db->select('
+            materialinwarehouse.storedMaterialID,
+            materialinwarehouse.materialEntry,
+            material.materialName,
+            supplier.supplierName,
+            packaging.packaging,
+            materialinwarehouse.storedArea,
+            materialinwarehouse.storedPackageNumber,
+            materialinwarehouse.remainingPackageNumber');
+        $this->db->from('materialinwarehouse');
+        $this->db->join('material', 'materialinwarehouse.material = material.materialID');
+        $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
+        $this->db->where('materialinwarehouse.material', $materialID);
+        $this->db->where('materialinwarehouse.supplier', $supplierID);
+        $this->db->where('materialinwarehouse.packagingID', $packagingID);
+        $this->db->where('materialinwarehouse.storedArea', $area);
+        $this->db->where('materialinwarehouse.remainingPackageNumber >', 0);
+        $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function queryAreaInWarehouseByMaterialSupplierPackagingIDData(
+        $materialID,
+        $supplierID,
+        $packagingID)
+    {
+        $this->db->select('materialinwarehouse.storedArea');
+        $this->db->from('materialinwarehouse');
+        $this->db->where('material', $materialID);
+        $this->db->where('supplier', $supplierID);
+        $this->db->where('packagingID', $packagingID);
+        $result = $this->db->get();
+
+        return $result;
+    }
+
     public function queryMaterialInWareHouseStoredPackageNumberWeightMoney(
         $material,
         $supplier,
@@ -119,6 +163,13 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->where('material', $material);
         $this->db->where('supplier', $supplier);
         $this->db->where('packagingID', $packaging);
+        $result = $this->db->update('materialinwarehouse');
+    }
+
+    public function updateRemainingPackageNumberData($storedMaterialID, $packageNumber)
+    {
+        $this->db->set('remainingPackageNumber', 'remainingPackageNumber + ' . $packageNumber, FALSE);
+        $this->db->where('storedMaterialID', $storedMaterialID);
         $result = $this->db->update('materialinwarehouse');
     }
 }
