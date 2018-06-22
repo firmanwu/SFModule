@@ -46,7 +46,7 @@ function queryFinishedGoodOutWarehouse() {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="f" onclick="queryFinishedGoodOutWarehouse()">出庫查詢</button>
+<button data-icon="flat-man" data-theme="f" onclick="queryFinishedGoodOutWarehouse()">成品出庫查詢</button>
 </div>
 
 <br><br>

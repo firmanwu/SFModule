@@ -88,14 +88,12 @@ $(document).ready(function() {
             $.ajax({
                 url: "/materialusage/queryMaterialUsageUsingDepartmentByMaterialID/" + materialID,
                 success: function(result) {
-                    var row = JSON.parse(result);
-
-                    $('select#usingDepartmentInMaterialRequisition option').each( function() {
-                        $(this).remove();
+                    $('select#usingDepartmentInMaterialRequisition option').  each( function() {
+                        if ("請選擇" != $(this).text()) {
+                            $(this).remove();
+                        }
                     });
-                    var selectOption = $(document.createElement('option'));
-                    selectOption.text("請選擇");
-                    selectOption.appendTo($('#usingDepartmentInMaterialRequisition'));
+                    var row = JSON.parse(result);
 
                     for(var i in row)
                     {
@@ -206,7 +204,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialRequisitionTable').remove();
                 var row = JSON.parse(result);
-                var header = ["領料單編號", "原料", "供應商", "包裝", "領料時間", "領料單位", "領料人員", "領料數量", "未領料數量"];
+                var header = ["領料單編號", "原料", "供應商", "包裝", "領料時間", "領料單位", "領料人員", "領料數量", "尚未領取數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialRequisitionTable');
                 table.appendTo($('#addMaterialRequisitionList'));
