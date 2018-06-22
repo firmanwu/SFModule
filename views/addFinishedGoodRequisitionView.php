@@ -236,7 +236,7 @@ $(document).ready(function() {
         </select>
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f">
-    包裝
+        包裝
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="packagingInFinishedGoodRequisitionSelection">
         <select id="packagingInFinishedGoodRequisition" name="packagingID">
