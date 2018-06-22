@@ -81,6 +81,22 @@ class Finishedgoodrequisition extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryFinishedGoodRequisitionID()
+    {
+        $this->load->model('finishedgoodrequisitionmodel');
+
+        $query = $this->finishedgoodrequisitionmodel->queryFinishedGoodRequisitionIDData();
+        echo json_encode($query->result_array());
+    }
+
+    public function queryFinishedGoodRequisitionByRequisitionID($requisitionID)
+    {
+        $this->load->model('finishedgoodrequisitionmodel');
+
+        $query = $this->finishedgoodrequisitionmodel->queryFinishedGoodRequisitionByRequisitionIDData($requisitionID);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteFinishedGoodRequisition($finishedGoodRequisitionID)
     {
         $this->load->model('finishedgoodrequisitionmodel');
