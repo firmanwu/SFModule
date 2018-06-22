@@ -14,8 +14,10 @@ class Materialinwarehousemodel extends CI_Model {
         $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
         $materialInWarehouseData['storedDate'] = $currentDateTime;
         $materialInWarehouseData['storedPackageNumber'] = $materialEntryData['expectedStoredPackageNumber'];
+        
         $materialInWarehouseData['storedWeight'] = $materialEntryData['expectedStoredWeight'];
         $materialInWarehouseData['storedMoney'] = $materialEntryData['expectedStoredMoney'];
+        $materialInWarehouseData['remainingPackageNumber'] = $materialEntryData['storedPackageNumber'];
         $result = $this->db->insert('materialinwarehouse', $materialInWarehouseData);
 
         return $materialInWarehouseData;
