@@ -22,7 +22,7 @@ class Finishedgoodoutwarehouse extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '成品出庫'
+            'title' => '新增成品出庫'
         );
 
         $this->load->view('header');
@@ -70,7 +70,7 @@ class Finishedgoodoutwarehouse extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '查詢出庫'
+            'title' => '查詢成品出庫'
         );
 
         $this->load->view('header');
