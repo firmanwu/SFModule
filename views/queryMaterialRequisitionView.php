@@ -3,22 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
 <script>
-function deleteMaterialRequisition(deleteURL) {
-    $.ajax({
-        url: deleteURL,
-        success: function(result) {
-            queryMaterialRequisition();
-        }
-    });
-}
-
 function queryMaterialRequisition() {
     $.ajax({
         url: "/materialrequisition/queryMaterialRequisition",
         success: function(result) {
             $('#queryMaterialRequisitionTable').remove();
             var row = JSON.parse(result);
-            var header = ["領料單編號", "原料", "供應商", "包裝", "領料單位", "領料人員", "領料數量", "未領料數量"];
+            var header = ["領料單編號", "原料", "供應商", "包裝", "領料時間", "領料單位", "領料人員", "領料數量", "未領料數量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialRequisitionTable');
             table.appendTo($('#queryMaterialRequisitionList'));
@@ -37,23 +28,10 @@ function queryMaterialRequisition() {
                 tr.appendTo(table);
                 for(var k in row[j])
                 {
-                    if ("materialRequisitionID" == k) {
-                        var materialRequisitionID = row[j][k];
-                    }
-
                     var td = $(document.createElement('td'));
                     td.text(row[j][k]);
                     td.appendTo(tr);
                 }
-/*
-                var deleteButton = $(document.createElement('button'));
-                var onclickFunction = "deleteMaterialRequisition(\"/materialrequisition/deleteMaterialRequisition/" + materialRequisitionID + "\")";
-                deleteButton.attr({"class":"selfButton", "onclick":onclickFunction});
-                deleteButton.text("刪除");
-
-                td = $(document.createElement('td'));
-                deleteButton.appendTo(td);
-                td.appendTo(tr);*/
             }
         }
     });

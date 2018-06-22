@@ -41,10 +41,11 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['material'] = $this->input->post('material');
         $materialRequisitionData['supplier'] = $this->input->post('supplier');
         $materialRequisitionData['packaging'] = $this->input->post('packaging');
+        $materialRequisitionData['requisitioningDate'] = $this->input->post('requisitioningDate');
         $materialRequisitionData['requisitioningDepartment'] = $this->input->post('requisitioningDepartment');
         $materialRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
         $materialRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
-        $materialRequisitionData['notTakenOutPackageNumber'] = $this->input->post('requisitionedPackageNumber');
+        $materialRequisitionData['notOutPackageNumber'] = $this->input->post('requisitionedPackageNumber');
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
 
@@ -86,6 +87,14 @@ class Materialrequisition extends CI_Controller {
         $this->load->model('materialrequisitionmodel');
 
         $query = $this->materialrequisitionmodel->queryMaterialRequisitionData();
+        echo json_encode($query->result_array());
+    }
+
+    public function queryMaterialRequisitionID()
+    {
+        $this->load->model('materialrequisitionmodel');
+
+        $query = $this->materialrequisitionmodel->queryMaterialRequisitionIDData();
         echo json_encode($query->result_array());
     }
 
