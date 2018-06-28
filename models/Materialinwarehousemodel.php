@@ -17,7 +17,7 @@ class Materialinwarehousemodel extends CI_Model {
         
         $materialInWarehouseData['storedWeight'] = $materialEntryData['expectedStoredWeight'];
         $materialInWarehouseData['storedMoney'] = $materialEntryData['expectedStoredMoney'];
-        $materialInWarehouseData['remainingPackageNumber'] = $materialEntryData['storedPackageNumber'];
+        $materialInWarehouseData['remainingPackageNumber'] = $materialInWarehouseData['storedPackageNumber'];
         $result = $this->db->insert('materialinwarehouse', $materialInWarehouseData);
 
         return $materialInWarehouseData;
