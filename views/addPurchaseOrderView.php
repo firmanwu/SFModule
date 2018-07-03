@@ -4,28 +4,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
-    // Auto-fill in material ID and display material name
-    $.ajax({
-        url: "/material/queryMaterialNameWithID",
-        success: function(result) {
-            var row = JSON.parse(result);
+    function autoFillMaterial() {
+        // Auto-fill in material ID and display material name
+        $.ajax({
+            url: "/material/queryMaterialNameWithID",
+            success: function(result) {
+                var row = JSON.parse(result);
 
-            for(var i in row)
-            {
-                selectOption = $(document.createElement('option'));
-                for(var j in row[i])
+                for(var i in row)
                 {
-                    if ("materialID" == j) {
-                        selectOption.attr('value', row[i][j]);
+                    selectOption = $(document.createElement('option'));
+                    for(var j in row[i])
+                    {
+                        if ("materialID" == j) {
+                            var materialID = row[i][j];
+                            selectOption.attr('value', row[i][j]);
+                        }
+                        var listedName = row[i][j] + "[" + materialID + "]";
+                        if ("materialName" == j) {
+                            selectOption.text(listedName);
+                        }
                     }
-                    if ("materialName" == j) {
-                        selectOption.text(row[i][j]);
-                    }
+                    selectOption.appendTo($('#materialInPurchaseOrder'));
                 }
-                selectOption.appendTo($('#materialInPurchaseOrder'));
             }
-        }
-    });
+        });
+    }
+    autoFillMaterial();
 
     // Auto-fill in supplier and packaging when material ID is selected
     $('#materialInPurchaseOrderSelection').on("change", '#materialInPurchaseOrder', function() {
@@ -107,7 +112,7 @@ $(document).ready(function() {
                 var header = ["採購單編號", "原料", "供應商", "包裝", "進貨條件", "採購數量", "未入料數量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addPurchaseOrderTable');
-                table.appendTo($('#purchaseOrderList'));
+                table.appendTo($('#addPurchaseOrderList'));
                 var tr = $(document.createElement('tr'));
                 tr.appendTo(table);
                 for(var i in header)
@@ -128,6 +133,34 @@ $(document).ready(function() {
             }
         });
         event.preventDefault();
+    });
+
+    // When click reset button
+    $('input[type="reset"]').click(function() {
+        // Remove options of material then create again
+        $('select#materialInPurchaseOrder option').each( function() {
+            if ("請選擇" != $(this).text()) {
+                $(this).remove();
+            }
+        });
+        autoFillMaterial();
+
+        // Remove options of supplier
+        $('select#supplierInPurchaseOrder option').each( function() {
+            if ("請選擇" != $(this).text()) {
+                $(this).remove();
+            }
+        });
+
+        // Remove options of packaging
+        $('select#packagingInPurchaseOrder option').each( function() {
+            if ("請選擇" != $(this).text()) {
+                $(this).remove();
+            }
+        });
+
+        // Remove added purchase order information table
+        $('#addPurchaseOrderTable').remove();
     });
 });
 </script>
@@ -179,11 +212,10 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         採購數量
         <input type="number" name="purchasedPackageNumber">
-    </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d">
-        <input type="submit" value="新增" data-role="button">
+        <input type="submit" value="確定" data-role="button">
+        <input type="reset" value="新增" data-role="button">
     </div>
 </form>
 
 <br><br>
-<div id="purchaseOrderList"></div>
+<div id="addPurchaseOrderList"></div>

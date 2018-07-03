@@ -85,7 +85,7 @@ $(document).ready(function() {
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         價格
-        <input type="number" name="unitPrice">
+        <input type="text" name="unitPrice">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>
