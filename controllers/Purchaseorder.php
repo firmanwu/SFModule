@@ -51,7 +51,7 @@ class Purchaseorder extends CI_Controller {
         // Prepare the data for UI display
         // Get material name by material ID
         $listPreparedData = $this->materialmodel->queryMaterialNameByMaterialID($purchaseOrderData['material']);
-        $purchaseOrderData['material'] = $listPreparedData['materialName'];
+        $purchaseOrderData['material'] = $listPreparedData['materialName'] . "(" . $purchaseOrderData['material'] . ")";
         // Get supplier name by supplier ID
         $listPreparedData = $this->suppliermodel->querySupplierNameBySupplierID($purchaseOrderData['supplier']);
         $purchaseOrderData['supplier'] = $listPreparedData['supplierName'];
