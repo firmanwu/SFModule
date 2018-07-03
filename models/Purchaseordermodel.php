@@ -14,6 +14,7 @@ class Purchaseordermodel extends CI_Model {
     {
         $this->db->select('
             purchaseorder.purchaseOrderID,
+            purchaseorder.material,
             material.materialName,
             supplier.supplierName,
             supplier.unitPrice,

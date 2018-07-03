@@ -66,7 +66,7 @@ $(document).ready(function() {
                 success: function(result) {
                     $('#queryPurchaseOrderTable').remove();
                     var row = JSON.parse(result);
-                    var header = ["採購單編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "採購數量", "未入料數量"];
+                    var header = ["採購單編號", "原料編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "採購數量", "未入料數量"];
                     var table = $(document.createElement('table'));
                     table.attr('id', 'queryPurchaseOrderTable');
                     table.appendTo($('#purchaseOrderList'));
@@ -105,7 +105,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addMaterialEntryTable').remove();
                 var row = JSON.parse(result);
-                var header = ["入料單編號", "倉儲流水號", "採購單編號", "儲放區域", "入料日期", "每棧板的原料數量", "棧板數", "入料數量", "入料重量", "入料金額"];
+                var header = ["入料單編號", "倉儲流水號", "採購單編號", "儲放區域", "入料日期", "棧板數", "入料數量", "入料重量", "入料金額"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addMaterialEntryTable');
                 table.appendTo($('#addMaterialEntryList'));
@@ -185,8 +185,8 @@ $(document).ready(function() {
         <input type="text" name="expectedStoredArea" size=20 maxlength=16>
         入料日期
         <input type="date" name="expectedStoredDate" min="2017-01-01">
-        每棧板的原料數量
-        <input type="number" name="packageNumberOfPallet">
+        入料數量
+        <input type="number" name="expectedStoredPackageNumber">
         棧板數
         <input type="number" name="palletNumber">
         <input type="submit" value="確定" data-role="button">

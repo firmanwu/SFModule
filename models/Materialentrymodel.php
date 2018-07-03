@@ -24,7 +24,6 @@ class Materialentrymodel extends CI_Model {
             supplier.supplierName,
             packaging.packaging,
             packaging.unitWeight,
-            materialentry.packageNumberOfPallet,
             materialentry.palletNumber,
             materialentry.expectedStoredPackageNumber,
             materialentry.expectedStoredWeight,
@@ -87,7 +86,6 @@ class Materialentrymodel extends CI_Model {
     public function updateMaterialEntryPackageNumberData(
         $materialEntryID,
         $storedArea,
-        $packageNumberOfPallet,
         $palletNumber,
         $storedPackageNumber,
         $storedWeight,
@@ -97,7 +95,6 @@ class Materialentrymodel extends CI_Model {
         if (null != $storedArea) {
             $this->db->set('expectedStoredArea', $storedArea);
         }
-        $this->db->set('packageNumberOfPallet', 'packageNumberOfPallet + ' . $packageNumberOfPallet, FALSE);
         $this->db->set('palletNumber', 'palletNumber + ' . $palletNumber, FALSE);
         $this->db->set('expectedStoredPackageNumber', 'expectedStoredPackageNumber + ' . $storedPackageNumber, FALSE);
         $this->db->set('expectedStoredWeight', 'expectedStoredWeight + ' . $storedWeight, FALSE);
