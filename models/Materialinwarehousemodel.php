@@ -23,6 +23,29 @@ class Materialinwarehousemodel extends CI_Model {
         return $materialInWarehouseData;
     }
 
+    public function queryMaterialInWarehouseData()
+    {
+        $this->db->select('
+            materialinwarehouse.material,
+            material.materialName,
+            materialinwarehouse.materialEntry,
+            supplier.supplierName,
+            packaging.packaging,
+            materialinwarehouse.storedArea,
+            materialinwarehouse.storedDate,
+            materialinwarehouse.storedPackageNumber,
+            materialinwarehouse.storedWeight,
+            materialinwarehouse.storedMoney,
+            materialinwarehouse.remainingPackageNumber');
+        $this->db->from('materialinwarehouse');
+        $this->db->join('material', 'materialinwarehouse.material = material.materialID');
+        $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
+        $result = $this->db->get();
+
+        return $result;
+    }
+
     public function queryMaterialNameIDInWarehouseData()
     {
         $this->db->select('

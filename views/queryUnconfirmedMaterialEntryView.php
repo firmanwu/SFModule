@@ -195,6 +195,7 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
 <div data-role="content" role="main">
 <fieldset class="ui-grid-a">
     <div class="ui-block-a"><a href="<?php echo base_url('materialentry/queryUnconfirmedMaterialEntryView');?>" data-role="button" data-icon="flat-bubble" data-theme="d">原料入庫</a></div>
+    <div class="ui-block-b"><a href="<?php echo base_url('materialinwarehouse/queryMaterialInWarehouseView');?>" data-role="button" data-icon="flat-bubble" data-theme="c">查詢原料庫存</a></div>
 </fieldset>
 <hr size="5" noshade>
 
