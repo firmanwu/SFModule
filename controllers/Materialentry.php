@@ -22,7 +22,7 @@ class Materialentry extends CI_Controller {
 
         $data = array(
             'theme' => 'b',
-            'title' => '新增入料'
+            'title' => '新增入料單'
         );
 
         $this->load->view('header');
@@ -70,7 +70,7 @@ class Materialentry extends CI_Controller {
 
         $data = array(
             'theme' => 'b',
-            'title' => "查詢已確認入料"
+            'title' => "查詢已確認入料單"
         );
 
         $this->load->view('header');
