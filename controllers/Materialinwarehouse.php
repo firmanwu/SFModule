@@ -51,6 +51,13 @@ class Materialinwarehouse extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryMaterialInWarehouseDataByMaterialSupplierID($materialID, $supplierID){
+        $this->load->model('materialinwarehousemodel');
+
+        $query = $this->materialinwarehousemodel->queryMaterialInWarehouseDataByMaterialSupplierIDData($materialID, $supplierID);
+        echo json_encode($query->result_array());
+    }
+
     public function queryMaterialInWarehouseDataByMaterialSupplierPackagingID($materialID, $supplierID, $packagingID){
         $this->load->model('materialinwarehousemodel');
 

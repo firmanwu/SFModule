@@ -46,6 +46,26 @@ class Materialinwarehousemodel extends CI_Model {
         return $result;
     }
 
+    public function queryMaterialInWarehouseDataByStoredMaterialID($storedMaterialID)
+    {
+        $this->db->select('
+            materialinwarehouse.material,
+            material.materialName,
+            materialinwarehouse.supplier,
+            supplier.supplierName,
+            materialinwarehouse.packagingID,
+            packaging.packaging,
+            materialinwarehouse.storedArea');
+        $this->db->from('materialinwarehouse');
+        $this->db->join('material', 'materialinwarehouse.material = material.materialID');
+        $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
+        $this->db->where('materialinwarehouse.storedMaterialID', $storedMaterialID);
+        $result = $this->db->get();
+
+        return $result->row_array();
+    }
+
     public function queryMaterialNameIDInWarehouseData()
     {
         $this->db->select('
@@ -83,6 +103,35 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
         $this->db->where('materialinwarehouse.material', $materialID);
         $this->db->where('materialinwarehouse.supplier', $supplierID);
+        $result = $this->db->get();
+
+        return $result;
+    }
+
+    public function queryMaterialInWarehouseDataByMaterialSupplierIDData(
+        $materialID,
+        $supplierID)
+    {
+        $this->db->select('
+            materialinwarehouse.storedMaterialID,
+            materialinwarehouse.materialEntry,
+            materialinwarehouse.material,
+            material.materialName,
+            supplier.supplierName,
+            packaging.packaging,
+            materialinwarehouse.storedArea,
+            materialinwarehouse.storedPackageNumber,
+            materialinwarehouse.storedWeight,
+            materialinwarehouse.remainingPackageNumber');
+        $this->db->from('materialinwarehouse');
+        $this->db->join('material', 'materialinwarehouse.material = material.materialID');
+        $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
+        $this->db->where('materialinwarehouse.material', $materialID);
+        if ("0" != $supplierID) {
+            $this->db->where('materialinwarehouse.supplier', $supplierID);
+        }
+        $this->db->where('materialinwarehouse.remainingPackageNumber >', 0);
         $result = $this->db->get();
 
         return $result;
