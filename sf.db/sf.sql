@@ -724,7 +724,7 @@ CREATE TABLE IF NOT EXISTS `materialinwarehouse` (
 -- 正在傾印表格  sf.materialinwarehouse 的資料：~1 rows (大約)
 /*!40000 ALTER TABLE `materialinwarehouse` DISABLE KEYS */;
 REPLACE INTO `materialinwarehouse` (`storedMaterialID`, `material`, `materialEntry`, `supplier`, `packagingID`, `storedArea`, `storedDate`, `storedPackageNumber`, `storedWeight`, `storedMoney`, `remainingPackageNumber`) VALUES
-	(7, '006', 'EN001', 1, 1, 'A', '2018-07-03 18:48:32', 40, 40, 560, 40);
+	(7, '006', 'EN001', 1, 1, 'A', '2018-07-03 18:48:32', 40, 40, 560, 0);
 /*!40000 ALTER TABLE `materialinwarehouse` ENABLE KEYS */;
 
 -- 傾印  表格 sf.materialoutwarehouse 結構
@@ -751,25 +751,31 @@ CREATE TABLE IF NOT EXISTS `materialoutwarehouse` (
 -- 傾印  表格 sf.materialrequisition 結構
 CREATE TABLE IF NOT EXISTS `materialrequisition` (
   `materialRequisitionID` varchar(256) NOT NULL,
+  `materialInWarehouseID` int(16) unsigned NOT NULL,
   `material` varchar(256) NOT NULL,
   `supplier` int(16) unsigned NOT NULL,
   `packaging` int(16) unsigned NOT NULL,
-  `requisitioningDate` date NOT NULL,
+  `storedArea` varchar(8) NOT NULL,
+  `requisitioningDate` datetime NOT NULL,
   `requisitioningDepartment` varchar(256) NOT NULL,
   `requisitioningMember` varchar(256) NOT NULL,
   `requisitionedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
-  `notOutPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`materialRequisitionID`),
   KEY `requisitionMaterial` (`material`),
   KEY `requisitionSupplierID` (`supplier`),
   KEY `requisitionPackagingID` (`packaging`),
+  KEY `requisitionMaterialInWarehouseId` (`materialInWarehouseID`),
   CONSTRAINT `requisitionMaterial` FOREIGN KEY (`material`) REFERENCES `material` (`materialID`),
+  CONSTRAINT `requisitionMaterialInWarehouseId` FOREIGN KEY (`materialInWarehouseID`) REFERENCES `materialinwarehouse` (`storedMaterialID`),
   CONSTRAINT `requisitionPackagingID` FOREIGN KEY (`packaging`) REFERENCES `packaging` (`packagingID`),
   CONSTRAINT `requisitionSupplierID` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 正在傾印表格  sf.materialrequisition 的資料：~0 rows (大約)
 /*!40000 ALTER TABLE `materialrequisition` DISABLE KEYS */;
+REPLACE INTO `materialrequisition` (`materialRequisitionID`, `materialInWarehouseID`, `material`, `supplier`, `packaging`, `storedArea`, `requisitioningDate`, `requisitioningDepartment`, `requisitioningMember`, `requisitionedPackageNumber`) VALUES
+	('RQ001', 7, '006', 1, 1, 'A', '2018-07-05 17:51:17', '一課', '甲員', 20),
+	('RQ002', 7, '006', 1, 1, 'A', '2018-07-05 18:00:28', '二課', '乙員', 20);
 /*!40000 ALTER TABLE `materialrequisition` ENABLE KEYS */;
 
 -- 傾印  表格 sf.materialusage 結構
