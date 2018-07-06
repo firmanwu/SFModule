@@ -178,7 +178,6 @@ class Finishedgoodentry extends CI_Controller {
     {
         $this->load->helper('file');
         $this->load->helper('date');
-        $this->load->helper('string');
 
         $dateString = '%Y%m%d';
         $time = time();
@@ -190,7 +189,19 @@ class Finishedgoodentry extends CI_Controller {
                 $newSerialNumber = $currentDate . "001";
             }
             else {
-                $newSerialNumber = increment_string($currentSerialNumber, '');
+                $number = str_replace($currentDate, '', $currentSerialNumber);
+                $number = (int)$number + 1;
+                $length = strlen($number);
+                if (3 >= $length) {
+                    for($i = 0; $i < (3 - $length); $i++)
+                    {
+                        $number = '0' . $number;
+                    }
+                }
+                else {
+                    $number = '0' . $number;
+                }
+                $newSerialNumber = $currentDate . $number;
             }
             write_file($fileName, $newSerialNumber);
         }
