@@ -47,7 +47,7 @@ function queryMaterialInWarehouse() {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="d" onclick="queryMaterialInWarehouse()">庫存查詢</button>
+<button data-icon="flat-man" data-theme="d" onclick="queryMaterialInWarehouse()">原料庫存查詢</button>
 </div>
 
 <br><br>
