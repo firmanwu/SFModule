@@ -65,9 +65,9 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['material'] = $queryData['materialName'] . "(" . $queryData['material'] . ")";
         $materialRequisitionData['supplier'] = $queryData['supplierName'];
         $materialRequisitionData['packaging'] = $queryData['packaging'];
-        //if (true == $result) {
+        if (true == $result) {
             echo json_encode($materialRequisitionData);
-        //}
+        }
     }
 
     public function queryMaterialRequisitionView()
