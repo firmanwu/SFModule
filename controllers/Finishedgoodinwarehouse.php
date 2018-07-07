@@ -13,7 +13,7 @@ class Finishedgoodinwarehouse extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '查詢成品庫存'
+            'title' => '成品入庫管理'
         );
 
         $this->load->view('header');

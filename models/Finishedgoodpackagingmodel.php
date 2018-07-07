@@ -29,13 +29,8 @@ class Finishedgoodpackagingmodel extends CI_Model {
     {
         $this->db->select('
             finishedgoodpackaging.finishedGoodPackagingID,
-            finishedgoodpackaging.product,
-            finishedgood.finishedGoodType,
-            finishedgoodpackaging.packaging,
-            finishedgoodpackaging.unitWeight,
-            finishedgoodpackaging.packageNumberOfPallet');
+            finishedgoodpackaging.packaging');
         $this->db->from('finishedgoodpackaging');
-        $this->db->join('finishedgood', 'finishedgoodpackaging.product = finishedgood.finishedGoodID');
         $this->db->where('finishedgoodpackaging.product', $productID);
         $result = $this->db->get();
 
@@ -45,11 +40,9 @@ class Finishedgoodpackagingmodel extends CI_Model {
     public function queryFinishedGoodPackagingbyPackagingIDData($finishedGoodPackagingID)
     {
         $this->db->select('
-            finishedgoodpackaging.product,
             finishedgood.finishedGoodType,
             finishedgoodpackaging.packaging,
-            finishedgoodpackaging.unitWeight,
-            finishedgoodpackaging.packageNumberOfPallet');
+            finishedgoodpackaging.unitWeight');
         $this->db->from('finishedgoodpackaging');
         $this->db->join('finishedgood', 'finishedgoodpackaging.product = finishedgood.finishedGoodID');
         $this->db->where('finishedgoodpackaging.finishedGoodPackagingID', $finishedGoodPackagingID);

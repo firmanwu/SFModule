@@ -22,7 +22,7 @@ class Finishedgoodentry extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '新增入庫單'
+            'title' => '成品入庫管理'
         );
 
         $this->load->view('header');
@@ -34,30 +34,32 @@ class Finishedgoodentry extends CI_Controller {
     public function addFinishedGoodEntry()
     {
         $this->load->model('finishedgoodpackagingmodel');
-        $this->load->model('finishedgoodentrymodel');
+        $this->load->model('finishedgoodinwarehousemodel');
 
         $finishedGoodEntryData['finishedGoodEntryID'] = $this->input->post('finishedGoodEntryID');
         $finishedGoodEntryData['serialNumber'] = $this->input->post('serialNumber');
+        $finishedGoodEntryData['batchNumber'] = $this->input->post('batchNumber');
         $finishedGoodEntryData['product'] = $this->input->post('product');
-        $finishedGoodEntryData['packaging'] = $this->input->post('packaging');
+        $finishedGoodEntryData['packagingID'] = $this->input->post('packagingID');
         $finishedGoodEntryData['status'] = $this->input->post('status');
-        $finishedGoodEntryData['expectedStoredArea'] = $this->input->post('expectedStoredArea');
-        $finishedGoodEntryData['expectedStoredDate'] = $this->input->post('expectedStoredDate');
+        $finishedGoodEntryData['storedArea'] = $this->input->post('storedArea');
+        // For Taiwan GMT+8
+        $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
+        $finishedGoodEntryData['storedDate'] = $currentDateTime;
         $finishedGoodEntryData['palletNumber'] = $this->input->post('palletNumber');
-        $finishedGoodEntryData['expectedStoredPackageNumber'] = $this->input->post('expectedStoredPackageNumber');
+        $finishedGoodEntryData['storedPackageNumber'] = $this->input->post('storedPackageNumber');
 
-        $queryData = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingbyPackagingIDData($finishedGoodEntryData['packaging']);
+        $queryData = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingbyPackagingIDData($finishedGoodEntryData['packagingID']);
         $unitWeight = $queryData['unitWeight'];
 
-        $finishedGoodEntryData['expectedStoredWeight'] = $finishedGoodEntryData['expectedStoredPackageNumber'] * $unitWeight;
-        $finishedGoodEntryData['notEnteredPalletNumber'] = $finishedGoodEntryData['palletNumber'];
-        $finishedGoodEntryData['notEnteredPackageNumber'] = $finishedGoodEntryData['expectedStoredPackageNumber'];
+        $finishedGoodEntryData['storedWeight'] = $finishedGoodEntryData['storedPackageNumber'] * $unitWeight;
+        $finishedGoodEntryData['remainingPackageNumber'] = $finishedGoodEntryData['storedPackageNumber'];
 
-        $result = $this->finishedgoodentrymodel->insertFinishedGoodEntryData($finishedGoodEntryData);
+        $result = $this->finishedgoodinwarehousemodel->insertFinishedGoodInWarehouseData($finishedGoodEntryData);
 
         // Make the data for displaying the result
         $finishedGoodEntryData['product'] = $queryData['finishedGoodType'] . '(' . $finishedGoodEntryData['product'] . ')';
-        $finishedGoodEntryData['packaging'] = $queryData['packaging'] . '(' . $unitWeight . '/' . $queryData['packageNumberOfPallet'] . ')';
+        $finishedGoodEntryData['packagingID'] = $queryData['packaging'];
         if (true == $result) {
             echo json_encode($finishedGoodEntryData);
         }

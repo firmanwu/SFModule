@@ -73,6 +73,14 @@ class Finishedgoodpackaging extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryFinishedGoodPackagingID()
+    {
+        $this->load->model('finishedgoodpackagingmodel');
+
+        $query = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingbyPackagingIDData('72');
+        echo json_encode($query);
+    }
+
     public function queryFinishedGoodPackagingbyProductID($productID)
     {
         $this->load->model('finishedgoodpackagingmodel');
