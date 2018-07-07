@@ -28,9 +28,6 @@ function queryMaterialRequisition() {
                 tr.appendTo(table);
                 for(var k in row[j])
                 {
-                    if ("materialInWarehouseID" == k) {
-                        continue;
-                    }
                     var td = $(document.createElement('td'));
                     td.text(row[j][k]);
                     td.appendTo(tr);
