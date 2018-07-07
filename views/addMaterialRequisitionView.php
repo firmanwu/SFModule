@@ -142,7 +142,7 @@ function listMaterialRequisition(storedMaterialID) {
     input.appendTo(divForm);
 
     div = $(document.createElement('div'));
-    div.html("入料數量");
+    div.html("領料數量");
     div.appendTo(divForm);
 
     var input = $(document.createElement('input'));
