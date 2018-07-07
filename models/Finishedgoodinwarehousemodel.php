@@ -13,17 +13,19 @@ class Finishedgoodinwarehousemodel extends CI_Model {
     public function queryFinishedGoodInWarehouseData()
     {
         $this->db->select('
-            finishedgoodinwarehouse.finishedGoodEntry,
+            finishedgoodinwarehouse.finishedGoodEntryID,
+            finishedgoodinwarehouse.serialNumber,
+            finishedgoodinwarehouse.batchNumber,
             finishedgoodinwarehouse.product,
             finishedgood.finishedGoodType,
-            finishedgoodinwarehouse.packagingID,
-            finishedgoodpackaging.unitWeight,
-            finishedgoodpackaging.packageNumberOfPallet,
+            finishedgoodpackaging.packaging,
+            finishedgoodinwarehouse.status,
             finishedgoodinwarehouse.storedArea,
             finishedgoodinwarehouse.storedDate,
-            finishedgoodinwarehouse.storedPalletNumber,
+            finishedgoodinwarehouse.palletNumber,
             finishedgoodinwarehouse.storedPackageNumber,
-            finishedgoodinwarehouse.storedWeight');
+            finishedgoodinwarehouse.storedWeight,
+            finishedgoodinwarehouse.remainingPackageNumber');
         $this->db->from('finishedgoodinwarehouse');
         $this->db->join('finishedgood', 'finishedgoodinwarehouse.product = finishedgood.finishedGoodID');
         $this->db->join('finishedgoodpackaging', 'finishedgoodinwarehouse.packagingID = finishedgoodpackaging.finishedGoodPackagingID');
