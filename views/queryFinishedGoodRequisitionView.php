@@ -9,7 +9,7 @@ function queryFinishedGoodRequisition() {
         success: function(result) {
             $('#queryFinishedGoodRequisitionTable').remove();
             var row = JSON.parse(result);
-            var header = ["領貨單編號", "成品代號", "包裝", "領貨日期", "領貨單位", "領貨人員", "領貨數量", "尚未領取數量"];
+            var header = ["領貨單編號", "成品代號", "成品", "包裝", "儲放區域", "領貨日期", "領貨單位", "領貨人員", "領貨數量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodRequisitionTable');
             table.appendTo($('#queryFinishedGoodRequisitionList'));

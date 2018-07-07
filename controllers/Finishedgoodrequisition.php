@@ -22,7 +22,7 @@ class Finishedgoodrequisition extends CI_Controller {
 
         $data = array(
             'theme' => 'd',
-            'title' => '新增領貨單'
+            'title' => '新增領貨'
         );
 
         $this->load->view('header');
@@ -31,23 +31,36 @@ class Finishedgoodrequisition extends CI_Controller {
         $this->load->view('footer');
     }
 
-    public function addFinishedGoodRequisition()
+    public function addFinishedGoodRequisition(
+        $storedFinishedGoodID,
+        $finishedGoodRequisitionID,
+        $requisitioningDepartment,
+        $requisitioningMember,
+        $requisitionedPackageNumber
+    )
     {
         $this->load->model('finishedgoodrequisitionmodel');
-        $this->load->model('finishedgoodpackagingmodel');
+        $this->load->model('finishedgoodinwarehousemodel');
 
-        $finishedGoodRequisitionData['finishedGoodRequisitionID'] = $this->input->post('finishedGoodRequisitionID');
-        $finishedGoodRequisitionData['product'] = $this->input->post('product');
-        $finishedGoodRequisitionData['packagingID'] = $this->input->post('packagingID');
-        $finishedGoodRequisitionData['requisitioningDate'] = $this->input->post('requisitioningDate');
-        $finishedGoodRequisitionData['requisitioningDepartment'] = $this->input->post('requisitioningDepartment');
-        $finishedGoodRequisitionData['requisitioningMember'] = $this->input->post('requisitioningMember');
-        $finishedGoodRequisitionData['requisitionedPackageNumber'] = $this->input->post('requisitionedPackageNumber');
-        $finishedGoodRequisitionData['notOutPackageNumber'] = $finishedGoodRequisitionData['requisitionedPackageNumber'];
+        $finishedGoodRequisitionData['finishedGoodRequisitionID'] = $finishedGoodRequisitionID;
+        $finishedGoodRequisitionData['productInWarehouseID'] = $storedFinishedGoodID;
+
+        $queryData = $this->finishedgoodinwarehousemodel->queryFinishedGoodInWarehouseDataByStoredFinishedGoodID($storedFinishedGoodID);
+        $finishedGoodRequisitionData['product'] = $queryData['product'];
+        $finishedGoodRequisitionData['packagingID'] = $queryData['packagingID'];
+        $finishedGoodRequisitionData['storedArea'] = $queryData['storedArea'];
+        // For Taiwan GMT+8
+        $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
+        $finishedGoodRequisitionData['requisitioningDate'] = $currentDateTime;
+        $finishedGoodRequisitionData['requisitioningDepartment'] = urldecode($requisitioningDepartment);
+        $finishedGoodRequisitionData['requisitioningMember'] = urldecode($requisitioningMember);
+        $finishedGoodRequisitionData['requisitionedPackageNumber'] = $requisitionedPackageNumber;
 
         $result = $this->finishedgoodrequisitionmodel->insertFinishedGoodRequisitionData($finishedGoodRequisitionData);
 
-        $queryData = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingByPackagingID($finishedGoodRequisitionData['packagingID']);
+        $this->finishedgoodinwarehousemodel->updateRemainingPackageNumberData($storedFinishedGoodID, (-$requisitionedPackageNumber));
+
+        $finishedGoodRequisitionData['product'] = $queryData['finishedGoodType'] . "(" . $queryData['product'] . ")";
         $finishedGoodRequisitionData['packagingID'] = $queryData['packaging'];
         if (true == $result) {
             echo json_encode($finishedGoodRequisitionData);

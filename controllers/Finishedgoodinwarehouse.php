@@ -30,11 +30,19 @@ class Finishedgoodinwarehouse extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function queryProductInWarehouse()
+    public function queryProductNameIDInWarehouse()
     {
         $this->load->model('finishedgoodinwarehousemodel');
 
-        $query = $this->finishedgoodinwarehousemodel->queryProductInWarehouseData();
+        $query = $this->finishedgoodinwarehousemodel->queryProductNameIDInWarehouseData();
+        echo json_encode($query->result_array());
+    }
+
+    public function queryFinishedGoodInWarehouseByProductPackagingID($productID,$packagingID)
+    {
+        $this->load->model('finishedgoodinwarehousemodel');
+
+        $query = $this->finishedgoodinwarehousemodel->queryFinishedGoodInWarehouseByProductPackagingIDData($productID, $packagingID);
         echo json_encode($query->result_array());
     }
 
