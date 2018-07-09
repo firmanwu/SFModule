@@ -27,7 +27,6 @@ class Materialentrymodel extends CI_Model {
             materialentry.palletNumber,
             materialentry.expectedStoredPackageNumber,
             materialentry.expectedStoredWeight,
-            materialusage.usingDepartment,
             supplier.unitPrice,
             materialentry.expectedStoredMoney,
             materialentry.confirmation');
@@ -36,7 +35,6 @@ class Materialentrymodel extends CI_Model {
         $this->db->join('material', 'purchaseorder.material = material.materialID');
         $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
         $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
-        $this->db->join('materialusage', 'purchaseorder.material = materialusage.material');
         if ("0" != $materialEntryID) {
             $this->db->where('materialentry.materialEntryID', $materialEntryID);
         }

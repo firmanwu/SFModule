@@ -114,7 +114,7 @@ function queryUnconfirmedMaterialEntry(isMaterialEntryID) {
             $('#queryMaterialEntryTable').remove();
             $('#reviseMaterialEntryForm').remove();
             var row = JSON.parse(result);
-            var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "進貨條件", "進貨日期", "供應商", "包裝", "單位重量", "棧板數", "入料數量", "入料重量", "使用單位", "單價", "入料金額", "確認", "修改"];
+            var header = ["進貨單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "進貨條件", "進貨日期", "供應商", "包裝", "單位重量", "棧板數", "入料數量", "入料重量", "單價", "入料金額", "確認", "修改"];
 
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialEntryTable');
