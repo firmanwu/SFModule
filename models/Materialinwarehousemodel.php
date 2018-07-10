@@ -74,6 +74,7 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->distinct();
         $this->db->from('materialinwarehouse');
         $this->db->join('material', 'materialinwarehouse.material = material.materialID');
+        $this->db->where('materialinwarehouse.remainingPackageNumber >', 0);
         $result = $this->db->get();
 
         return $result;
