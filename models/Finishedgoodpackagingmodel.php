@@ -13,6 +13,14 @@ class Finishedgoodpackagingmodel extends CI_Model {
     public function queryFinishedGoodPackagingData()
     {
         $result = $this->db->get('finishedgoodpackaging');
+        $this->db->select('
+            finishedgood.finishedGoodType,
+            finishedgoodpackaging.product,
+            finishedgoodpackaging.packaging,
+            finishedgoodpackaging.unitWeight');
+        $this->db->from('finishedgoodpackaging');
+        $this->db->join('finishedgood', 'finishedgoodpackaging.product = finishedgood.finishedGoodID');
+        $result = $this->db->get();
 
         return $result;
     }

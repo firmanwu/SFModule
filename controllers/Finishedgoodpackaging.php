@@ -38,7 +38,6 @@ class Finishedgoodpackaging extends CI_Controller {
         $finishedGoodPackagingData['product'] = $this->input->post('product');
         $finishedGoodPackagingData['packaging'] = $this->input->post('packaging');
         $finishedGoodPackagingData['unitWeight'] = $this->input->post('unitWeight');
-        $finishedGoodPackagingData['packageNumberOfPallet'] = $this->input->post('packageNumberOfPallet');
 
         $result = $this->finishedgoodpackagingmodel->insertFinishedGoodPackagingData($finishedGoodPackagingData);
         if (true == $result) {

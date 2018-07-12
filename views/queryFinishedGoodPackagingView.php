@@ -18,7 +18,7 @@ function queryFinishedGoodPackaging() {
         success: function(result) {
             $('#queryFinishedGoodPackagingTable').remove();
             var row = JSON.parse(result);
-            var header = ["成品", "包裝", "單位重量", "每棧板的成品數量"];
+            var header = ["成品", "包裝", "單位重量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodPackagingTable');
             table.appendTo($('#finishedGoodPackagingList'));
@@ -37,8 +37,16 @@ function queryFinishedGoodPackaging() {
                 tr.appendTo(table);
                 for(var k in row[j])
                 {
-                    if ("finishedGoodPackagingID" == k) {
-                        var finishedGoodPackagingID = row[j][k];
+                    if ("finishedGoodType" == k) {
+                        var productText = row[j][k];
+                        continue;
+                    }
+                    if ("product" == k) {
+                        productText = productText + "(" + row[j][k] + ")";
+
+                        var td = $(document.createElement('td'));
+                        td.text(productText);
+                        td.appendTo(tr);
                         continue;
                     }
 

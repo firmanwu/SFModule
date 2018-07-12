@@ -39,7 +39,7 @@ $(document).ready(function() {
             success: function(result) {
                 $('#addFinishedGoodPackagingTable').remove();
                 var row = JSON.parse(result);
-                var header = ["成品", "包裝", "單位重量", "每棧板的成品數量"];
+                var header = ["成品", "包裝", "單位重量"];
                 var table = $(document.createElement('table'));
                 table.attr('id', 'addFinishedGoodPackagingTable');
                 table.appendTo($('#finishedGoodPackagingList'));
@@ -88,8 +88,6 @@ $(document).ready(function() {
         <input type="text" name="packaging" size=20 maxlength=16>
         單位重量
         <input type="number" name="unitWeight">
-        每棧板的成品數量
-        <input type="number" name="packageNumberOfPallet">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>
