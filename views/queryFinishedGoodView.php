@@ -18,7 +18,7 @@ function queryFinishedGood() {
         success: function(result) {
             $('#queryFinishedGoodTable').remove();
             var row = JSON.parse(result);
-            var header = ["成品代號", "成品種類", "總數量", "總重量"];
+            var header = ["成品代號", "成品種類"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryFinishedGoodTable');
             table.appendTo($('#finishedGoodList'));
