@@ -16,10 +16,12 @@ function autoFillMaterial() {
                 for(var j in row[i])
                 {
                     if ("material" == j) {
+                        var materialID = row[i][j];
                         selectOption.attr('value', row[i][j]);
                     }
+                    var listedName = row[i][j] + "[" + materialID + "]";
                     if ("materialName" == j) {
-                        selectOption.text(row[i][j]);
+                        selectOption.text(listedName);
                     }
                 }
                 selectOption.appendTo($('#materialInMaterialRequisition'));
