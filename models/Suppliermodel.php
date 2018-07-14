@@ -15,6 +15,7 @@ class Suppliermodel extends CI_Model {
         $this->db->select('
             supplier.supplierID,
             supplier.supplierName,
+            supplier.material,
             material.materialName,
             supplier.unitPrice');
         $this->db->from('supplier');

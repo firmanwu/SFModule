@@ -18,7 +18,6 @@ function querySupplier() {
         success: function(result) {
             $('#querySupplierTable').remove();
             var row = JSON.parse(result);
-            //var header = ["供應商", "產品", "包裝", "單位重量", "價格", "刪除"];
             var header = ["供應商", "原料", "單價"];
             var table = $(document.createElement('table'));
             table.attr('id', 'querySupplierTable');
@@ -40,6 +39,17 @@ function querySupplier() {
                 {
                     if ("supplierID" == k) {
                         var supplierID = row[j][k];
+                        continue;
+                    }
+                    if ("material" == k) {
+                        var materialID = row[j][k];
+                        continue;
+                    }
+                    if ("materialName" == k) {
+                        var listedName = row[j][k] + "[" + materialID + "]";
+                        var td = $(document.createElement('td'));
+                        td.text(listedName);
+                        td.appendTo(tr);
                         continue;
                     }
 
