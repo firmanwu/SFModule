@@ -18,7 +18,6 @@ function queryMaterialUsage() {
         success: function(result) {
             $('#queryMaterialUsageTable').remove();
             var row = JSON.parse(result);
-            //var header = ["原料", "使用單位", "刪除"];
             var header = ["原料", "使用單位"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialUsageTable');
@@ -40,6 +39,17 @@ function queryMaterialUsage() {
                 {
                     if ("materialUsageID" == k) {
                         var materialUsageID = row[j][k];
+                        continue;
+                    }
+                    if ("material" == k) {
+                        var materialID = row[j][k];
+                        continue;
+                    }
+                    if ("materialName" == k) {
+                        var listedName = row[j][k] + "[" + materialID + "]";
+                        var td = $(document.createElement('td'));
+                        td.text(listedName);
+                        td.appendTo(tr);
                         continue;
                     }
 
