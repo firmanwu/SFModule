@@ -14,6 +14,7 @@ class Packagingmodel extends CI_Model {
     {
         $this->db->select('
             packaging.packagingID,
+            packaging.material,
             material.materialName,
             packaging.packaging,
             packaging.unitWeight');

@@ -15,10 +15,12 @@ $(document).ready(function() {
                 for(var j in row[i])
                 {
                     if ("materialID" == j) {
+                        var materialID = row[i][j];
                         selectOption.attr('value', row[i][j]);
                     }
+                    var listedName = row[i][j] + "[" + materialID + "]";
                     if ("materialName" == j) {
-                        selectOption.text(row[i][j]);
+                        selectOption.text(listedName);
                     }
                 }
                 selectOption.appendTo($('#materialInPackaging'));
@@ -84,7 +86,7 @@ $(document).ready(function() {
         包裝
         <input type="text" name="packaging" size=20 maxlength=16>
         單位重量
-        <input type="number" name="unitWeight">
+        <input type="text" name="unitWeight">
         <input type="submit" value="新增" data-role="button">
     </div>
 </form>

@@ -18,7 +18,6 @@ function queryPackaging() {
         success: function(result) {
             $('#queryPackagingTable').remove();
             var row = JSON.parse(result);
-            //var header = ["採購單編號", "原料", "進貨條件", "刪除];
             var header = ["原料", "包裝", "單位重量"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryPackagingTable');
@@ -40,6 +39,17 @@ function queryPackaging() {
                 {
                     if ("packagingID" == k) {
                         var packagingID = row[j][k];
+                        continue;
+                    }
+                    if ("material" == k) {
+                        var materialID = row[j][k];
+                        continue;
+                    }
+                    if ("materialName" == k) {
+                        var listedName = row[j][k] + "[" + materialID + "]";
+                        var td = $(document.createElement('td'));
+                        td.text(listedName);
+                        td.appendTo(tr);
                         continue;
                     }
 
