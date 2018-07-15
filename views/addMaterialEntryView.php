@@ -9,6 +9,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/materialentry/getSerialNumber",
             success: function(serialNumber) {
+                $("input[name = 'materialEntryID']").attr({"value":"B" + serialNumber, "readonly":true});
                 $("input[name = 'serialNumber']").attr({"value":serialNumber, "readonly":true});
             }
         });
