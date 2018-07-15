@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `finishedgoodentry` (
   `storedArea` varchar(8) NOT NULL,
   `storedDate` date NOT NULL,
   `palletNumber` int(8) unsigned NOT NULL DEFAULT 0,
-  `storedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `storedPackageNumber` float unsigned NOT NULL DEFAULT 0,
   `storedWeight` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`finishedGoodEntryID`),
   KEY `entryFinishedGood` (`product`),
@@ -217,9 +217,9 @@ CREATE TABLE IF NOT EXISTS `finishedgoodinwarehouse` (
   `storedArea` varchar(8) NOT NULL,
   `storedDate` datetime NOT NULL,
   `palletNumber` int(8) unsigned NOT NULL DEFAULT 0,
-  `storedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `storedPackageNumber` float unsigned NOT NULL DEFAULT 0,
   `storedWeight` float unsigned NOT NULL DEFAULT 0,
-  `remainingPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `remainingPackageNumber` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`storedFinishedGoodID`),
   KEY `storedFinishedGoodID` (`product`),
   KEY `storedFinishedGoodPackagingID` (`packagingID`),
@@ -242,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `finishedgoodoutwarehouse` (
   `takenOutDate` datetime NOT NULL,
   `takingOutDepartment` varchar(256) NOT NULL,
   `takingOutMember` varchar(256) NOT NULL,
-  `takenOutPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `takenOutPackageNumber` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`takenOutFinishedGoodID`),
   KEY `outFinishedGoodRequisitionID` (`finishedGoodRequisition`),
   KEY `outFinishedGoodInWarehouseID` (`inWarehouseID`),
@@ -514,7 +514,7 @@ CREATE TABLE IF NOT EXISTS `finishedgoodrequisition` (
   `requisitioningDate` datetime NOT NULL,
   `requisitioningDepartment` varchar(256) NOT NULL,
   `requisitioningMember` varchar(256) NOT NULL,
-  `requisitionedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `requisitionedPackageNumber` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`finishedGoodRequisitionID`),
   KEY `requisitionProduct` (`product`),
   KEY `requisitionPackaging` (`packagingID`),
@@ -535,13 +535,13 @@ REPLACE INTO `finishedgoodrequisition` (`finishedGoodRequisitionID`, `productInW
 CREATE TABLE IF NOT EXISTS `material` (
   `materialID` varchar(256) NOT NULL,
   `materialName` varchar(256) NOT NULL,
-  `totalPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `totalPackageNumber` float unsigned NOT NULL DEFAULT 0,
   `totalWeight` float unsigned NOT NULL DEFAULT 0,
   `totalMoney` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`materialID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  sf.material 的資料：~162 rows (大約)
+-- 正在傾印表格  sf.material 的資料：~160 rows (大約)
 /*!40000 ALTER TABLE `material` DISABLE KEYS */;
 REPLACE INTO `material` (`materialID`, `materialName`, `totalPackageNumber`, `totalWeight`, `totalMoney`) VALUES
 	('006', '硫酸鋁', 1040, 1040, 14560),
@@ -703,8 +703,7 @@ REPLACE INTO `material` (`materialID`, `materialName`, `totalPackageNumber`, `to
 	('AA', '217AA', 0, 0, 0),
 	('test01', 'test01', 200, 200, 2000),
 	('test02', 'test02', 150, 150, 1650),
-	('test03', 'test03', 0, 0, 0),
-	('Z205', '測試項', 202, 27775, 791588);
+	('test03', 'test03', 0, 0, 0);
 /*!40000 ALTER TABLE `material` ENABLE KEYS */;
 
 -- 傾印  表格 sf.materialentry 結構
@@ -716,7 +715,7 @@ CREATE TABLE IF NOT EXISTS `materialentry` (
   `expectedStoredArea` varchar(8) NOT NULL,
   `expectedStoredDate` date NOT NULL,
   `palletNumber` int(8) unsigned NOT NULL DEFAULT 0,
-  `expectedStoredPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `expectedStoredPackageNumber` float unsigned NOT NULL DEFAULT 0,
   `expectedStoredWeight` float unsigned NOT NULL DEFAULT 0,
   `expectedStoredMoney` float unsigned NOT NULL DEFAULT 0,
   `confirmation` tinyint(4) NOT NULL DEFAULT 0,
@@ -885,7 +884,7 @@ CREATE TABLE IF NOT EXISTS `materialinwarehouse` (
   `packagingID` int(16) unsigned NOT NULL,
   `storedArea` varchar(8) NOT NULL,
   `storedDate` datetime NOT NULL,
-  `storedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `storedPackageNumber` float unsigned NOT NULL DEFAULT 0,
   `storedWeight` float unsigned NOT NULL DEFAULT 0,
   `storedMoney` float unsigned NOT NULL DEFAULT 0,
   `remainingPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
@@ -1082,7 +1081,7 @@ CREATE TABLE IF NOT EXISTS `materialrequisition` (
   `requisitioningDate` datetime NOT NULL,
   `requisitioningDepartment` varchar(256) NOT NULL,
   `requisitioningMember` varchar(256) NOT NULL,
-  `requisitionedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `requisitionedPackageNumber` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`materialRequisitionID`),
   KEY `requisitionMaterial` (`material`),
   KEY `requisitionSupplierID` (`supplier`),
@@ -1647,8 +1646,8 @@ CREATE TABLE IF NOT EXISTS `purchaseorder` (
   `packaging` int(16) unsigned NOT NULL,
   `purchaseCondition` varchar(256) NOT NULL,
   `issueDate` datetime NOT NULL,
-  `purchasedPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
-  `notEnteredPackageNumber` int(8) unsigned NOT NULL DEFAULT 0,
+  `purchasedPackageNumber` float unsigned NOT NULL DEFAULT 0,
+  `notEnteredPackageNumber` float unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`purchaseOrderID`),
   KEY `purchaseOrderMaterialID` (`material`),
   KEY `purchaseOrderSupplierID` (`supplier`),
@@ -1658,7 +1657,7 @@ CREATE TABLE IF NOT EXISTS `purchaseorder` (
   CONSTRAINT `purchaseOrderSupplierID` FOREIGN KEY (`supplier`) REFERENCES `supplier` (`supplierID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在傾印表格  sf.purchaseorder 的資料：~164 rows (大約)
+-- 正在傾印表格  sf.purchaseorder 的資料：~7 rows (大約)
 /*!40000 ALTER TABLE `purchaseorder` DISABLE KEYS */;
 REPLACE INTO `purchaseorder` (`purchaseOrderID`, `material`, `supplier`, `packaging`, `purchaseCondition`, `issueDate`, `purchasedPackageNumber`, `notEnteredPackageNumber`) VALUES
 	('a0706001', '326', 207, 200, '一般', '0000-00-00 00:00:00', 643, 0),
