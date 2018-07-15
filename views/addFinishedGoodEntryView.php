@@ -9,6 +9,7 @@ $(document).ready(function() {
         $.ajax({
             url: "/finishedgoodentry/getSerialNumber",
             success: function(serialNumber) {
+                $("input[name = 'finishedGoodEntryID']").attr({"value":"D" + serialNumber, "readonly":true});
                 $("input[name = 'serialNumber']").attr({"value":serialNumber, "readonly":true});
             }
         });
