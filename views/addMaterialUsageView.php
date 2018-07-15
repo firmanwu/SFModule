@@ -32,7 +32,7 @@ $(document).ready(function() {
     autoFillMaterial();
 
     // Display added using department information when material selected
-    $('#materialSelection').on("change", '#materialInMaterialUsage', function() {
+    $('#materialInMaterialUsageSelection').on("change", '#materialInMaterialUsage', function() {
         var materialID = $('select#materialInMaterialUsage').find("option:selected").val();
 
         if ("請選擇" != materialID) {
@@ -121,6 +121,8 @@ $(document).ready(function() {
 
         // Remove added using department information table
         $('#addedUsingDepartmentTable').remove();
+        // Remove current adding material usage information table
+        $('#addMaterialUsageTable').remove();
     });
 });
 </script>
@@ -136,7 +138,7 @@ $(document).ready(function() {
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         原料
     </div>
-    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialSelection">
+    <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialInMaterialUsageSelection">
         <select id="materialInMaterialUsage" name="material">
         <option>請選擇</option>
         </select>
