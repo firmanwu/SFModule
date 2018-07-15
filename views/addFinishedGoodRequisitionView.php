@@ -106,6 +106,10 @@ function addFinishedGoodRequisition(storedFinishedGoodID) {
                 td.text(row[j]);
                 td.appendTo(tr);
             }
+
+            $.ajax({
+                url: "/finishedgoodrequisition/increaseSerialNumber"
+            });
         }
     });
 }
@@ -125,6 +129,13 @@ function listFinishedGoodRequisition(storedFinishedGoodID) {
     var input = $(document.createElement('input'));
     input.attr({"type":"text", "name":"finishedGoodRequisitionID", "size":"20", "maxlength":"16"});
     input.appendTo(divForm);
+
+    $.ajax({
+        url: "/finishedgoodrequisition/getSerialNumber",
+        success: function(serialNumber) {
+            $("input[name = 'finishedGoodRequisitionID']").attr({"value":"E" + serialNumber, "readonly":true});
+        }
+    });
 
     var div = $(document.createElement('div'));
     div.html("領貨單位");
