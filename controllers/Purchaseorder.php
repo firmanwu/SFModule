@@ -43,6 +43,9 @@ class Purchaseorder extends CI_Controller {
         $purchaseOrderData['supplier'] = $this->input->post('supplier');
         $purchaseOrderData['packaging'] = $this->input->post('packaging');
         $purchaseOrderData['purchaseCondition'] = $this->input->post('purchaseCondition');
+        // For Taiwan GMT+8
+        $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
+        $purchaseOrderData['issueDate'] = $currentDateTime;
         $purchaseOrderData['purchasedPackageNumber'] = $this->input->post('purchasedPackageNumber');
         $purchaseOrderData['notEnteredPackageNumber'] = $this->input->post('purchasedPackageNumber');
 

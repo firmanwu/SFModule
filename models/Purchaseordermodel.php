@@ -21,6 +21,7 @@ class Purchaseordermodel extends CI_Model {
             packaging.packaging,
             packaging.unitWeight,
             purchaseorder.purchaseCondition,
+            purchaseorder.issueDate,
             purchaseorder.purchasedPackageNumber,
             purchaseorder.notEnteredPackageNumber');
         $this->db->from('purchaseorder');
