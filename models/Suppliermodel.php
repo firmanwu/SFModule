@@ -43,6 +43,16 @@ class Suppliermodel extends CI_Model {
         return $result;
     }
 
+    public function querysSupplierNameUnitPriceByMaterialIDData($materialID)
+    {
+        $this->db->select('supplierName, unitPrice');
+        $this->db->from('supplier');
+        $this->db->where('material', $materialID);
+        $result = $this->db->get();
+
+        return $result;
+    }
+
     public function querySupplierNameBySupplierID($supplierID)
     {
         $this->db->select('supplierName');

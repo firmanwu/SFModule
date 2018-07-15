@@ -38,11 +38,11 @@ $(document).ready(function() {
 
         if ("請選擇" != materialID) {
             $.ajax({
-                url: "/supplier/querysSupplierNameIDByMaterialID/" + materialID,
+                url: "/supplier/querysSupplierNameUnitPriceByMaterialID/" + materialID,
                 success: function(result) {
                     $('#addedSupplierTable').remove();
                     var row = JSON.parse(result);
-                    var header = ["已新增的供應商"];
+                    var header = ["已新增的供應商", "單位價格"];
                     var table = $(document.createElement('table'));
                     table.attr('id', 'addedSupplierTable');
                     table.appendTo($('#addedSupplierList'));
