@@ -4,6 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(document).ready(function() {
+    function autoGeneratePurchaseOrderID() {
+        $.ajax({
+            url: "/purchaseorder/getSerialNumber",
+            success: function(serialNumber) {
+                $("input[name = 'purchaseOrderID']").attr({"value":"A" + serialNumber, "readonly":true});
+            }
+        });
+    }
+    autoGeneratePurchaseOrderID();
+
     function autoFillMaterial() {
         // Auto-fill in material ID and display material name
         $.ajax({
@@ -130,6 +140,10 @@ $(document).ready(function() {
                     td.text(row[j]);
                     td.appendTo(tr);
                 }
+
+                $.ajax({
+                    url: "/purchaseorder/increaseSerialNumber"
+                });
             }
         });
         event.preventDefault();
@@ -137,6 +151,8 @@ $(document).ready(function() {
 
     // When click reset button
     $('input[type="reset"]').click(function() {
+        autoGeneratePurchaseOrderID();
+
         // Remove options of material then create again
         $('select#materialInPurchaseOrder option').each( function() {
             if ("請選擇" != $(this).text()) {

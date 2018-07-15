@@ -114,6 +114,73 @@ class Purchaseorder extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function getSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+        $this->load->helper('string');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'PurchaseSN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+                write_file($fileName, $newSerialNumber);
+
+                echo $newSerialNumber;
+            }
+            else {
+                echo $currentSerialNumber;
+            }
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+
+            echo $newSerialNumber;
+        }
+    }
+
+    public function increaseSerialNumber()
+    {
+        $this->load->helper('file');
+        $this->load->helper('date');
+
+        $dateString = '%Y%m%d';
+        $time = time();
+        $currentDate = mdate($dateString, $time);
+        $fileName = 'PurchaseSN';
+        if (TRUE == file_exists($fileName)) {
+            $currentSerialNumber = read_file($fileName);
+            if (FALSE == strstr($currentSerialNumber, $currentDate)) {
+                $newSerialNumber = $currentDate . "001";
+            }
+            else {
+                $number = str_replace($currentDate, '', $currentSerialNumber);
+                $number = (int)$number + 1;
+                $length = strlen($number);
+                if (3 >= $length) {
+                    for($i = 0; $i < (3 - $length); $i++)
+                    {
+                        $number = '0' . $number;
+                    }
+                }
+                else {
+                    $number = '0' . $number;
+                }
+                $newSerialNumber = $currentDate . $number;
+            }
+            write_file($fileName, $newSerialNumber);
+        }
+        else {
+            $newSerialNumber = $currentDate . "001";
+            write_file($fileName, $newSerialNumber);
+        }
+    }
+
     public function deletePurchaseOrder($purchaseOrderID)
     {
         $this->load->model('purchaseordermodel');
