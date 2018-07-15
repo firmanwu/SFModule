@@ -37,11 +37,11 @@ $(document).ready(function() {
 
         if ("請選擇" != materialID) {
             $.ajax({
-                url: "/packaging/queryPackagingbyMaterialID/" + materialID,
+                url: "/packaging/queryPackagingUnitWeightbyMaterialID/" + materialID,
                 success: function(result) {
                     $('#addedPackagingTable').remove();
                     var row = JSON.parse(result);
-                    var header = ["已新增的包裝"];
+                    var header = ["已新增的包裝", "單位重量"];
                     var table = $(document.createElement('table'));
                     table.attr('id', 'addedPackagingTable');
                     table.appendTo($('#addedPackagingList'));
@@ -60,9 +60,6 @@ $(document).ready(function() {
                         tr.appendTo(table);
                         for(var k in row[j])
                         {
-                            if ("packagingID" == k) {
-                                continue;
-                            }
                             var td = $(document.createElement('td'));
                             td.text(row[j][k]);
                             td.appendTo(tr);
