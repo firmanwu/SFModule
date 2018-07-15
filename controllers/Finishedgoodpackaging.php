@@ -88,6 +88,14 @@ class Finishedgoodpackaging extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
+    public function queryFinishedGoodPackagingUnitWeightbyProductID($productID)
+    {
+        $this->load->model('finishedgoodpackagingmodel');
+
+        $query = $this->finishedgoodpackagingmodel->queryFinishedGoodPackagingUnitWeightbyProductIDData($productID);
+        echo json_encode($query->result_array());
+    }
+
     public function deleteFinishedGoodPackaging($packagingID)
     {
         $this->load->model('packagingmodel');
