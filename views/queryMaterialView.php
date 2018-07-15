@@ -19,7 +19,7 @@ function queryMaterial() {
             $('#queryMaterialTable').remove();
             var row = JSON.parse(result);
             //var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "價格", "刪除"];
-            var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "單價", "總金額"];
+            var header = ["原料編號", "原料", "供應商", "包裝", "單位重量", "使用單位", "單價"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialTable');
             table.appendTo($('#materialList'));
