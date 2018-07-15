@@ -191,7 +191,7 @@ $(document).ready(function() {
         儲放區域
         <input type="text" name="storedArea" size=20 maxlength=16>
         成品數量
-        <input type="number" name="storedPackageNumber">
+        <input type="text" name="storedPackageNumber">
         棧板數
         <input type="number" name="palletNumber">
         <input type="submit" value="確定" data-role="button">

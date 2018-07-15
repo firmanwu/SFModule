@@ -227,7 +227,7 @@ $(document).ready(function() {
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d">
         採購數量
-        <input type="number" name="purchasedPackageNumber">
+        <input type="text" name="purchasedPackageNumber">
         <input type="submit" value="確定" data-role="button">
         <input type="reset" value="新增" data-role="button">
     </div>

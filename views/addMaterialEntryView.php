@@ -187,7 +187,7 @@ $(document).ready(function() {
         入料日期
         <input type="date" name="expectedStoredDate" min="2017-01-01">
         入料數量
-        <input type="number" name="expectedStoredPackageNumber">
+        <input type="text" name="expectedStoredPackageNumber">
         棧板數
         <input type="number" name="palletNumber">
         <input type="submit" value="確定" data-role="button">
