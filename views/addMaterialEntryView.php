@@ -67,7 +67,7 @@ $(document).ready(function() {
                 success: function(result) {
                     $('#queryPurchaseOrderTable').remove();
                     var row = JSON.parse(result);
-                    var header = ["採購單編號", "原料編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "採購數量", "未入料數量"];
+                    var header = ["採購單編號", "原料編號", "原料", "供應商", "單價", "包裝", "單位重量", "進貨條件", "開單日期", "採購數量", "未入料數量"];
                     var table = $(document.createElement('table'));
                     table.attr('id', 'queryPurchaseOrderTable');
                     table.appendTo($('#purchaseOrderList'));
