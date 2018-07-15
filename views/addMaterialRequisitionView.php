@@ -107,6 +107,10 @@ function addMaterialRequisition(storedMaterialID) {
                 td.text(row[j]);
                 td.appendTo(tr);
             }
+
+            $.ajax({
+                url: "/materialrequisition/increaseSerialNumber"
+            });
         }
     });
 }
@@ -126,6 +130,13 @@ function listMaterialRequisition(storedMaterialID) {
     var input = $(document.createElement('input'));
     input.attr({"type":"text", "name":"materialRequisitionID", "size":"20", "maxlength":"16"});
     input.appendTo(divForm);
+
+    $.ajax({
+        url: "/materialrequisition/getSerialNumber",
+        success: function(serialNumber) {
+            $("input[name = 'materialRequisitionID']").attr({"value":"C" + serialNumber, "readonly":true});
+        }
+    });
 
     var div = $(document.createElement('div'));
     div.html("領料單位");
