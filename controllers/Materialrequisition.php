@@ -53,7 +53,7 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['storedArea'] = $queryData['storedArea'];
         // For Taiwan GMT+8
         $currentDateTime = gmdate("Y-m-d H:i:s", (time() + (28800)));
-        $materialRequisitionData['requisitioningDate'] = $currentDateTime;;
+        $materialRequisitionData['requisitioningDate'] = $currentDateTime;
         $materialRequisitionData['requisitioningDepartment'] = urldecode($requisitioningDepartment);
         $materialRequisitionData['requisitioningMember'] = urldecode($requisitioningMember);
         $materialRequisitionData['requisitionedPackageNumber'] = $requisitionedPackageNumber;
