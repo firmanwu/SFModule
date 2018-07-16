@@ -84,6 +84,26 @@ class Finishedgoodentry extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function downExcelFinishedGoodEntry($isConfirmed = 0, $finishedGoodEntryID = 0, $filterByDate = 0)
+    {
+        $obj = $_POST['excelBuildData'];
+        $db_data_test = self::getDBInfo($obj['isConfirmed'],$obj['finishedGoodEntryID'],$obj['model'],$obj['queryfunction']);
+        $header = $obj['header'];
+        $this->load->helper('print_helper');
+        $response = only_print_excel($db_data_test, $header);
+        die(json_encode($response));
+    }
+
+    public function getDBInfo ($isConfirmed, $finishedGoodEntryID, $model, $queryFunction){
+        $model_local = $model;
+        $query_function = $queryFunction;
+
+        $this->load->model($model_local);
+
+        $query = $this->finishedgoodentrymodel->$query_function($isConfirmed, $finishedGoodEntryID);
+        return $query->result_array();
+    }
+
     public function queryFinishedGoodEntry($isConfirmed, $finishedGoodEntryID)
     {
         $this->load->model('finishedgoodentrymodel');

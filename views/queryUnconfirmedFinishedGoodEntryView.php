@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+$isConfirmed = 0;
+$finishedGoodEntryID = 0;
+$filterByDate = 'Date_to_by_filtered_by';
 ?>
 
 <script>
@@ -182,6 +185,7 @@ function revisedFinishedGoodEntry(
 function queryUnconfirmedFinishedGoodEntry(isFinishedGoodEntryID) {
     $.ajax({
         url: "/finishedgoodentry/queryFinishedGoodEntry/0/" + isFinishedGoodEntryID,
+        async: false,
         success: function(result) {
             $('#queryFinishedGoodEntryTable').remove();
             $('#reviseFinishedGoodEntryForm').remove();
@@ -195,6 +199,8 @@ function queryUnconfirmedFinishedGoodEntry(isFinishedGoodEntryID) {
             for(var i in header)
             {
                 var th = $(document.createElement('th'));
+                th.attr('class', 'sortable');
+                th.attr('style', 'cursor:pointer');
                 th.text(header[i]);
                 th.appendTo(tr);
             }
@@ -258,9 +264,71 @@ function queryUnconfirmedFinishedGoodEntry(isFinishedGoodEntryID) {
                     }
                 }
             }
+            sortable_headers();
         }
     });
 }
+
+$(document).ready(function(){
+
+    var postData = 
+                {
+                    "model":"finishedgoodentrymodel",
+                    "queryfunction":"queryFinishedGoodEntryData",
+                    "header":["成品入庫單編號", "倉儲流水號", "成品代號", "成品種類", "包裝", "單位重量", "每棧板的成品數量", "狀態", "儲放區域", "入庫日期", "棧板數", "入庫數量", "入庫重量", "待入庫棧板數", "待入庫數量"],
+                    "isConfirmed":0,
+                    "finishedGoodEntryID":0
+                } 
+
+    $('.down-excel').click( function(e) {
+        e.preventDefault();  
+        $.ajax({
+            type: "POST",
+            //url: '../excelprint',
+            url:'downExcelFinishedGoodEntry',
+            dataType: 'json',
+            data: {excelBuildData:postData},
+
+            success: function (data, textstatus) {
+                          if( !('error' in data) ) {
+                            var $a = $("#excel-download");
+                            var today = new Date();
+                            var day = today.getDate();
+                            var month_index = today.getMonth();
+                            var year = today.getFullYear();
+                            $a.attr("href",data.file);
+                            $a.attr("download","file"+"_"+day+"_"+(month_index+1)+"_"+year+".xlsx");
+                            $a[0].click();
+                          }
+                          else {
+                              console.log(data.error);
+                          }
+                    }
+        });
+        return false; 
+
+    });
+
+});
+
+function sortable_headers (){
+    $('th').click(function(){
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc){rows = rows.reverse()}
+        for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+    });
+}
+
+function comparer(index) {
+    return function(a, b) {
+        var valA = getCellValue(a, index), valB = getCellValue(b, index)
+        return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+    }
+}
+function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+
 </script>
 
 <div data-role="content" role="main">
@@ -271,9 +339,12 @@ function queryUnconfirmedFinishedGoodEntry(isFinishedGoodEntryID) {
 <hr size="5" noshade>
 
 <div data-role="controlgroup" data-type="horizontal">
-<button data-icon="flat-man" data-theme="f" onclick="queryUnconfirmedFinishedGoodEntry(0)">顯示入庫清單</button>
+<button id="table-button" data-icon="flat-man" data-theme="f" onclick="queryUnconfirmedFinishedGoodEntry(0)">顯示入庫清單</button>
 </div>
 
 <br><br>
 <div id="queryFinishedGoodEntryList"></div>
 <div id="reviseFinishedGoodEntryArea"></div>
+
+<div class="ui-block-b"><a id = "excel-download" style="display:none;" href="" data-role="button" data-icon="flat-bubble" data-theme="c">Excel Download FGE</a></div>
+<div class="ui-block-b down-excel"><a href="" data-role="button" data-icon="flat-bubble" data-theme="c">Excel Download</a></div>
