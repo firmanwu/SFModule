@@ -86,6 +86,26 @@ class Purchaseorder extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function downloadPurchaseOrderExcel($purchaseOrderID = 0, $filterByDate = 0)
+    {
+        $obj = $this->input->post('excelBuildData');
+        $db_data_test = self::getDBInfo($obj['purchaseOrderID'],$obj['model'],$obj['queryfunction']);
+        $header = $obj['header'];
+        $this->load->helper('print_helper');
+        $response = only_print_excel($db_data_test, $header);
+        die(json_encode($response));
+    }
+
+    public function getDBInfo($purchaseOrderID, $model, $queryFunction){
+        $model_local = $model;
+        $query_function = $queryFunction;
+
+        $this->load->model($model_local);
+
+        $query = $this->$model_local->$query_function($purchaseOrderID);
+        return $query->result_array();
+    }
+
     public function queryPurchaseOrder($purchaseOrderID)
     {
         $this->load->model('purchaseordermodel');

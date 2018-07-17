@@ -28,7 +28,7 @@ class Purchaseordermodel extends CI_Model {
         $this->db->join('material', 'purchaseorder.material = material.materialID');
         $this->db->join('supplier', 'purchaseorder.supplier = supplier.supplierID');
         $this->db->join('packaging', 'purchaseorder.packaging = packaging.packagingID');
-        if (false != $purchaseOrderID) {
+        if ("false" != $purchaseOrderID) {
             $this->db->where('purchaseOrderID', $purchaseOrderID);
             $this->db->where('notEnteredPackageNumber >', 0);
         }
