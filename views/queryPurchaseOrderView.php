@@ -86,7 +86,7 @@ $(document).ready(function(){
                             var month_index = today.getMonth();
                             var year = today.getFullYear();
                             $a.attr("href",data.file);
-                            $a.attr("download","PurchaseOrder"+"-"+day+"_"+(month_index+1)+"_"+year+".xlsx");
+                            $a.attr("download","PurchaseOrder"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
                             $a[0].click();
                           }
                           else {
