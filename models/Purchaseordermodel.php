@@ -32,6 +32,7 @@ class Purchaseordermodel extends CI_Model {
             $this->db->where('purchaseOrderID', $purchaseOrderID);
             $this->db->where('notEnteredPackageNumber >', 0);
         }
+        $this->db->order_by('purchaseorder.issueDate', 'ASC');
         $result = $this->db->get();
 
         return $result;
