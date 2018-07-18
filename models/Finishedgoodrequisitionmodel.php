@@ -25,6 +25,7 @@ class Finishedgoodrequisitionmodel extends CI_Model {
         $this->db->from('finishedgoodrequisition');
         $this->db->join('finishedgood', 'finishedgoodrequisition.product = finishedgood.finishedGoodID');
         $this->db->join('finishedgoodpackaging', 'finishedgoodrequisition.packagingID = finishedgoodpackaging.finishedGoodPackagingID');
+        $this->db->order_by('finishedgoodrequisition.requisitioningDate', 'ASC');
         $result = $this->db->get();
 
         return $result;

@@ -36,6 +36,42 @@ function queryFinishedGoodRequisition() {
         }
     });
 }
+
+$(document).ready(function(){
+
+    var postData = 
+                {
+                    "model":"finishedgoodrequisitionmodel",
+                    "queryfunction":"queryFinishedGoodRequisitionData",
+                    "header":["領貨單編號", "成品代號", "成品", "包裝", "儲放區域", "領貨日期", "領貨單位", "領貨人員", "領貨數量"]
+                }
+
+    $('.download-finishedgoodrequisition-excel').click( function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url:'downloadFinishedGoodRequisitionExcel',
+            dataType: 'json',
+            data: {excelBuildData:postData},
+            success: function (data, textstatus) {
+                          if( !('error' in data) ) {
+                            var $a = $("#excel-finishedgoodrequisition-download");
+                            var today = new Date();
+                            var day = today.getDate();
+                            var month_index = today.getMonth();
+                            var year = today.getFullYear();
+                            $a.attr("href",data.file);
+                            $a.attr("download","領貨單報表"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
+                            $a[0].click();
+                          }
+                          else {
+                              console.log(data.error);
+                          }
+                    }
+        });
+        return false; 
+    });
+});
 </script>
 
 <div data-role="content" role="main">
@@ -49,5 +85,10 @@ function queryFinishedGoodRequisition() {
 <button data-icon="flat-man" data-theme="f" onclick="queryFinishedGoodRequisition()">領貨單查詢</button>
 </div>
 
+<div class="ui-block-b"><a id = "excel-finishedgoodrequisition-download" style="display:none;" href="" data-role="button" data-icon="flat-bubble" data-theme="c">Excel Download FGE</a></div>
+<div class="ui-block-b download-finishedgoodrequisition-excel"><a href="" data-role="button" data-icon="flat-bubble" data-theme="f">下載成品庫存 Excel</a></div>
+
+<br><br>
+<div></div>
 <br><br>
 <div id="queryFinishedGoodRequisitionList"></div>
