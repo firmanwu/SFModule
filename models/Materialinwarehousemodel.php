@@ -41,6 +41,7 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->join('material', 'materialinwarehouse.material = material.materialID');
         $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
         $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
+        $this->db->order_by('materialinwarehouse.storedDate', 'ASC');
         $result = $this->db->get();
 
         return $result;
