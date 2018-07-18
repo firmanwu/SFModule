@@ -36,6 +36,42 @@ function queryMaterialRequisition() {
         }
     });
 }
+
+$(document).ready(function(){
+
+    var postData = 
+                {
+                    "model":"materialrequisitionmodel",
+                    "queryfunction":"queryMaterialRequisitionData",
+                    "header":["領料單編號", "原料編號", "原料", "供應商", "包裝", "儲放區域", "領料日期", "領料單位", "領料人員", "領料數量"]
+                }
+
+    $('.download-materialrequisition-excel').click( function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url:'downloadMaterialRequisitionExcel',
+            dataType: 'json',
+            data: {excelBuildData:postData},
+            success: function (data, textstatus) {
+                          if( !('error' in data) ) {
+                            var $a = $("#excel-materialrequisition-download");
+                            var today = new Date();
+                            var day = today.getDate();
+                            var month_index = today.getMonth();
+                            var year = today.getFullYear();
+                            $a.attr("href",data.file);
+                            $a.attr("download","領料單報表"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
+                            $a[0].click();
+                          }
+                          else {
+                              console.log(data.error);
+                          }
+                    }
+        });
+        return false; 
+    });
+});
 </script>
 
 <div data-role="content" role="main">
@@ -49,5 +85,10 @@ function queryMaterialRequisition() {
 <button data-icon="flat-man" data-theme="d" onclick="queryMaterialRequisition()">領料單查詢</button>
 </div>
 
+<div class="ui-block-b"><a id = "excel-materialrequisition-download" style="display:none;" href="" data-role="button" data-icon="flat-bubble" data-theme="c">Excel Download FGE</a></div>
+<div class="ui-block-b download-materialrequisition-excel"><a href="" data-role="button" data-icon="flat-bubble" data-theme="d">下載領料單 Excel</a></div>
+
+<br><br>
+<div></div>
 <br><br>
 <div id="queryMaterialRequisitionList"></div>
