@@ -79,6 +79,26 @@ class Materialentry extends CI_Controller {
         $this->load->view('footer');
     }
 
+    public function downloadMaterialEntryExcel($isConfirmed = 0, $materialEntryID = 0, $filterByDate = 0)
+    {
+        $obj = $this->input->post('excelBuildData');
+        $db_data_test = self::getDBInfo($obj['isConfirmed'], $obj['materialEntryID'], $obj['model'], $obj['queryfunction']);
+        $header = $obj['header'];
+        $this->load->helper('print_helper');
+        $response = only_print_excel($db_data_test, $header);
+        die(json_encode($response));
+    }
+
+    public function getDBInfo($isConfirmed, $materialEntryID, $model, $queryFunction){
+        $model_local = $model;
+        $query_function = $queryFunction;
+
+        $this->load->model($model_local);
+
+        $query = $this->$model_local->$query_function($isConfirmed, $materialEntryID);
+        return $query->result_array();
+    }
+
     public function queryMaterialEntry($isConfirmed, $materialEntryID)
     {
         $this->load->model('materialentrymodel');

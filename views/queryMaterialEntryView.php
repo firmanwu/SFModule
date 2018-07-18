@@ -41,6 +41,44 @@ function queryConfirmedMaterialEntry() {
         }
     });
 }
+
+$(document).ready(function(){
+
+    var postData = 
+                {
+                    "model":"materialentrymodel",
+                    "queryfunction":"queryMaterialEntryData",
+                    "header":["入料單編號", "倉儲流水號", "採購單編號", "儲放區域", "原料編號", "原料", "進貨條件", "入料日期", "供應商", "包裝", "單位重量", "棧板數", "入料數量", "入料重量", "單價", "入料金額"],
+                    "isConfirmed":1,
+                    "materialEntryID":0,
+                } 
+
+    $('.download-materialentry-excel').click( function(e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url:'downloadMaterialEntryExcel',
+            dataType: 'json',
+            data: {excelBuildData:postData},
+            success: function (data, textstatus) {
+                          if( !('error' in data) ) {
+                            var $a = $("#excel-materialentry-download");
+                            var today = new Date();
+                            var day = today.getDate();
+                            var month_index = today.getMonth();
+                            var year = today.getFullYear();
+                            $a.attr("href",data.file);
+                            $a.attr("download","ConfirmedMaterilEntry"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
+                            $a[0].click();
+                          }
+                          else {
+                              console.log(data.error);
+                          }
+                    }
+        });
+        return false; 
+    });
+});
 </script>
 
 <div data-role="content" role="main">
@@ -54,5 +92,10 @@ function queryConfirmedMaterialEntry() {
 <button data-icon="flat-man" data-theme="d" onclick="queryConfirmedMaterialEntry()">已確認入料單查詢</button>
 </div>
 
+<div class="ui-block-b"><a id = "excel-materialentry-download" style="display:none;" href="" data-role="button" data-icon="flat-bubble" data-theme="c">Excel Download FGE</a></div>
+<div class="ui-block-b download-materialentry-excel"><a href="" data-role="button" data-icon="flat-bubble" data-theme="d">下載已確認入料單 Excel</a></div>
+
+<br><br>
+<div></div>
 <br><br>
 <div id="queryMaterialEntryList"></div>

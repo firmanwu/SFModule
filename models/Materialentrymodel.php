@@ -39,7 +39,7 @@ class Materialentrymodel extends CI_Model {
             $this->db->where('materialentry.materialEntryID', $materialEntryID);
         }
         $this->db->where('materialentry.confirmation', $isConfirmed);
-        $this->db->order_by('materialentry.materialEntryID', 'ASC');
+        $this->db->order_by('materialentry.expectedStoredDate', 'ASC');
         $result = $this->db->get();
 
         return $result;
