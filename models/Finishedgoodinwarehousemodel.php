@@ -29,6 +29,7 @@ class Finishedgoodinwarehousemodel extends CI_Model {
         $this->db->from('finishedgoodinwarehouse');
         $this->db->join('finishedgood', 'finishedgoodinwarehouse.product = finishedgood.finishedGoodID');
         $this->db->join('finishedgoodpackaging', 'finishedgoodinwarehouse.packagingID = finishedgoodpackaging.finishedGoodPackagingID');
+        $this->db->order_by('finishedgoodinwarehouse.storedDate', 'ASC');
         $result = $this->db->get();
 
         return $result;
