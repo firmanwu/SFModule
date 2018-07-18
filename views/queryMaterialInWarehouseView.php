@@ -62,7 +62,7 @@ $(document).ready(function(){
                             var month_index = today.getMonth();
                             var year = today.getFullYear();
                             $a.attr("href",data.file);
-                            $a.attr("download","MaterialInWarehouse"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
+                            $a.attr("download","原料庫存報表"+"-"+(month_index+1)+"-"+day+"-"+year+".xlsx");
                             $a[0].click();
                           }
                           else {
