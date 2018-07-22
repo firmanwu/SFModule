@@ -70,20 +70,31 @@ $('#materialInMaterialRequisitionSelection').on("change", '#materialInMaterialRe
 
 function addMaterialRequisition(storedMaterialID) {
     var materialRequisitionID = $("input[name='materialRequisitionID']").val();
-    var requisitioningDepartment = $("input[name='requisitioningDepartment']").val();
-    var requisitioningMember = $("input[name='requisitioningMember']").val();
+    var requisitioningDepartment = $('select#requisitioningDepartment').find("option:selected").val();
+    var requisitioningMember = $('select#requisitioningMember').find("option:selected").val();
     var requisitionedPackageNumber = $("input[name='requisitionedPackageNumber']").val();
+    var remark = $("input[name='remark']").val();
+
+    if ("請選擇" == requisitioningDepartment) {
+        alert("請選擇領料單位");
+        return;
+    }
+    if ("請選擇" == requisitioningMember) {
+        alert("請選擇領料人員");
+        return;
+    }
 
     $.ajax({
         url: "/materialrequisition/addMaterialRequisition/" +storedMaterialID + "/" + 
         materialRequisitionID + "/" + 
         requisitioningDepartment + "/" + 
         requisitioningMember + "/" + 
-        requisitionedPackageNumber,
+        requisitionedPackageNumber + "/" + 
+        remark,
         success: function(result) {
             $('#listMaterialRequisitionForm').remove();
             var row = JSON.parse(result);
-            var header = ["領料單編號", "原料", "供應商", "包裝", "儲放區域", "領料日期", "領料單位", "領料人員", "領料數量"];
+            var header = ["領料單編號", "原料", "供應商", "包裝", "儲放區域", "領料日期", "領料單位", "領料人員", "領料數量", "備註"];
             var table = $(document.createElement('table'));
             table.attr('id', 'addMaterialRequisitionResultTable');
             table.appendTo($('#addMaterialRequisitionResultList'));
@@ -115,6 +126,58 @@ function addMaterialRequisition(storedMaterialID) {
     });
 }
 
+function autoFillRequisitionDepartment() {
+    $.ajax({
+        url: "/requisitiondepartment/queryRequisitionDepartmentOnly",
+        success: function(result) {
+            var row = JSON.parse(result);
+
+            for(var i in row)
+            {
+                selectOption = $(document.createElement('option'));
+                for(var j in row[i])
+                {
+                    selectOption.attr('value', row[i][j]);
+                    selectOption.text(row[i][j]);
+                }
+                selectOption.appendTo($('#requisitioningDepartment'));
+            }
+        }
+    });
+}
+
+// Auto-fill in requisition member when requisition department is selected
+function changeDepartmentSelection() {
+    var department = $('select#requisitioningDepartment').find("option:selected").val();
+
+    if ("請選擇" != department) {
+        $.ajax({
+            url: "/requisitiondepartment/queryRequisitionMemberByDepartment/" + department,
+            success: function(result) {
+                var row = JSON.parse(result);
+
+                $('select#requisitioningMember option').each( function() {
+                    $(this).remove();
+                });
+                var selectOption = $(document.createElement('option'));
+                selectOption.text("請選擇");
+                selectOption.appendTo($('#requisitioningMember'));
+
+                for(var i in row)
+                {
+                    selectOption = $(document.createElement('option'));
+                    for(var j in row[i])
+                    {
+                        selectOption.attr('value', row[i][j]);
+                        selectOption.text(row[i][j]);
+                    }
+                    selectOption.appendTo($('#requisitioningMember'));
+                }
+            }
+        });
+    }
+}
+
 function listMaterialRequisition(storedMaterialID) {
     $('#queryMaterialInWarehouseTable').remove();
     $('#listMaterialRequisitionForm').remove();
@@ -142,24 +205,38 @@ function listMaterialRequisition(storedMaterialID) {
     div.html("領料單位");
     div.appendTo(divForm);
 
-    var input = $(document.createElement('input'));
-    input.attr({"type":"text", "name":"requisitioningDepartment", "size":"20", "maxlength":"16"});
-    input.appendTo(divForm);
+    var selection = $(document.createElement('select'));
+    selection.attr({"id":"requisitioningDepartment", "name":"requisitioningDepartment", "onchange":"changeDepartmentSelection()"});
+    selection.appendTo(divForm);
+    var selectOption = $(document.createElement('option'));
+    selectOption.text("請選擇");
+    selectOption.appendTo($('#requisitioningDepartment'));
 
     var div = $(document.createElement('div'));
     div.html("領料人員");
     div.appendTo(divForm);
 
-    var input = $(document.createElement('input'));
-    input.attr({"type":"text", "name":"requisitioningMember", "size":"20", "maxlength":"16"});
-    input.appendTo(divForm);
+    var selection = $(document.createElement('select'));
+    selection.attr({"id":"requisitioningMember", "name":"requisitioningMember"});
+    selection.appendTo(divForm);
+    var selectOption = $(document.createElement('option'));
+    selectOption.text("請選擇");
+    selectOption.appendTo($('#requisitioningMember'));
 
     div = $(document.createElement('div'));
     div.html("領料數量");
     div.appendTo(divForm);
 
     var input = $(document.createElement('input'));
-    input.attr({"type":"number", "name":"requisitionedPackageNumber"});
+    input.attr({"type":"text", "name":"requisitionedPackageNumber"});
+    input.appendTo(divForm);
+
+    div = $(document.createElement('div'));
+    div.html("備註");
+    div.appendTo(divForm);
+
+    var input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"remark"});
     input.appendTo(divForm);
 
     div = $(document.createElement('div'));
@@ -170,6 +247,8 @@ function listMaterialRequisition(storedMaterialID) {
     button.attr({'id':'revisionButton', 'class':'selfButtonB', 'onclick':'addMaterialRequisition(' + storedMaterialID + ')'});
     button.text("新增領料");
     button.appendTo(divForm);
+
+    autoFillRequisitionDepartment();
 }
 
 function queryMaterialInWarehouse() {

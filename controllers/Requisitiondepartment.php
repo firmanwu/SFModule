@@ -78,4 +78,12 @@ class Requisitiondepartment extends CI_Controller {
         $query = $this->requisitiondepartmentmodel->queryRequisitionMemberByDepartmentData($department);
         echo json_encode($query->result_array());
     }
+
+    public function queryRequisitionDepartmentOnly()
+    {
+        $this->load->model('requisitiondepartmentmodel');
+
+        $query = $this->requisitiondepartmentmodel->queryRequisitionDepartmentOnlyData();
+        echo json_encode($query->result_array());
+    }
 }

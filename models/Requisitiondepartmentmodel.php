@@ -29,13 +29,13 @@ class Requisitiondepartmentmodel extends CI_Model {
         return $result;
     }
 
-    public function queryUsingDepartmentByMaterialUsageID($materialUsageID)
+    public function queryRequisitionDepartmentOnlyData()
     {
-        $this->db->select('usingDepartment');
-        $this->db->from('materialusage');
-        $this->db->where('materialUsageID', $materialUsageID);
+        $this->db->select('requisitionDepartment');
+        $this->db->from('requisitiondepartment');
+        $this->db->distinct();
         $result = $this->db->get();
 
-        return $result->row_array();
+        return $result;
     }
 }

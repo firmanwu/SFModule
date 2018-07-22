@@ -22,7 +22,8 @@ class Materialrequisitionmodel extends CI_Model {
             materialrequisition.requisitioningDate,
             materialrequisition.requisitioningDepartment,
             materialrequisition.requisitioningMember,
-            materialrequisition.requisitionedPackageNumber');
+            materialrequisition.requisitionedPackageNumber,
+            materialrequisition.remark');
         $this->db->from('materialrequisition');
         $this->db->join('material', 'materialrequisition.material = material.materialID');
         $this->db->join('supplier', 'materialrequisition.supplier = supplier.supplierID');

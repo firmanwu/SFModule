@@ -36,7 +36,8 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionID,
         $requisitioningDepartment,
         $requisitioningMember,
-        $requisitionedPackageNumber
+        $requisitionedPackageNumber,
+        $remark
     )
     {
         $this->load->model('materialrequisitionmodel');
@@ -57,6 +58,7 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['requisitioningDepartment'] = urldecode($requisitioningDepartment);
         $materialRequisitionData['requisitioningMember'] = urldecode($requisitioningMember);
         $materialRequisitionData['requisitionedPackageNumber'] = $requisitionedPackageNumber;
+        $materialRequisitionData['remark'] = urldecode($remark);
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
 
