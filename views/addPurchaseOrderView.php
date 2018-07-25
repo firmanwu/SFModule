@@ -1,7 +1,27 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#materialInPurchaseOrder-button {
+        display: none;
+    }
 
+    div#supplierInPurchaseOrder-button {
+        display: none;
+    }
+
+    div#packagingInPurchaseOrder-button {
+        display: none;
+    }
+
+    div#purchaseCondition-button {
+        display: none;
+    }
+
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 $(document).ready(function() {
     function autoGeneratePurchaseOrderID() {
@@ -178,6 +198,7 @@ $(document).ready(function() {
         // Remove added purchase order information table
         $('#addPurchaseOrderTable').remove();
     });
+    $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -195,7 +216,7 @@ $(document).ready(function() {
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialInPurchaseOrderSelection">
-        <select id="materialInPurchaseOrder" name="material">
+        <select id="materialInPurchaseOrder" class="js-example-basic-single" name="material">
         <option>請選擇</option>
         </select>
     </div>
@@ -203,7 +224,7 @@ $(document).ready(function() {
         供應商
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierSelection">
-        <select id="supplierInPurchaseOrder" name="supplier">
+        <select id="supplierInPurchaseOrder" class="js-example-basic-single" name="supplier">
         <option>請選擇</option>
         </select>
     </div>
@@ -211,7 +232,7 @@ $(document).ready(function() {
         包裝
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="packagingSelection">
-        <select id="packagingInPurchaseOrder" name="packaging">
+        <select id="packagingInPurchaseOrder" class="js-example-basic-single" name="packaging">
         <option>請選擇</option>
         </select>
     </div>
@@ -219,7 +240,7 @@ $(document).ready(function() {
         進貨條件
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="purchaseConditionSelection">
-        <select id="purchaseCondition" name="purchaseCondition">
+        <select id="purchaseCondition" class="js-example-basic-single" name="purchaseCondition">
         <option value="一般" selected>一般</option>
         <option value="特採">特採</option>
         <option value="回收料">回收料</option>

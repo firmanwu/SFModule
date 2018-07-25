@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#productInPackaging-button {
+        display: none;
+    }
 
+    span#select2-productInPackaging-container{
+        width:200px;
+    }
+</style>
 <script>
 $(document).ready(function() {
     function autoFillProduct() {
@@ -122,6 +130,7 @@ $(document).ready(function() {
         // Remove current adding product packaging information table
         $('#addFinishedGoodPackagingTable').remove();
     });
+    $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -137,7 +146,7 @@ $(document).ready(function() {
         成品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="productInPackagingSelection">
-        <select id="productInPackaging" name="product">
+        <select id="productInPackaging" class="js-example-basic-single" name="product">
         <option>請選擇</option>
         </select>
     </div>

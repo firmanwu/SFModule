@@ -1,7 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#productInFinishedGoodEntry-button {
+        display: none;
+    }
 
+    div#packagingInFinishedGoodEntry-button {
+        display: none;
+    }
+
+    div#status-button {
+        display: none;
+    }
+
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 $(document).ready(function() {
     function autoGenerateFinishedGoodEntrySerialNumber() {
@@ -145,6 +161,7 @@ $(document).ready(function() {
         // Remove added material entry information table
         $('#addFinishedGoodEntryTable').remove();
     });
+    $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -166,7 +183,7 @@ $(document).ready(function() {
         成品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="productInFinishedGoodEntrySelection">
-        <select id="productInFinishedGoodEntry" name="product">
+        <select id="productInFinishedGoodEntry" class="js-example-basic-single" name="product">
         <option>請選擇</option>
         </select>
     </div>
@@ -174,7 +191,7 @@ $(document).ready(function() {
         包裝
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="packagingInFinishedGoodEntrySelection">
-        <select id="packagingInFinishedGoodEntry" name="packagingID">
+        <select id="packagingInFinishedGoodEntry" class="js-example-basic-single" name="packagingID">
         <option>請選擇</option>
         </select>
     </div>
@@ -182,7 +199,7 @@ $(document).ready(function() {
         狀態
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="statusSelection">
-        <select id="status" name="status">
+        <select id="status" class="js-example-basic-single" name="status">
         <option value="正常" selected>正常</option>
         <option value="急貨">急貨</option>
         </select>

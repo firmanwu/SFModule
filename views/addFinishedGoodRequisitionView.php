@@ -1,7 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#productInFinishedGoodRequisition-button {
+        display: none;
+    }
 
+    div#packagingInFinishedGoodRequisition-button {
+        display: none;
+    }
+
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 // Auto-fill in product ID and display product name
 function autoFillProduct() {
@@ -264,6 +276,7 @@ $('input[type="reset"]').click(function() {
     // Remove adding product requisition result table
     $('#addFinishedGoodRequisitionResultTable').remove();
 });
+$('.js-example-basic-single').select2();
 </script>
 
 <div data-role="content" role="main">
@@ -278,7 +291,7 @@ $('input[type="reset"]').click(function() {
         待領成品
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="productInFinishedGoodRequisitionSelection">
-        <select id="productInFinishedGoodRequisition" name="product">
+        <select id="productInFinishedGoodRequisition" class="js-example-basic-single" name="product">
         <option>請選擇</option>
         </select>
     </div>
@@ -286,7 +299,7 @@ $('input[type="reset"]').click(function() {
         包裝
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="f" id="packagingInFinishedGoodRequisitionSelection">
-        <select id="packagingInFinishedGoodRequisition" name="packagingID">
+        <select id="packagingInFinishedGoodRequisition" class="js-example-basic-single" name="packagingID">
         <option>請選擇</option>
         </select>
     </div>

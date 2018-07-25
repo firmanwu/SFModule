@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#materialInPackaging-button {
+        display: none;
+    }
 
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 $(document).ready(function() {
     function autoFillMaterial() {
@@ -121,6 +129,7 @@ $(document).ready(function() {
         // Remove current adding packaging information table
         $('#addPackagingTable').remove();
     });
+    $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -136,7 +145,7 @@ $(document).ready(function() {
         原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialInPackagingSelection">
-        <select id="materialInPackaging" name="material">
+        <select id="materialInPackaging" class="js-example-basic-single" name="material">
         <option>請選擇</option>
         </select>
     </div>

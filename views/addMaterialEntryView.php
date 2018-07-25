@@ -1,7 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#purchaseOrder-button.ui-btn.ui-icon-carat-d.ui-btn-icon-right.ui-corner-all.ui-shadow.ui-first-child.ui-last-child {
+        display: none;
+    }
 
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 $(document).ready(function() {
     function autoGenerateSerialNumber() {
@@ -157,6 +165,7 @@ $(document).ready(function() {
         // Remove added material entry information table
         $('#addMaterialEntryTable').remove();
     });
+    $('.js-example-basic-single').select2();
 });
 </script>
 
@@ -176,7 +185,7 @@ $(document).ready(function() {
         採購單編號
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="purchaseOrderSelection">
-        <select id="purchaseOrder" name="purchaseOrder">
+        <select class = "js-example-basic-single" id="purchaseOrder" name="purchaseOrder">
         <option>請選擇</option>
         </select>
     </div>

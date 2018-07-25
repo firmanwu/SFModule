@@ -1,7 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<style>
+    div#materialInMaterialRequisition-button {
+        display: none;
+    }
 
+    div#supplierInMaterialRequisition-button {
+        display: none;
+    }
+
+    span.select2-selection.select2-selection--single{
+        width:150px;
+    }
+</style>
 <script>
 // Auto-fill in material ID and display material name
 function autoFillMaterial() {
@@ -344,6 +356,7 @@ $('input[type="reset"]').click(function() {
     // Remove adding material requisition result table
     $('#addMaterialRequisitionResultTable').remove();
 });
+$('.js-example-basic-single').select2();
 </script>
 
 <div data-role="content" role="main">
@@ -358,7 +371,7 @@ $('input[type="reset"]').click(function() {
         待領原料
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="materialInMaterialRequisitionSelection">
-        <select id="materialInMaterialRequisition" name="material">
+        <select id="materialInMaterialRequisition" class="js-example-basic-single" name="material">
         <option>請選擇</option>
         </select>
     </div>
@@ -366,7 +379,7 @@ $('input[type="reset"]').click(function() {
         供應商
     </div>
     <div data-role="controlgroup" data-type="horizontal" data-theme="d" id="supplierInMaterialRequisitionSelection">
-        <select id="supplierInMaterialRequisition" name="supplier">
+        <select id="supplierInMaterialRequisition" class="js-example-basic-single" name="supplier">
         <option>請選擇</option>
         </select>
     </div>
