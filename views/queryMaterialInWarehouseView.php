@@ -10,7 +10,7 @@ function queryMaterialInWarehouse() {
         success: function(result) {
             $('#queryMaterialInWarehouseTable').remove();
             var row = JSON.parse(result);
-            var header = ["原料編號", "原料", "入料單編號", "供應商", "包裝", "儲放區域", "入料時間", "儲放數量", "儲放重量", "儲放金額", "尚餘數量"];
+            var header = ["原料編號", "原料", "入料單編號", "供應商", "包裝", "儲放區域", "入料時間", "儲放數量", "儲放重量", "儲放金額", "尚餘數量", "尚餘金額"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialInWarehouseTable');
             table.appendTo($('#materialInWarehouseList'));
