@@ -18,6 +18,7 @@ class Materialinwarehousemodel extends CI_Model {
         $materialInWarehouseData['storedWeight'] = $materialEntryData['expectedStoredWeight'];
         $materialInWarehouseData['storedMoney'] = $materialEntryData['expectedStoredMoney'];
         $materialInWarehouseData['remainingPackageNumber'] = $materialInWarehouseData['storedPackageNumber'];
+        $materialInWarehouseData['remainingMoney'] = $materialInWarehouseData['storedMoney'];
         $result = $this->db->insert('materialinwarehouse', $materialInWarehouseData);
 
         return $materialInWarehouseData;
@@ -54,6 +55,7 @@ class Materialinwarehousemodel extends CI_Model {
             material.materialName,
             materialinwarehouse.supplier,
             supplier.supplierName,
+            supplier.unitPrice,
             materialinwarehouse.packagingID,
             packaging.packaging,
             materialinwarehouse.storedArea');
@@ -241,10 +243,34 @@ class Materialinwarehousemodel extends CI_Model {
         $result = $this->db->update('materialinwarehouse');
     }
 
-    public function updateRemainingPackageNumberData($storedMaterialID, $packageNumber)
+    public function updateRemainingPackageNumberData($storedMaterialID, $packageNumber, $money)
     {
         $this->db->set('remainingPackageNumber', 'remainingPackageNumber + ' . $packageNumber, FALSE);
+        $this->db->set('remainingMoney', 'remainingMoney + ' . $money, FALSE);
         $this->db->where('storedMaterialID', $storedMaterialID);
         $result = $this->db->update('materialinwarehouse');
+    }
+
+    public function calculateRemainingMoneyData()
+    {
+        $this->db->select('
+            materialinwarehouse.storedMaterialID,
+            materialinwarehouse.remainingPackageNumber,
+            supplier.unitPrice');
+        $this->db->from('materialinwarehouse');
+        $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $result = $this->db->get();
+
+        foreach($result->result_array() as $row)
+        {
+            if (0 == $row['remainingPackageNumber']) {
+                continue;
+            }
+
+            $money = $row['remainingPackageNumber'] * $row['unitPrice'];
+            $this->db->set('remainingMoney', $money, FALSE);
+            $this->db->where('storedMaterialID', $row['storedMaterialID']);
+            $result = $this->db->update('materialinwarehouse');
+        }
     }
 }

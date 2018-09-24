@@ -58,11 +58,12 @@ class Materialrequisition extends CI_Controller {
         $materialRequisitionData['requisitioningDepartment'] = urldecode($requisitioningDepartment);
         $materialRequisitionData['requisitioningMember'] = urldecode($requisitioningMember);
         $materialRequisitionData['requisitionedPackageNumber'] = $requisitionedPackageNumber;
+        $requisitionedMoney = $requisitionedPackageNumber * $queryData['unitPrice'];
         $materialRequisitionData['remark'] = urldecode($remark);
 
         $result = $this->materialrequisitionmodel->insertMaterialRequisitionData($materialRequisitionData);
 
-        $this->materialinwarehousemodel->updateRemainingPackageNumberData($storedMaterialID, (-$requisitionedPackageNumber));
+        $this->materialinwarehousemodel->updateRemainingPackageNumberData($storedMaterialID, (-$requisitionedPackageNumber), (-$requisitionedMoney));
 
         $materialRequisitionData['material'] = $queryData['materialName'] . "(" . $queryData['material'] . ")";
         $materialRequisitionData['supplier'] = $queryData['supplierName'];

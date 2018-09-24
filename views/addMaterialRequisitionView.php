@@ -95,6 +95,9 @@ function addMaterialRequisition(storedMaterialID) {
         alert("請選擇領料人員");
         return;
     }
+    if (remark == "") {
+        remark = "%20";
+    }
 
     $.ajax({
         url: "/materialrequisition/addMaterialRequisition/" +storedMaterialID + "/" + 

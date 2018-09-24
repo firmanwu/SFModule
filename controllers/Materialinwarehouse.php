@@ -98,4 +98,10 @@ class Materialinwarehouse extends CI_Controller {
         $query = $this->materialinwarehousemodel->queryAreaInWarehouseByMaterialSupplierPackagingIDData($materialID, $supplierID, $packagingID);
         echo json_encode($query->result_array());
     }
+
+    public function calculateRemainingMoney(){
+        $this->load->model('materialinwarehousemodel');
+
+        $query = $this->materialinwarehousemodel->calculateRemainingMoneyData();
+    }
 }
