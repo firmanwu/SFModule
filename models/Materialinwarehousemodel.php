@@ -59,6 +59,7 @@ class Materialinwarehousemodel extends CI_Model {
             supplier.unitPrice,
             materialinwarehouse.packagingID,
             packaging.packaging,
+            packaging.unitWeight,
             materialinwarehouse.storedArea');
         $this->db->from('materialinwarehouse');
         $this->db->join('material', 'materialinwarehouse.material = material.materialID');
