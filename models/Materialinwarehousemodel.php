@@ -258,9 +258,11 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->select('
             materialinwarehouse.storedMaterialID,
             materialinwarehouse.remainingPackageNumber,
-            supplier.unitPrice');
+            supplier.unitPrice,
+            packaging.unitWeight');
         $this->db->from('materialinwarehouse');
         $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
+        $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
         $result = $this->db->get();
 
         foreach($result->result_array() as $row)
@@ -269,7 +271,7 @@ class Materialinwarehousemodel extends CI_Model {
                 continue;
             }
 
-            $money = $row['remainingPackageNumber'] * $row['unitPrice'];
+            $money = $row['remainingPackageNumber'] * $row['unitWeight'] * $row['unitPrice'];
             $this->db->set('remainingMoney', $money, FALSE);
             $this->db->where('storedMaterialID', $row['storedMaterialID']);
             $result = $this->db->update('materialinwarehouse');
