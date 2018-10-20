@@ -4,13 +4,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 
+function updateStoredAreaInWareHouse() {
+    var materialEntry = $("input[name='materialEntry']").val();
+    var storedArea = $("input[name='storedArea']").val();
+
+    $.ajax({
+        url: "/materialinwarehouse/updateStoredArea/" 
+        + materialEntry + "/" 
+        + storedArea,
+        success: function(result) {
+            queryMaterialInWarehouse();
+        }
+    });
+}
+
+function reviseStoredArea(
+        storedArea,
+        materialEntry) {
+    $('#queryMaterialInWarehouseTable').remove();
+    $('#reviseStoredAreaForm').remove();
+
+    var divForm = $(document.createElement('div'));
+    divForm.attr('id', 'reviseStoredAreaForm');
+    divForm.appendTo($('#reviseStoredAreaArea'));
+
+    var div = $(document.createElement('div'));
+    div.html("入料單編號");
+    div.appendTo(divForm);
+
+    var input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"materialEntry", "value":materialEntry, "readonly":true});
+    input.appendTo(divForm);
+
+    var div = $(document.createElement('div'));
+    div.html("儲放區域");
+    div.appendTo(divForm);
+
+    var input = $(document.createElement('input'));
+    input.attr({"type":"text", "name":"storedArea", "value":storedArea});
+    input.appendTo(divForm);
+
+    div = $(document.createElement('div'));
+    div.html("");
+    div.appendTo(divForm);
+
+    var button = $(document.createElement('button'));
+    button.attr({'id':'revisionButton', 'class':'selfButtonB', 'onclick':'updateStoredAreaInWareHouse()'});
+    button.text("修改");
+    button.appendTo(divForm);
+}
+
 function queryMaterialInWarehouse() {
     $.ajax({
         url: "/materialinwarehouse/queryMaterialInWarehouse",
         success: function(result) {
             $('#queryMaterialInWarehouseTable').remove();
+            $('#reviseStoredAreaForm').remove();
             var row = JSON.parse(result);
-            var header = ["原料編號", "原料", "入料單編號", "供應商", "包裝", "儲放區域", "入料時間", "儲放數量", "儲放重量", "儲放金額", "尚餘數量", "尚餘金額"];
+            var header = ["原料編號", "原料", "入料單編號", "供應商", "包裝", "儲放區域", "入料時間", "儲放數量", "儲放重量", "儲放金額", "尚餘數量", "修改儲放區域"];
             var table = $(document.createElement('table'));
             table.attr('id', 'queryMaterialInWarehouseTable');
             table.appendTo($('#materialInWarehouseList'));
@@ -19,7 +70,7 @@ function queryMaterialInWarehouse() {
             for(var i in header)
             {
                 var th = $(document.createElement('th'));
-		th.attr('class', 'sortable');
+                th.attr('class', 'sortable');
                 th.attr('style', 'cursor:pointer');
                 th.text(header[i]);
                 th.appendTo(tr);
@@ -31,12 +82,34 @@ function queryMaterialInWarehouse() {
                 tr.appendTo(table);
                 for(var k in row[j])
                 {
+                    if ("materialEntry" == k) {
+                        materialEntry = row[j][k];
+                    }
+
+                    if ("storedArea" == k) {
+                        storedArea = row[j][k];
+                    }
+
                     var td = $(document.createElement('td'));
                     td.text(row[j][k]);
                     td.appendTo(tr);
+
+                    if ("remainingPackageNumber" == k) {
+                        // Create revised button
+                        var revisedButton = $(document.createElement('button'));
+                        var onclickFunction = "reviseStoredArea(\"" 
+                        + storedArea + "\", \"" 
+                        + materialEntry + "\")";
+                        revisedButton.attr({"class":"selfButtonB", "onclick":onclickFunction});
+                        revisedButton.text("修改");
+
+                        td = $(document.createElement('td'));
+                        revisedButton.appendTo(td);
+                        td.appendTo(tr);
+                    }
                 }
             }
-	sortable_headers();    
+            sortable_headers();    
         }
     });
 }
@@ -114,3 +187,4 @@ function getCellValue(row, index){ return $(row).children('td').eq(index).text()
 <div></div>
 <br><br>
 <div id="materialInWarehouseList"></div>
+<div id="reviseStoredAreaArea"></div>

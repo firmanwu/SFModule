@@ -44,6 +44,7 @@ class Materialinwarehousemodel extends CI_Model {
         $this->db->join('supplier', 'materialinwarehouse.supplier = supplier.supplierID');
         $this->db->join('packaging', 'materialinwarehouse.packagingID = packaging.packagingID');
         $this->db->order_by('materialinwarehouse.storedDate', 'ASC');
+        $this->db->where('materialinwarehouse.remainingPackageNumber >', 0);
         $result = $this->db->get();
 
         return $result;
@@ -276,5 +277,12 @@ class Materialinwarehousemodel extends CI_Model {
             $this->db->where('storedMaterialID', $row['storedMaterialID']);
             $result = $this->db->update('materialinwarehouse');
         }
+    }
+
+    public function updateStoredAreaData($materialEntry, $storedArea)
+    {
+        $this->db->set('storedArea', $storedArea);
+        $this->db->where('materialEntry', $materialEntry);
+        $result = $this->db->update('materialinwarehouse');
     }
 }

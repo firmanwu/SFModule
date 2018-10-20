@@ -32,7 +32,8 @@ class Materialinwarehouse extends CI_Controller {
         die(json_encode($response));
     }
 
-    public function getDBInfo($model, $queryFunction){
+    public function getDBInfo($model, $queryFunction)
+    {
         $model_local = $model;
         $query_function = $queryFunction;
 
@@ -50,58 +51,73 @@ class Materialinwarehouse extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-    public function queryMaterialNameIDInWarehouse(){
+    public function queryMaterialNameIDInWarehouse()
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryMaterialNameIDInWarehouseData();
         echo json_encode($query->result_array());
     }
 
-    public function querySupplierNameIDInWareHouseByMaterialID($materialID){
+    public function querySupplierNameIDInWareHouseByMaterialID($materialID)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->querySupplierNameIDInWareHouseByMaterialIDData($materialID);
         echo json_encode($query->result_array());
     }
 
-    public function queryPackagingNameIDInWareHouseByMaterialSupplierID($materialID, $supplierID){
+    public function queryPackagingNameIDInWareHouseByMaterialSupplierID($materialID, $supplierID)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryPackagingNameIDInWareHouseByMaterialSupplierIDData($materialID, $supplierID);
         echo json_encode($query->result_array());
     }
 
-    public function queryMaterialInWarehouseDataByMaterialSupplierID($materialID, $supplierID){
+    public function queryMaterialInWarehouseDataByMaterialSupplierID($materialID, $supplierID)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryMaterialInWarehouseDataByMaterialSupplierIDData($materialID, $supplierID);
         echo json_encode($query->result_array());
     }
 
-    public function queryMaterialInWarehouseDataByMaterialSupplierPackagingID($materialID, $supplierID, $packagingID){
+    public function queryMaterialInWarehouseDataByMaterialSupplierPackagingID($materialID, $supplierID, $packagingID)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryMaterialInWarehouseDataByMaterialSupplierPackagingIDData($materialID, $supplierID, $packagingID);
         echo json_encode($query->result_array());
     }
 
-    public function queryMaterialInWarehouseDataByMaterialSupplierPackagingArea($materialID, $supplierID, $packagingID, $area){
+    public function queryMaterialInWarehouseDataByMaterialSupplierPackagingArea($materialID, $supplierID, $packagingID, $area)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryMaterialInWarehouseDataByMaterialSupplierPackagingAreaData($materialID, $supplierID, $packagingID, $area);
         echo json_encode($query->result_array());
     }
 
-    public function queryAreaInWarehouseByMaterialSupplierPackagingID($materialID, $supplierID, $packagingID){
+    public function queryAreaInWarehouseByMaterialSupplierPackagingID($materialID, $supplierID, $packagingID)
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->queryAreaInWarehouseByMaterialSupplierPackagingIDData($materialID, $supplierID, $packagingID);
         echo json_encode($query->result_array());
     }
 
+<<<<<<< HEAD
     public function calculateRemainingMoney(){
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->calculateRemainingMoneyData();
+=======
+    public function updateStoredArea($materialEntry, $storedArea)
+    {
+        $this->load->model('materialinwarehousemodel');
+
+        $result = $this->materialinwarehousemodel->updateStoredAreaData($materialEntry, $storedArea);
+>>>>>>> Add "revise stored area in warehouse" function in queryMaterialInWarehouseView.
     }
 }
