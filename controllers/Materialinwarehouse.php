@@ -107,17 +107,17 @@ class Materialinwarehouse extends CI_Controller {
         echo json_encode($query->result_array());
     }
 
-<<<<<<< HEAD
-    public function calculateRemainingMoney(){
+    public function calculateRemainingMoney()
+    {
         $this->load->model('materialinwarehousemodel');
 
         $query = $this->materialinwarehousemodel->calculateRemainingMoneyData();
-=======
+    }
+
     public function updateStoredArea($materialEntry, $storedArea)
     {
         $this->load->model('materialinwarehousemodel');
 
         $result = $this->materialinwarehousemodel->updateStoredAreaData($materialEntry, $storedArea);
->>>>>>> Add "revise stored area in warehouse" function in queryMaterialInWarehouseView.
     }
 }
